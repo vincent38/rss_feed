@@ -9,11 +9,22 @@ class RSS {
     private $nouvelles; // Liste des nouvelles du flux dans un tableau d'objets Nouvelle
 
     // Contructeur
-    function __construct($url) {
-        $this->url = $url;
+    function __construct($url = null) {
+        if ($url !== null) {
+            $this->url = $url;
+        }
     }
 
-    // Fonctions getter
+    // Getter générique
+    function __get($name) {
+        return $this->$name;
+    }
+
+    // Setter générique
+    function __set($name, $value) {
+        $this->$name = $value;
+    }
+
     function titre() {
         return $this->titre;
     }
@@ -24,6 +35,9 @@ class RSS {
 
     // Récupère un flux à partir de son URL
     function update() {
+        //Définition du 1° ID d'image
+        $id = 1;
+
         // Cree un objet pour accueillir le contenu du RSS : un document XML
         $doc = new DOMDocument;
 
@@ -43,11 +57,13 @@ class RSS {
             $nouvelle = new Nouvelle();
             
             // Modifie cette nouvelle avec l'information téléchargée
-            $nouvelle->update($node);
+            $nouvelle->update($node, $id);
 
             //Ajout de la nouvelle
             $this->nouvelles[] = $nouvelle;
-        
+            
+            //MàJ ID
+            $id++;
         }
     }
 
