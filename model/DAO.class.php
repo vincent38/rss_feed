@@ -19,7 +19,7 @@ class DAO {
     // Récupération de la liste des nouvelles d'un flux RSS (id)
     function getAllNews($rssID) {
         try {
-            $q = 'SELECT date, titre, description, url, image FROM nouvelle WHERE RSS_id = :rssID';
+            $q = 'SELECT date, titre, description, url, urlImage FROM nouvelle WHERE RSS_id = :rssID';
             $r = $this->db->prepare($q);
             $r->execute(array($rssID));
             $response = $r->fetchAll(PDO::FETCH_CLASS, "Nouvelle");
@@ -114,14 +114,49 @@ class DAO {
 
     // Acces à une nouvelle à partir de son titre et l'ID du flux
     function readNouvellefromTitre($titre,$RSS_id) {
-        //...
-        die("2");
+        try {
+            $q = "SELECT * FROM nouvelle WHERE titre = :titre AND RSS_id = :RSS_id";
+            $r = $this->db->prepare($q);
+            $r->execute(array($titre, $RSS_id));
+            $response = $r->fetchAll(PDO::FETCH_CLASS, "Nouvelle");
+            if (sizeof($response) > 0){
+                return $response[0];
+            }           
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
     }
 
     // Crée une nouvelle dans la base à partir d'un objet nouvelle
     // et de l'id du flux auquelle elle appartient
     function createNouvelle(Nouvelle $n, $RSS_id) {
-        //...
-        die("3");
+        $q = "INSERT INTO nouvelle(date, titre, description, url, RSS_id) VALUES (:d, :t, :des, :url, :rss)";
+        try {
+            $r = $this->db->prepare($q);
+            $date = $n->date();
+            $titre = $n->titre();
+            $description = $n->description();
+            $url = $n->url();
+            $r->bindParam(":d", $date);
+            $r->bindParam(":t", $titre);
+            $r->bindParam(":des", $description);
+            $r->bindParam(":url", $url);
+            $r->bindParam(":rss", $RSS_id);
+            $r->execute();
+            return $this->db->lastInsertId();
+        } catch (PDOException $e) {
+            die("PDOException : ".$e->getMessage());
+        }
+    }
+
+    // Ajoute une image à une nouvelle
+    function addImageToNouvelle($url, $id) {
+        $q = "UPDATE nouvelle SET urlImage = :url WHERE id = :id";
+        try {
+            $r = $this->db->prepare($q);
+            $r->execute(array($url, $id));
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
     }
 }

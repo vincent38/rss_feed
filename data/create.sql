@@ -11,7 +11,7 @@ CREATE TABLE nouvelle (
     titre varchar(255),
     description varchar(1024),
     url varchar(255),
-    image varchar(80),
+    urlImage varchar(80),
     RSS_id integer
 );
 

@@ -8,7 +8,7 @@
 </head>
 <body>
     <?php foreach ($data as $r) { ?>
-        <a href = "<?= $r->url ?>">
+        <a href = "<?= $r->urlParsed ?>">
             <p><?= $r->titre ?> </p>            
             <p><?= $r->date ?> </p>
         </a>
