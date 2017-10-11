@@ -8,13 +8,19 @@
     </head>
     <body>
         <h1>Choisissez les flux à mettre à jour</h1>
+        <?php
+        if (isset($alert)) {
+            echo "<p>".$alert['message']."</p>";
+        }
+        ?>
         <form action="force_update.ctrl.php" method="post">
             <fieldset>
-            <input type="checkbox" onClick="checkAll(this)" /> Tout cocher<br/><br>
+            <input id="all" type="checkbox" onClick="checkAll(this)" />
+            <label for="all">Tout cocher</label><br/><br>
             <?php
             foreach ($data as $d) {
                 ?>
-                <input type="checkbox" name="toUpdate" value="<?php echo $d->url?>" id="<?php echo $d->id?>">
+                <input type="checkbox" name='toUpdate[]' value="<?php echo $d->url?>" id="<?php echo $d->id?>">
                 <label for="<?php echo $d->id?>"><?php echo $d->titre?></label><br>
                 <?php
             }
