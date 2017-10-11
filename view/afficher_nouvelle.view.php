@@ -7,8 +7,9 @@
     <title>Nouvelle</title>
 </head>
 <body>
-    <?php
+<?php
     if ($data !== null) {
+        echo "<h1>".$data->titre()."</h1>";  
         echo ' <a href="'.$data->url().'">'.$data->titre().'</a> '.$data->date()."<br>\n";
         echo '<img src="'.$data->urlimage().'" alt="image"><br><br>'."\n";
         echo '  '.$data->description()."<br><br>\n";

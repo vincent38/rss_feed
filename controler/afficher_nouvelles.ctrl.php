@@ -17,7 +17,7 @@ if (isset($_GET['rssID'])) {
         /* On ajoute l'objet NEW dans l'array data */
         $new->urlParsed = "afficher_nouvelle.ctrl.php?nouvelleTitle=".$new->titre()."&rssID=".$rssID;
         $data[] = $new;
-        var_dump($new);
+        //var_dump($new);
     }
 
     include "../view/afficher_nouvelles.view.php";

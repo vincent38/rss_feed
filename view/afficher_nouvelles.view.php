@@ -7,6 +7,7 @@
     <title>Afficher Nouvelles</title>
 </head>
 <body>
+<h1>Dernières informations sur le flux :</h1>
 <?php 
 foreach($data as $nouvelle) {
     echo ' <a href="'.$nouvelle->urlParsed.'">'.$nouvelle->titre().'</a> '.$nouvelle->date()."<br>\n";

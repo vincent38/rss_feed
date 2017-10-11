@@ -7,10 +7,10 @@
     <title>Affichage des flux</title>
 </head>
 <body>
+    <h1>Mes flux</h1>
     <?php foreach ($data as $r) { ?>
         <a href = "<?= $r->urlParsed ?>">
-            <p><?= $r->titre ?> </p>            
-            <p><?= $r->date ?> </p>
+            <p><?= $r->titre ?> - Ajouté le : <?= $r->date ?> </p>
         </a>
     <?php } ?>
 </body>
