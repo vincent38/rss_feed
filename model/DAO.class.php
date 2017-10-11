@@ -19,7 +19,7 @@ class DAO {
     // Récupération de la liste des nouvelles d'un flux RSS (id)
     function getAllNews($rssID) {
         try {
-            $q = 'SELECT date, titre, description, url, urlImage FROM nouvelle WHERE RSS_id = :rssID';
+            $q = 'SELECT id, date, titre, description, url, urlImage FROM nouvelle WHERE RSS_id = :rssID';
             $r = $this->db->prepare($q);
             $r->execute(array($rssID));
             $response = $r->fetchAll(PDO::FETCH_CLASS, "Nouvelle");
@@ -111,6 +111,21 @@ class DAO {
     //////////////////////////////////////////////////////////
     // Methodes CRUD sur Nouvelle
     //////////////////////////////////////////////////////////
+
+    // Acces à une nouvelle à partir de son ID et l'ID du flux
+    function readNouvellefromID($newID,$RSS_id) {
+        try {
+            $q = "SELECT * FROM nouvelle WHERE id = :id AND RSS_id = :RSS_id";
+            $r = $this->db->prepare($q);
+            $r->execute(array($newID, $RSS_id));
+            $response = $r->fetchAll(PDO::FETCH_CLASS, "Nouvelle");
+            if (sizeof($response) > 0){
+                return $response[0];
+            }           
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+    }
 
     // Acces à une nouvelle à partir de son titre et l'ID du flux
     function readNouvellefromTitre($titre,$RSS_id) {

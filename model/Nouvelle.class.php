@@ -1,6 +1,7 @@
 <?php
 
 class Nouvelle {
+    private $id; // id de la nouvelle
     private $date;    // Date de publication
     private $titre;   // Le titre
     private $description; // Contenu de la nouvelle
@@ -26,6 +27,10 @@ class Nouvelle {
 
     function urlImage() {
         return $this->urlImage;
+    }
+
+    function id() {
+        return $this->id;
     }
 
 

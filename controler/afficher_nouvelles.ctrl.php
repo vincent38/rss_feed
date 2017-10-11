@@ -15,7 +15,7 @@ if (isset($_GET['rssID'])) {
 
     foreach ($dao->getAllNews($rssID) as $new) {
         /* On ajoute l'objet NEW dans l'array data */
-        $new->urlParsed = "afficher_nouvelle.ctrl.php?nouvelleTitle=".$new->titre()."&rssID=".$rssID;
+        $new->urlParsed = "afficher_nouvelle.ctrl.php?newID=".$new->id()."&rssID=".$rssID;
         $data[] = $new;
         //var_dump($new);
     }
