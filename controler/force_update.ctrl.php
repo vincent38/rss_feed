@@ -16,7 +16,6 @@ $data = array();
 
 foreach ($dao->getRSSFlux() as $rss) {
    /* On ajoute l'objet RSS dans l'array data */
-   $rss->date = date('r', $rss->date);
    $data[] = $rss;
 }
 
