@@ -16,6 +16,17 @@ class DAO {
     // Methodes CRUD sur RSS
     //////////////////////////////////////////////////////////
 
+    // Méthode du contenu des flux
+    function purgeRSSFlux($rssID) {
+        try {
+            $q = 'DELETE FROM nouvelle WHERE RSS_id = :rssID';
+            $r = $this->db->prepare($q);
+            $r->execute(array($rssID));
+        } catch (PDOException $e) {
+            die ("PDO Error : ".$e->getMessage());
+        }
+    }
+
     // Récupération de la liste des nouvelles d'un flux RSS (id)
     function getAllNews($rssID) {
         try {

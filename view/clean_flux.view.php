@@ -7,15 +7,19 @@
         <title>Mettre à jour les flux</title>
     </head>
     <body>
-        <h1>Choisissez les flux à purger</h1>
+        <h1>Choisissez les flux à purger</h1><?php
+        if (isset($alert)) {
+            echo "<p>".$alert['message']."</p>";
+        }
+        ?>
         <form action="clean_flux.ctrl.php" method="post">
             <fieldset>
             <input type="checkbox" onClick="checkAll(this)" /> Tout cocher<br/><br>
             <?php
             foreach ($data as $d) {
                 ?>
-                <input type="checkbox" name="<?php echo $d->id?>" value="<?php echo $d->url?>">
-                <label for="<?php echo $d->id?>"><?php echo $d->titre?></label><br>
+                <input type="checkbox" name="<?= $d->id ?>" value="<?= $d->id ?>|<?= $d->titre ?>">
+                <label for="<?= $d->id ?>"><?= $d->titre ?></label><br>
                 <?php
             }
             ?>
