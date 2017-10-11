@@ -3,13 +3,18 @@
 require_once('../model/DAO.class.php');
 require_once('../model/RSS.class.php');
 
-if (isset($_POST['flux'])) {
-    //reçu array de flux
-} 
-
-// Listing des flux
-
 $dao = new DAO();
+
+if (isset($_POST['toUpdate'])) {
+    //reçu urls
+    $alert['message'] = "Les flux suivants ont été mis à jour : <br>";
+    foreach ($_POST['toUpdate'] as $url) {
+        //Update 1 par 1
+        $rss = $dao->readRSSfromURL($url);
+        $rss->update();
+        $alert['message'] .= $rss->titre."<br>";
+    }
+} 
 
 /* Variable globale data contenant les données passées à la vue */
 $data = array();
