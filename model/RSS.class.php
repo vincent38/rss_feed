@@ -35,6 +35,28 @@ class RSS {
         return $this->nouvelles;
     }
 
+    // Supprime les images associées au flux RSS, et les entrées des tables Nouvelle et RSS
+    function delete() {
+        // Objet DAO
+        $dao = new DAO();
+
+        // On récupère toutes les nouvelles associées à ce flux
+        $allNews = $dao->getAllNews($this->id);
+
+        // Pour chaque nouvelle : on supprime l'image associée
+        foreach ($allNews as $new) {
+            // Suppression de l'image associée à la nouvelle
+            if (file_exists($new->urlImage()))
+                unlink($new->urlImage());
+        }
+
+        // On supprime toutes les nouvelle associées au flux RSS
+        $dao->purgeRSSFlux($this->id);
+
+        // On supprimer l'entrée dans la table RSS
+        $dao->deleteRSSFlux($this->id);
+    }
+
     // Récupère un flux à partir de son URL
     function update() {
         // Objet DAO
@@ -51,13 +73,13 @@ class RSS {
 
         // Met à jour le titre dans l'objet
         $this->titre = $nodeList->item(0)->textContent;
-        
+
         // Récupère tous les items du flux RSS
         foreach ($doc->getElementsByTagName('item') as $node) {
-            
+
             // Création d'un objet Nouvelle à conserver dans la liste $this->nouvelles
             $nouvelle = new Nouvelle();
-            
+
             // Modifie cette nouvelle avec l'information téléchargée
             $nouvelle->update($node);
 
@@ -65,15 +87,13 @@ class RSS {
             if ($dao->readNouvellefromTitre($nouvelle->titre(),$this->id) === null) {
                 //Ajout nouvelle dans la BDD
                 $idN = $dao->createNouvelle($nouvelle, $this->id);
-                
+
                 // Ajout image et lien avec la nouvelle
                 $nouvelle->downloadImage($node, $idN);
                 $dao->addImageToNouvelle($nouvelle->urlImage(), $idN);
             } else {
                 $nouvelle = $dao->readNouvellefromTitre($nouvelle->titre(),$this->id);
             }
-
-            //var_dump($nouvelle);
 
             //Ajout de la nouvelle
             $this->nouvelles[] = $nouvelle;
