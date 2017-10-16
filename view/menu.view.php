@@ -10,7 +10,7 @@
         <h1>Bienvenue sur le backoffice</h1>
         <p>Dernière MàJ : 11/10/2017 - V0.1</p>
         <br>
-        <a href="see_all.ctrl.php">Voir tous les flux</a><br>
+        <a href="afficher_flux.ctrl.php">Voir tous les flux</a><br>
         <a href="add_flux.ctrl.php">Ajouter un flux</a><br>
         <a href="force_update.ctrl.php">Mettre à jour un flux</a><br>
         <a href="clean_flux.ctrl.php">Vidanger un flux</a><br>

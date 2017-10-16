@@ -6,7 +6,7 @@ class Nouvelle {
     private $titre;   // Le titre
     private $description; // Contenu de la nouvelle
     private $url;         // Le lien vers la ressource associée à la nouvelle
-    private $urlImage;    // URL vers l'image
+    private $urlImage;    // URL vers l'image (référence locale)
 
     // Fonctions getter
     function titre() {
@@ -33,8 +33,6 @@ class Nouvelle {
         return $this->id;
     }
 
-
-
     // Extrait la structure DOM du noeud enclosure
     function downloadImage(DOMElement $item, $imageId) {
         $node = $item->getElementsByTagName('enclosure');
@@ -51,7 +49,7 @@ class Nouvelle {
                 $this->urlImage = '../data/images/'.$imageId;
                 // On télécharge l'image à l'aide de son URL, et on la copie localement.
                 file_put_contents($this->urlImage, file_get_contents($url));
-            } 
+            }
         }
     }
 

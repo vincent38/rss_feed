@@ -18,11 +18,13 @@ if (isset($_POST['toUpdate'])) {
 
 /* Variable globale data contenant les données passées à la vue */
 $data = array();
+$allFlux = $dao->getRSSFlux();
 
-foreach ($dao->getRSSFlux() as $rss) {
-   /* On ajoute l'objet RSS dans l'array data */
-   $rss->date = date('r', $rss->date);
-   $data[] = $rss;
+if ($allFlux !== null) {
+    foreach ($allFlux as $rss) {
+        /* On ajoute l'objet RSS dans l'array data */
+        $data[] = $rss;
+    }
 }
 
 // Vue

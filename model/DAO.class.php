@@ -16,6 +16,66 @@ class DAO {
     // Methodes CRUD sur RSS
     //////////////////////////////////////////////////////////
 
+    // Méthode renvoyant toutes les nouvelles correspondant aux filtres
+    // $keywords : mots clés, $strict : true si tous les mots clés doivent apparaitre
+    // $time : up0 si peu importe, up24 pour les dernières 24h, up7 pour les 7 derniers jours
+    //         up30 pour le dernier mois
+    function searchNews(string $keywords, bool $strict, string $time) : array {
+        // Tableau contenant les nouvelles
+        $new = array();
+
+        // Sépération des mots clés par des espaces
+        $keywords = preg_split('/\s+/', $keywords);
+
+        try {
+            if ($strict) { // Si on doit trouver tous les mots clés dans les entrées
+                $rq = "%";
+                foreach ($keywords as $word) {
+                    $rq .= $word."%";
+                }
+                $q = 'SELECT id, date, titre, description, url, urlImage FROM nouvelle WHERE titre LIKE ":rq" OR description LIKE ":rq"';
+            } else { // Si on peut trouver n'importe quel mot clé dans les entrées
+                
+            }
+            /*
+            $q = 'SELECT id, date, titre, description, url, urlImage FROM nouvelle WHERE RSS_id = :rssID';
+            $r = $this->db->prepare($q);
+            $r->execute(array($rssID));
+            $response = $r->fetchAll(PDO::FETCH_CLASS, "Nouvelle");
+            if (sizeof($response) > 0){
+                return $response;
+            } else {
+                return false;
+            }
+            => A TERMINER
+            */ 
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+    }
+
+    // Méthode de purge des nouvelles d'un flux
+    function purgeRSSFlux($rssID) {
+        try {
+            $q = 'DELETE FROM nouvelle WHERE RSS_id = :rssID';
+            $r = $this->db->prepare($q);
+            $r->execute(array($rssID));
+        } catch (PDOException $e) {
+            die ("PDO Error : ".$e->getMessage());
+        }
+    }
+
+    // Méthode de suppression d'un flux
+    function deleteRSSFlux($rssID) {
+        try {
+            $q = 'DELETE FROM RSS WHERE id = :rssID';
+            $r = $this->db->prepare($q);
+            $r->execute(array($rssID));
+        } catch (PDOException $e) {
+            die ("PDO Error : ".$e->getMessage());
+        }
+    }
+
     // Récupération de la liste des nouvelles d'un flux RSS (id)
     function getAllNews($rssID) {
         try {

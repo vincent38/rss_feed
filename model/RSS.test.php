@@ -5,8 +5,8 @@ require_once('Nouvelle.class.php');
 require_once('DAO.class.php');
 
 //$url = "http://www.lemonde.fr/m-actu/rss_full.xml";
-//$url = "http://www.01net.com/rss/info/flux-rss/flux-toutes-les-actualites/";
-$url = "http://www.lefigaro.fr/rss/figaro_flash-actu.xml";
+$url = "http://www.01net.com/rss/info/flux-rss/flux-toutes-les-actualites/";
+//$url = "http://www.lefigaro.fr/rss/figaro_flash-actu.xml";
 $title = "Le Figaro";
 
 $dao = new DAO();

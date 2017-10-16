@@ -19,10 +19,10 @@
             <label for="all">Tout cocher</label><br/><br>
             <?php
             foreach ($data as $d) {
-                ?>
+            ?>
                 <input type="checkbox" name='toUpdate[]' value="<?php echo $d->url?>" id="<?php echo $d->id?>">
                 <label for="<?php echo $d->id?>"><?php echo $d->titre?></label><br>
-                <?php
+            <?php
             }
             ?>
             <br>
