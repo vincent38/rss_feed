@@ -234,4 +234,44 @@ class DAO {
             die("PDO Error : ".$e->getMessage());
         }
     }
+
+    //////////////////////////////////////////////////////////
+    // Methodes CRUD sur utilisateur
+    //////////////////////////////////////////////////////////
+
+    //Cherche un utilisateur sur la db avec son login et renvoie un booléen
+    function readUserBool($username) {
+        $q = "SELECT * FROM utilisateur WHERE login = :username";
+        try {
+            $r = $this->db->prepare($q);
+            $r->execute(array($username));
+            $reply = $r->fetchAll(PDO::FETCH_CLASS,"User");
+            return (sizeOf($reply) > 0) ? true : false; 
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+    }
+
+    public function create($username, $mdp)
+    {
+        $q = "INSERT INTO utilisateur VALUES (:username, :mdp)";
+        try {
+            $r = $this->db->prepare($q);
+            $r->execute(array($username, $mdp));
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+    }
+
+    public function read($username, $mdp) {
+        $q = "SELECT * FROM utilisateur WHERE login = :username and mp = :mdp";
+        try {
+            $r = $this->db->prepare($q);
+            $r->execute(array($username, $mdp));
+            $reply = $r->fetchAll(PDO::FETCH_CLASS,"User");
+            return (sizeof($reply) > 0) ? $reply[0] : null;
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+    }
 }

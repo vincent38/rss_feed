@@ -8,7 +8,7 @@
     </head>
     <body>
         <h1>Bienvenue sur le backoffice</h1>
-        <p>Dernière MàJ : 11/10/2017 - V0.1</p>
+        <p>Dernière MàJ : 16/10/2017 - V0.3</p>
         <br>
         <a href="afficher_flux.ctrl.php">Voir tous les flux</a><br>
         <a href="add_flux.ctrl.php">Ajouter un flux</a><br>
