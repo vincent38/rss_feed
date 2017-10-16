@@ -8,9 +8,9 @@
 </head>
 <body>
 <h1>Dernières informations sur le flux :</h1>
-<?php 
+<?php
 foreach($data as $nouvelle) {
-    echo ' <a href="'.$nouvelle->urlParsed.'">'.$nouvelle->titre().'</a> '.$nouvelle->date()."<br>\n";
+    echo '<a href="'.$nouvelle->urlParsed.'">'.$nouvelle->titre().'</a> '.$nouvelle->date()."<br>\n";
     echo '<img src="'.$nouvelle->urlimage().'" alt="image"><br><br>'."\n";
     echo '  '.$nouvelle->description()."<br><br>\n";
 }

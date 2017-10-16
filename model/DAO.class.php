@@ -20,35 +20,55 @@ class DAO {
     // $keywords : mots clés, $strict : true si tous les mots clés doivent apparaitre
     // $time : up0 si peu importe, up24 pour les dernières 24h, up7 pour les 7 derniers jours
     //         up30 pour le dernier mois
-    function searchNews(string $keywords, bool $strict, string $time) : array {
+    function searchNews(string $keywords, bool $strict, bool $onlyT, string $time) : array {
         // Tableau contenant les nouvelles
-        $new = array();
+        $results = array();
 
-        // Sépération des mots clés par des espaces
-        $keywords = preg_split('/\s+/', $keywords);
+        /* Traitement des mots clés reçus en entrée 
+        ======================================================*/
+        $keywords = preg_split('/\s+/', $keywords); // On coupe la chaîne par des espaces
+        $s_keywords = array();
+
+        /* On reconstruit un tableau et on sécurise chacun des mots clés individuellement */
+        foreach ($keywords as $word) {
+            if (rtrim($word)) { // Si la chaîne n'est pas vide ou remplie d'espaces
+                $s_keywords[] = $this->db->quote("%".$word."%"); // On quote le mot passé en paramètres avec les % (jokers du LIKE)
+            }
+        }
 
         try {
-            if ($strict) { // Si on doit trouver tous les mots clés dans les entrées
-                $rq = "%";
-                foreach ($keywords as $word) {
-                    $rq .= $word."%";
+            /* Génération de la requête 
+            ======================================================*/
+            $i = false; $rq = "";
+            $mode = ($strict) ? " AND" : " OR"; // Si le mode est strict, on utilise AND, sinon on utilise OR
+
+            foreach ($s_keywords as $word) {
+                if (rtrim($word)) { // Si la chaîne n'est pas vide ou remplie d'espaces
+                    $str = ($i) ? $mode : ""; // Si il y a plus d'un keyword, on ajoute le mot clé en début de chaîne
+
+                    if ($onlyT) { // Si le mode est "titre only", on ne fait la recherche que sur le titre de la nouvelle
+                        $rq .= $str." titre LIKE $word";
+                    } else {
+                        $rq .= $str." (titre LIKE $word OR description LIKE $word)";
+                    }
+
+                    $i = true;
                 }
-                $q = 'SELECT id, date, titre, description, url, urlImage FROM nouvelle WHERE titre LIKE ":rq" OR description LIKE ":rq"';
-            } else { // Si on peut trouver n'importe quel mot clé dans les entrées
-                
             }
-            /*
-            $q = 'SELECT id, date, titre, description, url, urlImage FROM nouvelle WHERE RSS_id = :rssID';
+            $q = 'SELECT id, date, titre, description, url, urlImage FROM nouvelle WHERE'.$rq;
+
+            // Gestion du paramètres temps
+            // SELECT * FROM nouvelle WHERE date BETWEEN strftime('%m/%d/%Y %H:%M', datetime('now','localtime'), '-5 day') AND strftime('%m/%d/%Y %H:%M',datetime('now','localtime')); 
+
+            // On exécute la requête formée
             $r = $this->db->prepare($q);
-            $r->execute(array($rssID));
-            $response = $r->fetchAll(PDO::FETCH_CLASS, "Nouvelle");
-            if (sizeof($response) > 0){
-                return $response;
-            } else {
-                return false;
-            }
-            => A TERMINER
-            */ 
+            $r->execute();
+
+            echo "<br><br>".$q."<br>";
+
+            $results = $r->fetchAll(PDO::FETCH_CLASS, "Nouvelle");  
+    
+            return $results;
         } catch (PDOException $e) {
             die("PDO Error : ".$e->getMessage());
         }
