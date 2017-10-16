@@ -9,4 +9,7 @@ class User {
         return $this->login;
     }
 
+    function getHash() {
+        return $this->mp;
+    }
 }

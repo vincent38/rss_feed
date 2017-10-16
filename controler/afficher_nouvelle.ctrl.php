@@ -13,5 +13,5 @@ if (isset($_GET['newID']) and isset( $_GET['rssID'])) {
 
     $data = $dao->readNouvellefromID($newID, $rssID);
 
-    include "../view/afficher_nouvelle.view.php";
+    include "../view_style/afficher_nouvelle.view.php";
 }
