@@ -16,7 +16,7 @@ if (isset($_POST["username"]) and isset($_POST["password"])) {
     //Inscription
     $reply = $uM->login($_POST["username"], $_POST["password"]);
     if ($reply) {
-        $_SESSION["user"] = $reply;
+        $_SESSION["user"] = $reply->getLogin();
         header("Location: afficher_flux.ctrl.php");
     } else {
         $error = "La connexion au compte a échouée! Vérifiez vos identifiants.";

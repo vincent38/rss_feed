@@ -9,6 +9,7 @@ class UserManager {
     {
         // Objet DAO
         $dao = new DAO();
+        $mdp = password_hash($mdp, PASSWORD_BCRYPT);
         $reply = $dao->readUserBool($username);
         if ($reply) {
             return false;
@@ -22,6 +23,7 @@ class UserManager {
     {
         // Objet DAO
         $dao = new DAO();
+        $mdp = password_hash($mdp, PASSWORD_BCRYPT);
         $reply = $dao->read($username, $mdp);
         if ($reply == null) {
             return null;

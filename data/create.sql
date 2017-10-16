@@ -17,11 +17,11 @@ CREATE TABLE nouvelle (
 
 CREATE TABLE utilisateur (
     login varchar(80) primary key,
-    mp varchar(8)
+    mp varchar(255)
 );
 
 CREATE TABLE abonnement (
-    utilisateur_login varchar(10),
+    utilisateur_login varchar(80),
     RSS_id integer,
     nom varchar(40),
     categorie varchar(40),

@@ -7,7 +7,7 @@
         <title>Backoffice</title>
     </head>
     <body>
-        <h1>Bienvenue sur le backoffice</h1>
+        <h1>Bienvenue sur le backoffice, <?php echo $_SESSION["user"]; ?></h1>
         <p>Dernière MàJ : 16/10/2017 - V0.3</p>
         <br>
         <a href="afficher_flux.ctrl.php">Voir tous les flux</a><br>
