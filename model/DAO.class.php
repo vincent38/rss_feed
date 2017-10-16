@@ -173,16 +173,16 @@ class DAO {
     function updateRSS(RSS $rss) {
         // Met à jour uniquement le titre et la date
         $titre = $this->db->quote($rss->titre());
-        $q = "UPDATE RSS SET titre=:titre, date=':date' WHERE url=':url'";
+        $q = "UPDATE RSS SET titre=:titre, date=:d WHERE url=:url";
         try {
             $r = $this->db->prepare($q);
-            $r->bindParam(":titre", $rss->date());
-            $r->bindParam(":date", $rss->date());
-            $r->bindParam(":url", $rss->url());
+            $titre = $rss->titre;
+            $url = $rss->url;
+            $date = time();
+            $r->bindParam(":titre", $titre);
+            $r->bindParam(":d", $date);
+            $r->bindParam(":url", $url);
             $r->execute();
-            if ($r == 0) {
-                die("updateRSS error: no rss updated\n");
-            }
         } catch (PDOException $e) {
             die("PDO Error :".$e->getMessage());
         }
@@ -250,6 +250,46 @@ class DAO {
         try {
             $r = $this->db->prepare($q);
             $r->execute(array($url, $id));
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+    }
+
+    //////////////////////////////////////////////////////////
+    // Methodes CRUD sur utilisateur
+    //////////////////////////////////////////////////////////
+
+    //Cherche un utilisateur sur la db avec son login et renvoie un booléen
+    function readUserBool($username) {
+        $q = "SELECT * FROM utilisateur WHERE login = :username";
+        try {
+            $r = $this->db->prepare($q);
+            $r->execute(array($username));
+            $reply = $r->fetchAll(PDO::FETCH_CLASS,"User");
+            return (sizeOf($reply) > 0) ? true : false; 
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+    }
+
+    public function create($username, $mdp)
+    {
+        $q = "INSERT INTO utilisateur VALUES (:username, :mdp)";
+        try {
+            $r = $this->db->prepare($q);
+            $r->execute(array($username, $mdp));
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+    }
+
+    public function read($username, $mdp) {
+        $q = "SELECT * FROM utilisateur WHERE login = :username and mp = :mdp";
+        try {
+            $r = $this->db->prepare($q);
+            $r->execute(array($username, $mdp));
+            $reply = $r->fetchAll(PDO::FETCH_CLASS,"User");
+            return (sizeof($reply) > 0) ? $reply[0] : null;
         } catch (PDOException $e) {
             die("PDO Error : ".$e->getMessage());
         }

@@ -31,6 +31,14 @@ class RSS {
         return $this->titre;
     }
 
+    function date() {
+        return $this->date;
+    }
+
+    function url() {
+        return $this->url;
+    }
+
     function nouvelles() {
         return $this->nouvelles;
     }
@@ -61,6 +69,9 @@ class RSS {
     function update() {
         // Objet DAO
         $dao = new DAO();
+
+        //Mise à jour date
+        $dao->updateRSS($this);
 
         // Cree un objet pour accueillir le contenu du RSS : un document XML
         $doc = new DOMDocument;

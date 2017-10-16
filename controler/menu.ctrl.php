@@ -1,7 +1,10 @@
 <?php
-/*
-    A terme : gestion des cas utilisateur connecté ou non
-*/
+//Are u logged in ?
+session_start();
+if (!isset($_SESSION["user"]) or $_SESSION["user"] == null) {
+    //Goodbye
+    header("Location: afficher_flux.ctrl.php");
+}
 
 //Vue
 include "../view/menu.view.php";
