@@ -284,12 +284,29 @@ class DAO {
     }
 
     public function read($username, $mdp) {
-        $q = "SELECT * FROM utilisateur WHERE login = :username and mp = :mdp";
+        $q = "SELECT * FROM utilisateur WHERE login = :username";
+        if ($this->unlock($username, $mdp)) {
+            try {
+                $r = $this->db->prepare($q);
+                $r->execute(array($username));
+                $reply = $r->fetchAll(PDO::FETCH_CLASS,"User");
+                return (sizeof($reply) > 0) ? $reply[0] : null;
+            } catch (PDOException $e) {
+                die("PDO Error : ".$e->getMessage());
+            }
+        } else {
+            return null;
+        }
+    }
+
+    public function unlock($username, $mdp)
+    {
+        $q = "SELECT mp FROM utilisateur WHERE login = :username";
         try {
             $r = $this->db->prepare($q);
-            $r->execute(array($username, $mdp));
-            $reply = $r->fetchAll(PDO::FETCH_CLASS,"User");
-            return (sizeof($reply) > 0) ? $reply[0] : null;
+            $r->execute(array($username));
+            $pass = $r->fetch();
+            return (password_verify($mdp, $pass['mp'])) ? true : false;
         } catch (PDOException $e) {
             die("PDO Error : ".$e->getMessage());
         }
