@@ -300,7 +300,6 @@ class DAO {
             return null;
         }
     }
-
     public function unlock($username, $mdp)
     {
         $q = "SELECT mp FROM utilisateur WHERE login = :username";
