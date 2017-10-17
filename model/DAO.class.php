@@ -312,4 +312,19 @@ class DAO {
             die("PDO Error : ".$e->getMessage());
         }
     }
+
+    //////////////////////////////////////////////////////////
+    // Methodes CRUD sur abonnement
+    //////////////////////////////////////////////////////////
+
+    public function createAbo($username, $idRss, $nom, $cat)
+    {
+        $q = "INSERT INTO abonnement VALUES (:username, :idRss, :nom, :cat)";
+        try {
+            $r = $this->db->prepare($q);
+            $r->execute(array($username, $idRss, $nom, $cat));
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+    }
 }

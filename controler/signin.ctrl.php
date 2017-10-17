@@ -9,6 +9,7 @@ if (isset($_SESSION["user"]) and $_SESSION["user"] != null) {
     header("Location: afficher_flux.ctrl.php");
 }
 require_once("../model/UserManager.class.php");
+require_once("../model/User.class.php");
 
 $uM = new UserManager;
 
@@ -18,7 +19,7 @@ if (isset($_POST["username"]) and isset($_POST["password"])) {
 
     // Si le login a fonctionné on authentifie l'utilisateur
     if ($reply) {
-        $_SESSION["user"] = $reply->getLogin();
+        $_SESSION["user"] = $reply;
         header("Location: afficher_flux.ctrl.php");
     } else {
         $error = "La connexion au compte a échouée! Vérifiez vos identifiants.";
