@@ -1,54 +1,138 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Mettre à jour les flux</title>
-    </head>
-    <body>
-        <h1>Choisissez les flux à purger</h1><?php
-        if (isset($alert)) {
-            echo "<p>".$alert['message']."</p>";
-        }
-        ?>
-        <form action="clean_flux.ctrl.php" method="post">
-            <fieldset>
-            <input type="checkbox" onClick="checkAll(this)" /> Tout cocher<br/><br>
-            <?php
-            foreach ($data as $d) {
-                ?>
-                <input type="checkbox" name="<?= $d->id ?>" value="<?= $d->id ?>|<?= $d->titre ?>">
-                <label for="<?= $d->id ?>"><?= $d->titre ?></label><br>
-                <?php
-            }
-            ?>
-            <br>
-            <input type="submit" value="Purger">
-            </fieldset>
-        </form>
-        <script language="JavaScript">
-            /*
-                Script check all / uncheck all fourni par stackoverflow
-                https://stackoverflow.com/questions/19282219/check-uncheck-all-the-checkboxes-in-a-table
-            */
-            function checkAll(ele) {
-                var checkboxes = document.getElementsByTagName('input');
-                if (ele.checked) {
-                    for (var i = 0; i < checkboxes.length; i++) {
-                        if (checkboxes[i].type == 'checkbox') {
-                            checkboxes[i].checked = true;
-                        }
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" type="image/png" href="assets/img/favicon.ico">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<title>RSSFeed</title>
+
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/animate.min.css" rel="stylesheet"/>
+    <link href="assets/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
+    <link href="assets/css/demo.css" rel="stylesheet" />
+
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+
+</head>
+<body>
+
+<div class="wrapper">
+    <?php
+        // Inclusion de la sidebar pour éviter la répétition du code
+        $mode = "cleanF";
+        include "html/sidebar.php";
+    ?>    
+    
+    <div class="content">
+    <!-- Le contenu va ici ! -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Vidanger un flux</h4>
+                        <p class="category">Purger un flux vide les images associées au flux et ses nouvelles.</p>
+                    </div>
+                    <div class="content">
+                        <form action="clean_flux.ctrl.php" method="post">
+                            <?php
+                            foreach ($data as $d) {
+                            ?>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" name='toClean[]' value="<?= $d->id ?>|<?= $d->titre ?>">
+                                    <?= $d->titre ?>
+                                </label>
+                            </div>
+                            <?php
+                            }
+                            ?>
+                            <br>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" onClick="checkAll(this)">
+                                    Tout cocher
+                                </label>
+                            </div>
+                            </br>
+                            <button type="submit" class = "btn btn-warning btn-fill pull-left">Purger</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container-fluid">
+            <nav class="pull-left">
+            </nav>
+            <p class="copyright pull-right">
+                Projet de gestionnaire de flux RSS - <a href="http://iut2.univ-grenoble-alpes.fr">IUT2 Grenoble</a>
+            </p>
+        </div>
+    </footer>
+
+    </div>
+</div>
+
+
+</body>
+
+    <!--   Core JS Files   -->
+    <script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+	<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+
+	<!--  Checkbox, Radio & Switch Plugins -->
+	<script src="assets/js/bootstrap-checkbox-radio-switch.js"></script>
+
+    <!--  Notifications Plugin    -->
+    <script src="assets/js/bootstrap-notify.js"></script>
+    
+    <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
+    <script src="assets/js/light-bootstrap-dashboard.js"></script>
+
+    <script language="JavaScript">
+        function checkAll(ele) {
+            var checkboxes = document.getElementsByTagName('input');
+            if (ele.checked) {
+                for (var i = 0; i < checkboxes.length; i++) {
+                    if (checkboxes[i].type == 'checkbox') {
+                        checkboxes[i].checked = true;
                     }
-                } else {
-                    for (var i = 0; i < checkboxes.length; i++) {
-                        console.log(i)
-                        if (checkboxes[i].type == 'checkbox') {
-                            checkboxes[i].checked = false;
-                        }
+                }
+            } else {
+                for (var i = 0; i < checkboxes.length; i++) {
+                    console.log(i)
+                    if (checkboxes[i].type == 'checkbox') {
+                        checkboxes[i].checked = false;
                     }
                 }
             }
+        }
+    </script>
+
+    <?php if (isset($alert)):?> 
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $.notify({
+                    icon: '<?= $alert['icon'] ?>',
+                    message: '<?= $alert['message'] ?>'
+                },{
+                    type: '<?= $alert['type'] ?>',
+                    timer: 4000,
+                    placement: {
+                        from: 'top',
+                        align: 'center'
+                    }
+                });
+            });
         </script>
-    </body>
+    <?php endif; ?>
 </html>

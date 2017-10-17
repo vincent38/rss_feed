@@ -9,15 +9,18 @@ if (!isset($_SESSION["user"]) or $_SESSION["user"] == null) {
 require_once('../model/DAO.class.php');
 require_once('../model/RSS.class.php');
 
-if ($_POST !== null) {
+if (isset($_POST['toClean'])) {
     $dao = new DAO();
 
     $alert['message'] = "Les flux suivants ont été purgés : <br>";
-    foreach ($_POST as $rssData) {
+    foreach ($_POST['toClean'] as $rssData) {
         $rssID = explode("|", $rssData);
         $dao->purgeRSSFlux($rssID[0]);
-        $alert['message'] .= $rssID[1]."<br>";
+        $alert['message'] .= "<b>".$rssID[1]."</b><br>";
     }
+
+    $alert['type'] = "success";
+    $alert['icon'] = "pe-7s-check";
 }
 
 // Listing des flux
@@ -35,4 +38,4 @@ if ($allFlux !== null) {
 }
 
 // Vue
-include "../view/clean_flux.view.php";
+include "../view_style/clean_flux.view.php";

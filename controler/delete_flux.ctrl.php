@@ -12,14 +12,18 @@ require_once('../model/RSS.class.php');
 $dao = new DAO();
 
 if (isset($_POST['toDelete'])) {
-    //reçu urls
     $alert['message'] = "Les flux suivants ont été supprimés : <br>";
-    foreach ($_POST['toDelete'] as $url) {
+    
+    foreach ($_POST['toDelete'] as $rssID) {
         //Update 1 par 1
-        $rss = $dao->readRSSfromURL($url);
+        $rss = $dao->readRSSfromID($rssID);
         $rss->delete();
-        $alert['message'] .= $rss->titre."<br>";
+
+        $alert['message'] .= "<b>".$rss->titre."</b><br>";
     }
+    
+    $alert['type'] = "success";
+    $alert['icon'] = "pe-7s-check";
 }
 
 /* Variable globale data contenant les données passées à la vue */
@@ -34,4 +38,4 @@ if ($allFlux !== null) {
 }
 
 // Vue
-include "../view/delete_flux.view.php";
+include "../view_style/delete_flux.view.php";

@@ -17,7 +17,7 @@ if (isset($_POST['url']) and isset($_POST['titre'])) {
     $titre = htmlspecialchars($_POST['titre']);
     $url = htmlspecialchars($_POST['url']);
     $dao = new DAO();
-    
+
     if (filter_var($url, FILTER_VALIDATE_URL)) {
         //URL valide
         $rss = $dao->readRSSfromURL($url);
@@ -25,6 +25,7 @@ if (isset($_POST['url']) and isset($_POST['titre'])) {
             //URL Inconnue, on ajoute
             $rss = $dao->createRSS($url, $titre);
             $rss->update();
+
             $alert['message'] = "Flux ajouté !";
             $alert['type'] = "success";
             $alert['icon'] = "pe-7s-check";
