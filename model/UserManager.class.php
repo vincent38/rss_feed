@@ -4,7 +4,7 @@ require_once('DAO.class.php');
 require_once('User.class.php');
 
 class UserManager {
-    public function register($username, $mdp) : boolean
+    public function register($username, $mdp) : bool
     {
         // Objet DAO
         $dao = new DAO();
