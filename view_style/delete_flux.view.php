@@ -60,7 +60,7 @@
                                 </label>
                             </div>
                             </br>
-                            <button type="submit" class = "btn btn-warning btn-fill pull-left">Supprimer les flux</button>
+                            <button type="submit" class = "btn btn-danger btn-fill pull-left">Supprimer les flux</button>
                             <div class="clearfix"></div>
                         </form>
                     </div>

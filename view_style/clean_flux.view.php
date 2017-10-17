@@ -36,7 +36,7 @@
                 <div class="card">
                     <div class="header">
                         <h4 class="title">Vidanger un flux</h4>
-                        <p class="category">Choisissez les flux à purger</p>
+                        <p class="category">Purger un flux vide les images associées au flux et ses nouvelles.</p>
                     </div>
                     <div class="content">
                         <form action="clean_flux.ctrl.php" method="post">
@@ -60,7 +60,7 @@
                                 </label>
                             </div>
                             </br>
-                            <button type="submit" class = "btn btn-success btn-fill pull-left">Purger</button>
+                            <button type="submit" class = "btn btn-warning btn-fill pull-left">Purger</button>
                             <div class="clearfix"></div>
                         </form>
                     </div>
