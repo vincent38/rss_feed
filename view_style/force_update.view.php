@@ -35,8 +35,8 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="header">
-                        <h4 class="title">Mettre à jour les flux</h4>
-                        <p class="category">Choisissez les flux à mettre à jour</p>
+                        <h4 class="title">Supprimer un flux</h4>
+                        <p class="category">Choisissez les flux à supprimer</p>
                     </div>
                     <div class="content">
                         <form action="force_update.ctrl.php" method="post">
@@ -45,7 +45,7 @@
                             ?>
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" name='toUpdate[]' value="<?= $d->url ?>|<?= $d->titre ?>">
+                                    <input class="form-check-input" type="checkbox" name='toUpdate[]' value="<?= $d->id ?>|<?= $d->titre ?>">
                                     <?= $d->titre ?>
                                 </label>
                             </div>

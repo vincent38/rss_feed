@@ -35,4 +35,4 @@ if ($allFlux !== null) {
 }
 
 // Vue
-include "../view/clean_flux.view.php";
+include "../view_style/clean_flux.view.php";

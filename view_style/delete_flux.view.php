@@ -25,7 +25,7 @@
 <div class="wrapper">
     <?php
         // Inclusion de la sidebar pour éviter la répétition du code
-        $mode = "upF";
+        $mode = "deleteF";
         include "html/sidebar.php";
     ?>    
     
@@ -35,17 +35,17 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="header">
-                        <h4 class="title">Mettre à jour les flux</h4>
-                        <p class="category">Choisissez les flux à mettre à jour</p>
+                        <h4 class="title">Supprimer un flux</h4>
+                        <p class="category">Choisissez les flux à supprimer</p>
                     </div>
                     <div class="content">
-                        <form action="force_update.ctrl.php" method="post">
+                        <form action="delete_flux.ctrl.php" method="post">
                             <?php
                             foreach ($data as $d) {
                             ?>
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" name='toDelete[]' value="<?= $d->url ?>|<?= $d->titre ?>">
+                                    <input class="form-check-input" type="checkbox" name='toDelete[]' value="<?= $d->id ?>">
                                     <?= $d->titre ?>
                                 </label>
                             </div>

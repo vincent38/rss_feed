@@ -19,7 +19,7 @@ if (isset($_POST['toUpdate'])) {
         $dub = explode ('|', $url);
 
         // Update des flux un par un
-        $rss = $dao->readRSSfromURL($dub[0]);
+        $rss = $dao->readRSSfromID($dub[0]);
         $rss->update();
 
         $alert['message'] .= "<b>".$dub[1]."</b><br>";

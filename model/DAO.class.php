@@ -169,6 +169,21 @@ class DAO {
             die("PDO Error : ".$e->getMessage());
         }
     }
+    
+    // Acces à un objet RSS à partir de son ID
+    function readRSSfromID($rssID) {
+        try {
+            $q = "SELECT * FROM RSS WHERE id = :id";
+            $r = $this->db->prepare($q);
+            $r->execute(array($rssID));
+            $response = $r->fetchAll(PDO::FETCH_CLASS, "RSS");
+            if (sizeof($response) > 0){
+                return $response[0];
+            }           
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+    }
 
     // Met à jour un flux
     function updateRSS(RSS $rss) {
