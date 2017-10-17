@@ -18,6 +18,7 @@ if (isset($_POST['toDelete'])) {
         //Update 1 par 1
         $rss = $dao->readRSSfromURL($url);
         $rss->delete();
+
         $alert['message'] .= $rss->titre."<br>";
     }
 }
