@@ -59,6 +59,7 @@ class DAO {
 
             // Gestion du paramètres temps
             // SELECT * FROM nouvelle WHERE date BETWEEN strftime('%m/%d/%Y %H:%M', datetime('now','localtime'), '-5 day') AND strftime('%m/%d/%Y %H:%M',datetime('now','localtime')); 
+            // => A FAIRE
 
             // On exécute la requête formée
             $r = $this->db->prepare($q);
@@ -259,7 +260,7 @@ class DAO {
     // Methodes CRUD sur utilisateur
     //////////////////////////////////////////////////////////
 
-    //Cherche un utilisateur sur la db avec son login et renvoie un booléen
+    // Cherche un utilisateur sur la db avec son login et renvoie true s'il existe
     function readUserBool($username) {
         $q = "SELECT * FROM utilisateur WHERE login = :username";
         try {
@@ -272,6 +273,7 @@ class DAO {
         }
     }
 
+    // Crée un compte utilisateur (username, mdp)
     public function create($username, $mdp)
     {
         $q = "INSERT INTO utilisateur VALUES (:username, :mdp)";

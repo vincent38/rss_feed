@@ -26,14 +26,22 @@ if (isset($_POST['url']) and isset($_POST['titre'])) {
             $rss = $dao->createRSS($url, $titre);
             $rss->update();
             $alert['message'] = "Flux ajouté !";
+            $alert['type'] = "success";
+            $alert['icon'] = "pe-7s-check";
+            // type = ['','info','success','warning','danger'];
+            // icones : pe-7s-check, pe-7s-close-circle,  pe-7s-attention
         } else {
             $alert['message'] = "Flux déjà présent en BDD !";
+            $alert['type'] = "warning";
+            $alert['icon'] = "pe-7s-close-circle";
         }
     } else {
         $alert['message'] = "URL invalide !";
+        $alert['type'] = "danger";
+        $alert['icon'] = "pe-7s-attention";
     }
 }
 
 
 // Vue
-include "../view/add_flux.view.php";
+include "../view_style/add_flux.view.php";

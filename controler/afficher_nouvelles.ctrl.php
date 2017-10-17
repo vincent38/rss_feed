@@ -20,5 +20,5 @@ if (isset($_GET['rssID'])) {
         //var_dump($new);
     }
 
-    include "../view/afficher_nouvelles.view.php";
+    include "../view_style/afficher_nouvelles.view.php";
 }

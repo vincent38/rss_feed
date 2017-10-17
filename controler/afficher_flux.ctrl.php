@@ -20,4 +20,4 @@ if ($allFlux !== null) {
     }
 }
 
-include "../view/afficher_flux.view.php";
+include "../view_style/afficher_flux.view.php";

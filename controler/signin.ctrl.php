@@ -13,8 +13,10 @@ require_once("../model/UserManager.class.php");
 $uM = new UserManager;
 
 if (isset($_POST["username"]) and isset($_POST["password"])) {
-    //Inscription
+    // Inscription
     $reply = $uM->login($_POST["username"], $_POST["password"]);
+
+    // Si le login a fonctionné on authentifie l'utilisateur
     if ($reply) {
         $_SESSION["user"] = $reply->getLogin();
         header("Location: afficher_flux.ctrl.php");
