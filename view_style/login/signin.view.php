@@ -68,8 +68,7 @@ input {
 input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgba(255,255,255,0.2); }
 
     </style>
-	<link href="assets/notif/bootstrap.min.css" rel="stylesheet" />
-	<link href="assets/css/animate.min.css" rel="stylesheet"/>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 </head>

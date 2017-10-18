@@ -22,8 +22,10 @@ if (isset($_POST["username"]) and isset($_POST["password"])) {
         $_SESSION["user"] = $reply;
         header("Location: afficher_flux.ctrl.php");
     } else {
-        $error = "La connexion au compte a échouée! Vérifiez vos identifiants.";
+        $alert['message'] = "La connexion au compte a échouée. <br>Vérifiez vos identifiants.";
+        $alert['type'] = "danger";
+        $alert['icon'] = "pe-7s-attention";
     }
 }
 
-include "../view/signin.view.php";
+include "../view_style/signin.view.php";
