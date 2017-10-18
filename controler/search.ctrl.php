@@ -8,8 +8,6 @@ $dao = new DAO();
 $data = array();
 $results = false;
 
-var_dump($_POST);
-
 /* Si les mots clés de recherche sont définis et qu'ils ne sont pas vides */
 if (isset($_POST['searchstr']) && rtrim($_POST['searchstr'])) {
     /* Définition des paramètres de recherche */
@@ -24,16 +22,20 @@ if (isset($_POST['searchstr']) && rtrim($_POST['searchstr'])) {
     $foundNews = $dao->searchNews ($s_str, $strict, $onlyT, $time);
 
     if ($foundNews) { // Si on a trouvé des résultats
+        $results = true;
+
         /* On formate les résultats trouvés */
         foreach ($foundNews as $new) {
             /* On ajoute l'objet NEW dans l'array data */
             $new->urlParsed = "afficher_nouvelle.ctrl.php?newID=".$new->id()."&rssID=".$rssID;
-            $data[] = $new;
+            $data[] = $new;            
         }
-
-        $results = true;
+    } else { // On affiche un message d'erreur
+        $alert['message'] .= "Aucun résultat trouvé pour la requête : <br><b>".$_POST['searchstr']."</b>";
+        $alert['type'] = "warning";
+        $alert['icon'] = "pe-7s-check";
     }
 }
 
 // Vue
-include "../view/search.view.php";
+include "../view_style/search.view.php";

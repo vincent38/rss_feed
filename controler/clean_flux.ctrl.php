@@ -3,7 +3,7 @@
 session_start();
 if (!isset($_SESSION["user"]) or $_SESSION["user"] == null) {
     //Goodbye
-    header("Location: afficher_flux.ctrl.php");
+    header("Location: signin.ctrl.php");
 }
 
 require_once('../model/DAO.class.php');
@@ -14,8 +14,16 @@ if (isset($_POST['toClean'])) {
 
     $alert['message'] = "Les flux suivants ont été purgés : <br>";
     foreach ($_POST['toClean'] as $rssData) {
+        // On traite la chaîne passée en POST
         $rssID = explode("|", $rssData);
+
+        // On récupère l'objet RSS et on supprime les images qui lui sont associées
+        $rssObj = $dao->readRSSfromID($rssID[0]);
+        $rssObj->deleteImg();
+
+        // On supprime toutes les nouvelles associées au flux RSS
         $dao->purgeRSSFlux($rssID[0]);
+
         $alert['message'] .= "<b>".$rssID[1]."</b><br>";
     }
 

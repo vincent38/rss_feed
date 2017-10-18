@@ -2,13 +2,6 @@
 /*
 Signup : inscription de l'utilisateur
 */
-//Are u logged in ?
-session_start();
-if (isset($_SESSION["user"]) and $_SESSION["user"] != null) {
-    //Goodbye
-    header("Location: afficher_flux.ctrl.php");
-}
-
 require_once("../model/UserManager.class.php");
 
 $uM = new UserManager;
