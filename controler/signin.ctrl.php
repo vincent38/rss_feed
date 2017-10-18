@@ -20,9 +20,12 @@ if (isset($_POST["username"]) and isset($_POST["password"])) {
     // Si le login a fonctionné on authentifie l'utilisateur
     if ($reply) {
         $_SESSION["user"] = $reply;
-        header("Location: afficher_flux.ctrl.php");
+
+        // On redirige l'utilisateur vers la page d'acceuil
+        header ("Location: afficher_flux.ctrl.php?logged");
+
     } else {
-        $alert['message'] = "La connexion au compte a échouée. <br>Vérifiez vos identifiants.";
+        $alert['message'] = "La connexion au compte a échouée. Vérifiez vos identifiants.";
         $alert['type'] = "danger";
         $alert['icon'] = "pe-7s-attention";
     }

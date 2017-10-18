@@ -35,8 +35,8 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="header">
-                        <h4 class="title">Supprimer un flux</h4>
-                        <p class="category">Choisissez les flux à supprimer</p>
+                        <h4 class="title">Mettre à jour un flux</h4>
+                        <p class="category">Choisissez les flux à mettre à jour</p>
                     </div>
                     <div class="content">
                         <form action="force_update.ctrl.php" method="post">
@@ -118,21 +118,5 @@
         }
     </script>
 
-    <?php if (isset($alert)):?> 
-        <script type="text/javascript">
-            $(document).ready(function(){
-                $.notify({
-                    icon: '<?= $alert['icon'] ?>',
-                    message: '<?= $alert['message'] ?>'
-                },{
-                    type: '<?= $alert['type'] ?>',
-                    timer: 4000,
-                    placement: {
-                        from: 'top',
-                        align: 'center'
-                    }
-                });
-            });
-        </script>
-    <?php endif; ?>
+    <?php include "html/alert.php"; ?>
 </html>

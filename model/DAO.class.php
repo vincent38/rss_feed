@@ -55,7 +55,7 @@ class DAO {
                     $i = true;
                 }
             }
-            $q = 'SELECT id, date, titre, description, url, urlImage FROM nouvelle WHERE'.$rq;
+            $q = 'SELECT * FROM nouvelle WHERE'.$rq;
 
             // Gestion du paramètres temps
             // SELECT * FROM nouvelle WHERE date BETWEEN strftime('%m/%d/%Y %H:%M', datetime('now','localtime'), '-5 day') AND strftime('%m/%d/%Y %H:%M',datetime('now','localtime')); 
@@ -64,8 +64,6 @@ class DAO {
             // On exécute la requête formée
             $r = $this->db->prepare($q);
             $r->execute();
-
-            echo "<br><br>".$q."<br>";
 
             $results = $r->fetchAll(PDO::FETCH_CLASS, "Nouvelle");  
     
@@ -100,7 +98,7 @@ class DAO {
     // Récupération de la liste des nouvelles d'un flux RSS (id)
     function getAllNews($rssID) {
         try {
-            $q = 'SELECT id, date, titre, description, url, urlImage FROM nouvelle WHERE RSS_id = :rssID ORDER BY datetime("r", date) DESC';
+            $q = 'SELECT id, date, titre, description, url, urlImage FROM nouvelle WHERE RSS_id = :rssID ORDER BY date DESC';
             $r = $this->db->prepare($q);
             $r->execute(array($rssID));
             $response = $r->fetchAll(PDO::FETCH_CLASS, "Nouvelle");
@@ -244,7 +242,7 @@ class DAO {
         $q = "INSERT INTO nouvelle(date, titre, description, url, RSS_id) VALUES (:d, :t, :des, :url, :rss)";
         try {
             $r = $this->db->prepare($q);
-            $date = $n->date();
+            $date = $n->real_date(); // On stocke le timestamp en BDD
             $titre = $n->titre();
             $description = $n->description();
             $url = $n->url();
@@ -332,14 +330,34 @@ class DAO {
     // Methodes CRUD sur abonnement
     //////////////////////////////////////////////////////////
 
-    public function createAbo($username, $idRss, $nom, $cat)
+    // Crée un abonnement (username, idRSS, nom, cat) si le flux n'est pas
+    // déjà enregistré dans la même catégorie
+    //   renvoie true si succès
+    public function createAbo($username, $idRss, $nom, $cat) : bool
     {
-        $q = "INSERT INTO abonnement VALUES (:username, :idRss, :nom, :cat)";
+        $result;
+    
         try {
+            // On vérifie si l'abonnement dans la catégorie n'existe pas déjà en base de données
+            $q = "SELECT * FROM abonnement WHERE utilisateur_login = :username AND RSS_id = :idRSS AND categorie = :cat";
+
             $r = $this->db->prepare($q);
-            $r->execute(array($username, $idRss, $nom, $cat));
+            $r->execute(array($username, $idRss, $cat));
+            $pass = $r->fetch();
+
+            $result = ($pass) ? true : false; // On teste si on a un résultat
+
+            // Ajout de l'abonnement dans la base de données
+
+            if (!$result) { // Si le couple abonnement - catégorie n'existe pas déjà
+                $q = "INSERT INTO abonnement VALUES (:username, :idRss, :nom, :cat)";
+                $r = $this->db->prepare($q);
+                $r->execute(array($username, $idRss, $nom, $cat));
+            }
         } catch (PDOException $e) {
             die("PDO Error : ".$e->getMessage());
         }
+
+        return (!$result);
     }
 }

@@ -60,14 +60,14 @@
                             </label>  
                             <br><br>
 
-                            <div>Rechercher les résultats dans...</div>                             
+                            <div>Rechercher les résultats dans...</div>                   
                             <label for="all">
                                 <input type="radio" name='modeS' value="all" checked>
                                 Titre et corps des contenus
                             </label>                            
                             <label for="t_only">
-                                Titre des contenus uniquement
                                 <input type="radio" name='modeS'  value="t_only">
+                                Titre des contenus uniquement
                             </label>
                             <br><br>
 
@@ -92,7 +92,7 @@
                     </div>
                 </div>
                 <?php if($results): // S'il y a eu des résultats à la recherche ?>
-                    <h1>Résultats de la recherche :</h1>
+                    <h4>Résultats de la recherche</h4>
                     <?php foreach($data as $nouvelle) { ?>
                         <div class="card">
                             <div class="header">
@@ -107,7 +107,10 @@
                                 <div class="footer">
                                     <hr>
                                     <div class="stats">
-                                        <i class="fa fa-arrow-right"></i> 
+                                        <i class="fa fa-newspaper-o"></i>
+                                        <?= $nouvelle->titreFlux ?>
+                                        &nbsp;
+                                        <i class="fa fa-arrow-right" aria-hidden="true"></i> 
                                         <a href="<?= $nouvelle->urlParsed ?>">Lire la nouvelle</a>
                                     </div>
                                 </div>     
@@ -148,21 +151,5 @@
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
     <script src="assets/js/light-bootstrap-dashboard.js"></script>
 
-    <?php if (isset($alert)):?> 
-        <script type="text/javascript">
-            $(document).ready(function(){
-                $.notify({
-                    icon: '<?= $alert['icon'] ?>',
-                    message: '<?= $alert['message'] ?>'
-                },{
-                    type: '<?= $alert['type'] ?>',
-                    timer: 4000,
-                    placement: {
-                        from: 'top',
-                        align: 'center'
-                    }
-                });
-            });
-        </script>
-    <?php endif; ?>
+    <?php include "html/alert.php"; ?>
 </html>

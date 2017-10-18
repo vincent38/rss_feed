@@ -16,6 +16,7 @@ if (isset($_POST['url']) and isset($_POST['titre'])) {
     //OK, on échappe et on fait les vérifs
     $titre = htmlspecialchars($_POST['titre']);
     $url = htmlspecialchars($_POST['url']);
+
     $dao = new DAO();
 
     if (filter_var($url, FILTER_VALIDATE_URL)) {

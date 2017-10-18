@@ -2,18 +2,30 @@
 
 class Nouvelle {
     private $id; // id de la nouvelle
-    private $date;    // Date de publication
+    private $date;   // Timestamp UNIX de la date de la nouvelle
     private $titre;   // Le titre
     private $description; // Contenu de la nouvelle
     private $url;         // Le lien vers la ressource associée à la nouvelle
     private $urlImage;    // URL vers l'image (référence locale)
+
+    private $RSS_id; // RSS_id du flux contenant la nouvelle
 
     // Fonctions getter
     function titre() {
         return $this->titre;
     }
 
+    function RSS_id() {
+        return $this->RSS_id;
+    }
+
+    // Renvoie la date formatée "en français" à partir du timestamp
     function date() {
+        return date("d/m/Y H:i:s", $this->date);
+    }
+
+    // Renvoie le timestamp UNIX de la date
+    function real_date() {
         return $this->date;
     }
 
@@ -62,6 +74,9 @@ class Nouvelle {
         if ($id !== null) {
             $this->updateImage($item, $id);
         }
+
+        // On convertit la date RSS (qui suit le standard RFC 2822) en timestamp
+        $this->date = strtotime($this->date);
     }
 
     // Se charge de mettre à jour l'image

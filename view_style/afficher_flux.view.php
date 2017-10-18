@@ -91,18 +91,5 @@
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 	<script src="assets/js/light-bootstrap-dashboard.js"></script>
 
-	<script type="text/javascript">
-    	$(document).ready(function(){
-            /* => A UTILISER
-        	$.notify({
-            	icon: 'pe-7s-gift',
-            	message: "Welcome to <b>Light Bootstrap Dashboard</b> - a beautiful freebie for every web developer."
-
-            },{
-                type: 'info',
-                timer: 4000
-            });
-            */
-    	});
-	</script>
+    <?php include "html/alert.php"; ?>
 </html>

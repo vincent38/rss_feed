@@ -84,4 +84,6 @@
     
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 	<script src="assets/js/light-bootstrap-dashboard.js"></script>
+
+    <?php include "html/alert.php"; ?>
 </html>

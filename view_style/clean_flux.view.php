@@ -118,21 +118,5 @@
         }
     </script>
 
-    <?php if (isset($alert)):?> 
-        <script type="text/javascript">
-            $(document).ready(function(){
-                $.notify({
-                    icon: '<?= $alert['icon'] ?>',
-                    message: '<?= $alert['message'] ?>'
-                },{
-                    type: '<?= $alert['type'] ?>',
-                    timer: 4000,
-                    placement: {
-                        from: 'top',
-                        align: 'center'
-                    }
-                });
-            });
-        </script>
-    <?php endif; ?>
+    <?php include "html/alert.php"; ?>
 </html>
