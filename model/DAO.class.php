@@ -100,7 +100,7 @@ class DAO {
     // Récupération de la liste des nouvelles d'un flux RSS (id)
     function getAllNews($rssID) {
         try {
-            $q = 'SELECT id, date, titre, description, url, urlImage FROM nouvelle WHERE RSS_id = :rssID';
+            $q = 'SELECT id, date, titre, description, url, urlImage FROM nouvelle WHERE RSS_id = :rssID ORDER BY datetime("r", date) DESC';
             $r = $this->db->prepare($q);
             $r->execute(array($rssID));
             $response = $r->fetchAll(PDO::FETCH_CLASS, "Nouvelle");

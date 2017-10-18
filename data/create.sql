@@ -8,6 +8,7 @@ CREATE TABLE RSS (
 CREATE TABLE nouvelle (
     id integer primary key autoincrement,
     date datetime,
+    archiDate timestamp,
     titre varchar(255),
     description varchar(1024),
     url varchar(255),

@@ -20,6 +20,7 @@ if (isset($_POST['toUpdate'])) {
 
         // Update des flux un par un
         $rss = $dao->readRSSfromID($dub[0]);
+        var_dump($rss);
         $rss->update();
 
         $alert['message'] .= "<b>".$dub[1]."</b><br>";
