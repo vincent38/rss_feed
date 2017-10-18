@@ -1,13 +1,13 @@
 <?php
+
 //Are u logged in ?
 session_start();
 if (!isset($_SESSION["user"]) or $_SESSION["user"] == null) {
     //Goodbye
-    header("Location: afficher_flux.ctrl.php");
+    header("Location: signin.ctrl.php");
 }
 
 // Ajout flux
-
 require_once('../model/RSS.class.php');
 require_once('../model/Nouvelle.class.php');
 require_once('../model/DAO.class.php');
@@ -42,7 +42,6 @@ if (isset($_POST['url']) and isset($_POST['titre'])) {
         $alert['icon'] = "pe-7s-attention";
     }
 }
-
 
 // Vue
 include "../view_style/add_flux.view.php";

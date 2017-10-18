@@ -48,7 +48,7 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
                         <li>
-                           <a href="">
+                           <a href="search.ctrl.php">
                                 <i class="fa fa-search"></i>
 								<p class="hidden-lg hidden-md">Search</p>
                             </a>

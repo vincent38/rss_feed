@@ -49,6 +49,21 @@ class RSS {
         $dao = new DAO();
 
         // On récupère toutes les nouvelles associées à ce flux
+        $this->deleteImg();
+
+        // On supprime toutes les nouvelle associées au flux RSS
+        $dao->purgeRSSFlux($this->id);
+
+        // On supprimer l'entrée dans la table RSS
+        $dao->deleteRSSFlux($this->id);
+    }
+
+    // Supprime les images associées au flux RSS
+    function deleteImg() {
+        // Objet DAO
+        $dao = new DAO();
+
+        // On récupère toutes les nouvelles associées à ce flux
         $allNews = $dao->getAllNews($this->id);
 
         // Pour chaque nouvelle : on supprime l'image associée
@@ -57,12 +72,6 @@ class RSS {
             if (file_exists($new->urlImage()))
                 unlink($new->urlImage());
         }
-
-        // On supprime toutes les nouvelle associées au flux RSS
-        $dao->purgeRSSFlux($this->id);
-
-        // On supprimer l'entrée dans la table RSS
-        $dao->deleteRSSFlux($this->id);
     }
 
     // Récupère un flux à partir de son URL
