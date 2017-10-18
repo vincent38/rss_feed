@@ -25,9 +25,14 @@
 <div class="wrapper">
     <?php
         // Inclusion de la sidebar pour éviter la répétition du code
-        $mode = "cleanF";
+        $mode = "dealF";
         include "html/sidebar.php";
-    ?>    
+    ?>     
+    <?php
+        // Inclusion des onglets de navigation
+        $tab_mode = "cleanF";
+        include "html/tabs_flux.php";
+    ?>
     
     <div class="content">
     <!-- Le contenu va ici ! -->
@@ -60,7 +65,10 @@
                                 </label>
                             </div>
                             </br>
-                            <button type="submit" class = "btn btn-warning btn-fill pull-left">Purger</button>
+                            <button type="submit" class = "btn btn-warning btn-fill pull-left">
+                                <span class="fa fa-trash" style="margin-left: -6px;"></span>
+                                Purger
+                            </button>
                             <div class="clearfix"></div>
                         </form>
                     </div>

@@ -27,7 +27,12 @@
         // Inclusion de la sidebar pour éviter la répétition du code
         $mode = "myAbo";
         include "html/sidebar.php";
-    ?>    
+    ?>
+    <?php
+        // Inclusion des onglets de navigation
+        $tab_mode = "subT";
+        include "html/tabs_subs.php";
+    ?>
 
     <div class="content">
     <!-- Le contenu va ici ! -->

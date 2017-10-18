@@ -360,4 +360,33 @@ class DAO {
 
         return (!$result);
     }
+
+    // Récupère tous les abonnements d'un utilisateur username, triés par catégories
+    public function getAbo($username) : bool
+    {
+        $result;
+    
+        try {
+            // On vérifie si l'abonnement dans la catégorie n'existe pas déjà en base de données
+            $q = "SELECT * FROM abonnement WHERE utilisateur_login = :username AND RSS_id = :idRSS AND categorie = :cat";
+
+            $r = $this->db->prepare($q);
+            $r->execute(array($username, $idRss, $cat));
+            $pass = $r->fetch();
+
+            $result = ($pass) ? true : false; // On teste si on a un résultat
+
+            // Ajout de l'abonnement dans la base de données
+
+            if (!$result) { // Si le couple abonnement - catégorie n'existe pas déjà
+                $q = "INSERT INTO abonnement VALUES (:username, :idRss, :nom, :cat)";
+                $r = $this->db->prepare($q);
+                $r->execute(array($username, $idRss, $nom, $cat));
+            }
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+
+        return (!$result);
+    }
 }

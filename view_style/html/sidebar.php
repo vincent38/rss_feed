@@ -18,28 +18,10 @@
                     <p>Mes abonnements</p>
                 </a>
             </li>
-            <li <?= $mode=="addF" ? 'class="active"' : ""?>>
+            <li <?= $mode=="dealF" ? 'class="active"' : ""?>>
                 <a href="add_flux.ctrl.php">
-                    <i class="pe-7s-plus"></i>
-                    <p>Ajouter un flux</p>
-                </a>
-            </li>
-            <li <?= $mode=="upF" ? 'class="active"' : ""?>>
-                <a href="force_update.ctrl.php">
-                    <i class="pe-7s-refresh-2"></i>
-                    <p>Mettre à jour un flux</p>
-                </a>
-            </li>
-            <li <?= $mode=="cleanF" ? 'class="active"' : ""?>>
-                <a href="clean_flux.ctrl.php">
-                    <i class="pe-7s-trash"></i>
-                    <p>Vidanger un flux</p>
-                </a>
-            </li>
-            <li <?= $mode=="deleteF" ? 'class="active"' : ""?>>
-                <a href="delete_flux.ctrl.php">
-                    <i class="pe-7s-close-circle"></i>
-                    <p>Supprimer un flux</p>
+                    <i class="pe-7s-tools"></i>
+                    <p>Gérer les flux</p>
                 </a>
             </li>
         </ul>

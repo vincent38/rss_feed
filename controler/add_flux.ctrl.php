@@ -1,11 +1,8 @@
 <?php
 
-//Are u logged in ?
-session_start();
-if (!isset($_SESSION["user"]) or $_SESSION["user"] == null) {
-    //Goodbye
-    header("Location: signin.ctrl.php");
-}
+// Vérification de l'authentification
+require_once('redirect.ctrl.php');
+
 
 // Ajout flux
 require_once('../model/RSS.class.php');

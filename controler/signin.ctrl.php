@@ -2,10 +2,9 @@
 /*
 Signin : connexion de l'utilisateur
 */
-//Are u logged in ?
 session_start();
 if (isset($_SESSION["user"]) and $_SESSION["user"] != null) {
-    //Goodbye
+    // Si l'utilisateur est déjà connecté, il est redirigé vers l'acceuil
     header("Location: afficher_flux.ctrl.php");
 }
 require_once("../model/UserManager.class.php");
@@ -27,8 +26,13 @@ if (isset($_POST["username"]) and isset($_POST["password"])) {
     } else {
         $alert['message'] = "La connexion au compte a échouée. Vérifiez vos identifiants.";
         $alert['type'] = "danger";
-        $alert['icon'] = "pe-7s-attention";
+        $alert['icon'] = "pe-7s-close-circle";
     }
+// Si l'utilisateur a essayé d'accéder à une page sans autorisation, on affiche une notification
+} else if (isset ($_GET['forbidden'])) {
+    $alert['message'] = "Pour accéder à ces fonctionnalités, veuillez vous identifier.";
+    $alert['type'] = "warning";
+    $alert['icon'] = "pe-7s-attention";
 }
 
 include "../view_style/signin.view.php";

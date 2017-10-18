@@ -25,9 +25,14 @@
 <div class="wrapper">
     <?php
         // Inclusion de la sidebar pour éviter la répétition du code
-        $mode = "addF";
+        $mode = "dealF";
         include "html/sidebar.php";
-    ?>    
+    ?>
+    <?php
+        // Inclusion des onglets de navigation
+        $tab_mode = "dealF";
+        include "html/tabs_flux.php";
+    ?>
     
     <div class="content">
     <!-- Le contenu va ici ! -->
@@ -54,7 +59,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class = "btn btn-success btn-fill pull-left">Ajouter</button>
+                            <button type="submit" class = "btn btn-success btn-fill pull-left">
+                                <span class="fa fa-plus" style="margin-left: -6px;"></span>
+                                Ajouter
+                            </button>
                             <div class="clearfix"></div>
                         </form>
                     </div>

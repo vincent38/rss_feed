@@ -1,20 +1,14 @@
 <?php
-/*
-Outil de gestion des abonnements d'un utilisateur
-*/
+/* Gestion des abonnements d'un utilisateur */
+
+// Vérification de l'authentification
+require_once('redirect.ctrl.php');
 
 require_once("../model/RSS.class.php");
 require_once("../model/DAO.class.php");
 require_once("../model/User.class.php");
 
 $dao = new DAO();
-
-//Are u logged in ?
-session_start();
-if (!isset($_SESSION["user"]) or $_SESSION["user"] == null) {
-    //Goodbye
-    header("Location: signin.ctrl.php");
-}
 
 // Si les paramètres en POST sont définis, alors on ajoute l'abonnement voulu par l'utilisateur
 if (isset($_POST["flux"]) and isset($_POST["titre"]) and isset($_POST["cat"])) {
@@ -45,5 +39,8 @@ $data = array();
 foreach ($dao->getRSSFlux() as $f) {
     $data[] = $f;
 }
+
+/* On recherche tous les abonnements de l'utilisateur et on les affiche également */
+
 
 include "../view_style/manage_subs.view.php";
