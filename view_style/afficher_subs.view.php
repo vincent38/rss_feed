@@ -25,34 +25,37 @@
 <div class="wrapper">
     <?php
         // Inclusion de la sidebar pour éviter la répétition du code
-        $mode = "allF";
+        $mode = "myAbo";
         include "html/sidebar.php";
-    ?>    
-    
+    ?>
+    <?php
+        // Inclusion des onglets de navigation
+        $tab_mode = "seeT";
+        include "html/tabs_subs.php";
+    ?>
+
     <div class="content">
     <!-- Le contenu va ici ! -->
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="header">
-                        <h4 class="title"><?= $data->titre() ?></h4>
-                        <p class="category"><i class="fa fa-clock-o"></i>  <?= $data->date() ?></p>
+                        <h4 class="title">Mes abonnements</h4>
+                        <p class="category">Ici figure la liste de vos abonnements à des flux</p>
                     </div>
                     <div class="content">
-                        <?php if ($data->urlimage()): ?>
-                            <img src="<?=$data->urlimage() ?>" alt="image"><br><br>
-                        <?php endif; ?>
-                        <?=  $data->description() ?>    
-                        <div class="footer">
-                            <hr>
-                            <div class="stats">
-                                <i class="fa fa-arrow-right"></i> 
-                                <a href="<?= $data->url() ?>">Voir sur le site source</a>
-                            </div>
-                        </div>     
+                        <?php foreach ($data as $cat => $listeRSS) { ?>
+                            <a href="#" class="list-group-item active">
+                                <?= $cat ?>
+                            </a>
+                            <?php foreach ($data[$cat] as $r) { ?>
+                                <a href="<?= $r->urlParsed() ?>" class="list-group-item list-group-item-action"><?= $r->titre() ?></a>
+                            <?php } ?>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 

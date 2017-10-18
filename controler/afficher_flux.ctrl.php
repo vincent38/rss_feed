@@ -14,7 +14,6 @@ if ($allFlux !== null) {
     foreach ($allFlux as $rss) {
         /* On ajoute l'objet RSS dans l'array data */
         $rss->date = date("d/m/Y H:i", $rss->date); // On convertit le timestamp en français
-        $rss->urlParsed = "afficher_nouvelles.ctrl.php?rssID=".$rss->id;
         $data[] = $rss;
         $noFlux = false;
     }

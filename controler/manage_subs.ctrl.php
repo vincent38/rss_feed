@@ -1,12 +1,13 @@
 <?php
 /* Gestion des abonnements d'un utilisateur */
 
+require_once("../model/User.class.php");
+
 // Vérification de l'authentification
 require_once('redirect.ctrl.php');
 
 require_once("../model/RSS.class.php");
 require_once("../model/DAO.class.php");
-require_once("../model/User.class.php");
 
 $dao = new DAO();
 
@@ -18,7 +19,7 @@ if (isset($_POST["flux"]) and isset($_POST["titre"]) and isset($_POST["cat"])) {
 
         // Si la requête a fonctionné, alors on envoie un message succès
         if ($status) {
-            $alert['message'] = "Vous êtes désormais abonné au flux <b>".$$_POST["titre"]."<b> dans la catégorie <b>".$_POST["cat"]."</b>";
+            $alert['message'] = "Vous êtes désormais abonné au flux : <br><b>".$_POST["titre"]."</b> dans la catégorie <b>".$_POST["cat"]."</b>";
             $alert['type'] = "success";
             $alert['icon'] = "pe-7s-check";
         } else {
@@ -39,8 +40,6 @@ $data = array();
 foreach ($dao->getRSSFlux() as $f) {
     $data[] = $f;
 }
-
-/* On recherche tous les abonnements de l'utilisateur et on les affiche également */
 
 
 include "../view_style/manage_subs.view.php";

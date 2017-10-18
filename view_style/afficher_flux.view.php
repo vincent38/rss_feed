@@ -12,7 +12,7 @@
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="assets/css/animate.min.css" rel="stylesheet"/>
     <link href="assets/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
-    <link href="assets/css/demo.css" rel="stylesheet" />
+    <link href="assets/css/bonus.css" rel="stylesheet" />
 
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
@@ -39,22 +39,11 @@
                         <p class="category">Liste de tous les flux enregistrés dans notre base de données. Cliquez sur un flux pour en consulter le contenu.</p>
                     </div>
                     <div class="content">
-                    <table class="table table-hover table-striped">
-                        <thead>
-                            <th>Nom du flux</th>
-                            <th>Date d'ajout</th>
-                            <th>URL</th>
-                        </thead>
-                        <tbody>
+                        <ul class="list-group">
                             <?php foreach ($data as $r) { ?>
-                                <tr>
-                                    <td><a href = "<?= $r->urlParsed ?>"><?= $r->titre ?></a></td>
-                                    <td><?= $r->date ?></td>                                    
-                                    <td><?= $r->url ?></td>
-                                </tr>
+                <li class="list-group-item special-list"><a href = "<?= $r->urlParsed() ?>"><?= $r->titre ?></a><span class="badge"><?= $r->date ?></span></li>
                             <?php } ?>
-                        </tbody>
-                    </table>
+                        </ul>
                     </div>
                 </div>
             </div>

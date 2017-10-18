@@ -12,7 +12,7 @@
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="assets/css/animate.min.css" rel="stylesheet"/>
     <link href="assets/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
-    <link href="assets/css/demo.css" rel="stylesheet" />
+    <link href="assets/css/bonus.css" rel="stylesheet" />
 
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">

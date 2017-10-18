@@ -1,0 +1,18 @@
+/* Contient le CSS supplémentaire à Bootstrap */
+.special-list:hover {
+    background-color: #f1f1f1;
+}
+
+.special-radio {
+    margin-right: 15px;
+    margin-left: 5px;
+    font-size: 14px !important;
+}
+
+.special-radio input {
+    margin-right:5px;
+}
+
+a.list-group-item {
+    color:#1DC7EA;
+}

@@ -12,7 +12,7 @@
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="assets/css/animate.min.css" rel="stylesheet"/>
     <link href="assets/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
-    <link href="assets/css/demo.css" rel="stylesheet" />
+    <link href="assets/css/bonus.css" rel="stylesheet" />
 
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
@@ -43,13 +43,14 @@
                         <h4 class="title">Supprimer un flux</h4>
                         <p class="category">Choisissez les flux à supprimer</p>
                     </div>
+                    <br>
                     <div class="content">
                         <form action="delete_flux.ctrl.php" method="post">
                             <?php
                             foreach ($data as $d) {
                             ?>
                             <div class="form-check">
-                                <label class="form-check-label">
+                                <label class="form-check-label special-radio">
                                     <input class="form-check-input" type="checkbox" name='toDelete[]' value="<?= $d->id ?>">
                                     <?= $d->titre ?>
                                 </label>
@@ -59,7 +60,7 @@
                             ?>
                             <br>
                             <div class="form-check">
-                                <label class="form-check-label">
+                                <label class="form-check-label special-radio">
                                     <input class="form-check-input" type="checkbox" onClick="checkAll(this)">
                                     Tout cocher
                                 </label>

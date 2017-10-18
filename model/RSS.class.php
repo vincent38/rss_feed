@@ -27,6 +27,10 @@ class RSS {
         $this->$name = $value;
     }
 
+    function urlParsed() {
+        return "afficher_nouvelles.ctrl.php?rssID=".$this->id;
+    }
+
     function titre() {
         return $this->titre;
     }
@@ -43,7 +47,7 @@ class RSS {
         return $this->nouvelles;
     }
 
-    // Supprime les images associées au flux RSS, et les entrées des tables Nouvelle et RSS
+    // Supprime les images associées au flux RSS, et les entrées des tables Nouvelle, RSS et Abonnement
     function delete() {
         // Objet DAO
         $dao = new DAO();

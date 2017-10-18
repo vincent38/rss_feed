@@ -12,7 +12,7 @@
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="assets/css/animate.min.css" rel="stylesheet"/>
     <link href="assets/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
-    <link href="assets/css/demo.css" rel="stylesheet" />
+    <link href="assets/css/bonus.css" rel="stylesheet" />
 
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
@@ -48,43 +48,43 @@
                                 </button>
                                 </div>
                             </div>                    
-                            <br><br>
-                            <div>Rechercher les résultats qui...</div>              
-                            <label for="anyT">
+                            <br>
+                            <h5>Rechercher les résultats qui...</h5>              
+                            <label for="anyT" class = "special-radio">
                                 <input type="radio" name='typeS' value="anyT" checked>
                                 Contiennent n'importe quel terme
                             </label>
-                            <label for="allT">
+                            <label for="allT" class = "special-radio">
                                 <input type="radio" name='typeS' id = 'allT' value="allT">
                                 Contiennent tous les termes
                             </label>  
                             <br><br>
 
-                            <div>Rechercher les résultats dans...</div>                   
-                            <label for="all">
+                            <h5>Rechercher les résultats dans...</h5>                   
+                            <label for="all" class = "special-radio">
                                 <input type="radio" name='modeS' value="all" checked>
                                 Titre et corps des contenus
                             </label>                            
-                            <label for="t_only">
+                            <label for="t_only" class = "special-radio">
                                 <input type="radio" name='modeS'  value="t_only">
                                 Titre des contenus uniquement
                             </label>
                             <br><br>
 
-                            <div>Date des nouvelles</div>                             
-                            <label for="up0">
+                            <h5>Date des nouvelles</h5>                             
+                            <label for="up0" class = "special-radio">
                                 <input type="radio" name='time' value="up0" checked>
                                 Peu importe
                             </label>                            
-                            <label for="up24">
+                            <label for="up24" class = "special-radio">
                                 <input type="radio" name='time'  value="up24">
                                 Les dernières 24 heures
                             </label>                            
-                            <label for="up7">
+                            <label for="up7" class = "special-radio">
                                 <input type="radio" name='time' value="up7">
                                 La dernière semaine
                             </label>                           
-                            <label for="up30">
+                            <label for="up30" class = "special-radio">
                                 <input type="radio" name='time'  value="up30">
                                 Le dernier mois
                             </label>

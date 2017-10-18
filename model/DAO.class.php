@@ -87,6 +87,12 @@ class DAO {
     // Méthode de suppression d'un flux
     function deleteRSSFlux($rssID) {
         try {
+            /* On supprime dans un premier temps les abonnements utilisant $rssID*/
+            $q = 'DELETE FROM abonnement WHERE RSS_id = :rssID';
+            $r = $this->db->prepare($q);
+            $r->execute(array($rssID));
+
+            /* Puis on supprime les flux RSS */
             $q = 'DELETE FROM RSS WHERE id = :rssID';
             $r = $this->db->prepare($q);
             $r->execute(array($rssID));
@@ -339,6 +345,7 @@ class DAO {
     
         try {
             // On vérifie si l'abonnement dans la catégorie n'existe pas déjà en base de données
+
             $q = "SELECT * FROM abonnement WHERE utilisateur_login = :username AND RSS_id = :idRSS AND categorie = :cat";
 
             $r = $this->db->prepare($q);
@@ -361,32 +368,39 @@ class DAO {
         return (!$result);
     }
 
-    // Récupère tous les abonnements d'un utilisateur username, triés par catégories
-    public function getAbo($username) : bool
+    // Renvoie tous les abonnements d'un utilisateur sous la forme d'un tableau $tab['categ'] = array (RSS)
+    public function getAbo($username) : array
     {
-        $result;
-    
+        $result = array();
+
         try {
-            // On vérifie si l'abonnement dans la catégorie n'existe pas déjà en base de données
-            $q = "SELECT * FROM abonnement WHERE utilisateur_login = :username AND RSS_id = :idRSS AND categorie = :cat";
-
+            $q = "SELECT categorie, RSS_id FROM abonnement WHERE utilisateur_login = :username ORDER BY categorie";
             $r = $this->db->prepare($q);
-            $r->execute(array($username, $idRss, $cat));
-            $pass = $r->fetch();
+            $r->execute(array($username));
 
-            $result = ($pass) ? true : false; // On teste si on a un résultat
+            /* On récupères le données sous la forme d'un tableau categorie => tab[RSSid] */
+            $result = $r->fetchAll(PDO::FETCH_COLUMN|PDO::FETCH_GROUP);
 
-            // Ajout de l'abonnement dans la base de données
+            /* Pour chaque RSSid d'abonnement, on récupère l'objet RSS correspondant et on remplace l'ID par l'objet */
+            foreach ($result as $categ => $tabID) {
+                $i = 0;
 
-            if (!$result) { // Si le couple abonnement - catégorie n'existe pas déjà
-                $q = "INSERT INTO abonnement VALUES (:username, :idRss, :nom, :cat)";
-                $r = $this->db->prepare($q);
-                $r->execute(array($username, $idRss, $nom, $cat));
+                /* On parcourt chaque rssID de la catégorie */
+                foreach ($tabID as $rssID) {
+                    /* On récupère l'objet associé à l'ID et on remplace l'ID par l'objet dans le tableau*/
+                    $rssObj = $this->readRSSfromID($rssID);
+
+                    if ($rssObj) {
+                        $result[$categ][$i] = $this->readRSSfromID($rssID);
+                    }
+
+                    $i++;
+                }
             }
         } catch (PDOException $e) {
             die("PDO Error : ".$e->getMessage());
         }
-
-        return (!$result);
-    }
+        
+        return $result;
+    }    
 }
