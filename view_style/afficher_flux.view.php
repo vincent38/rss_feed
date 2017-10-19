@@ -39,9 +39,9 @@
                         <p class="category">Liste de tous les flux enregistrés dans notre base de données. Cliquez sur un flux pour en consulter le contenu.</p>
                     </div>
                     <div class="content">
-                        <ul class="list-group">
+                        <ul class="list-group special-list-container">
                             <?php foreach ($data as $r) { ?>
-                <li class="list-group-item special-list"><a href = "<?= $r->urlParsed() ?>"><?= $r->titre ?></a><span class="badge"><?= $r->date ?></span></li>
+                <li class="list-group-item"><a href = "<?= $r->urlParsed() ?>"><?= $r->titre ?></a><span class="badge"><?= $r->date ?></span></li>
                             <?php } ?>
                         </ul>
                     </div>

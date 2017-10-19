@@ -31,6 +31,11 @@
     
     <div class="content">
     <!-- Le contenu va ici ! -->
+        <h5 class="title special-h5">
+            <a href = "afficher_flux.ctrl.php">Tous les flux</a> <  
+            <a href = "afficher_nouvelles.ctrl.php?rssID=<?= $data->RSS_id(); ?>"><?=$data->RSStitre?></a>
+            < <a href = "#"><?= $data->new_titre ?></a>
+        </h5>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">

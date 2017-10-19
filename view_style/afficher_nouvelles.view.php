@@ -31,6 +31,10 @@
     
     <div class="content">
     <!-- Le contenu va ici ! -->
+        <h5 class="title special-h5">
+            <a href = "afficher_flux.ctrl.php">Tous les flux</a> <
+            <a href = "afficher_nouvelles.ctrl.php?rssID=<?= $data[0]->RSS_id(); ?>"><?=$data[0]->RSStitre?></a>
+        </h5>
         <div class="row">
             <div class="col-md-12">
                 <?php foreach($data as $nouvelle) { ?>

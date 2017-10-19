@@ -1,8 +1,24 @@
-/* Contient le CSS supplémentaire à Bootstrap */
-.special-list:hover {
+/* Contient une partie du CSS ajouté spécialement pour RSSFeed
+=============================================================== */
+/* Items listés */
+.special-list-container {
+    margin-top:30px;
+}
+
+.special-list-container li {
+    font-size:18px;
+}
+
+.special-list-container li:hover {
     background-color: #f1f1f1;
 }
 
+.special-list-2 {
+    font-size:18px;
+    margin-top:30px;
+}
+
+/* Radios\Checkbox */
 .special-radio {
     margin-right: 15px;
     margin-left: 5px;
@@ -11,6 +27,17 @@
 
 .special-radio input {
     margin-right:5px;
+}
+
+/* Titres de navigation */
+.special-h5 {
+    margin-top:0px;
+    margin-left:5px;
+}
+
+.special-h5 a {
+    padding-right:5px;
+    padding-left:5px;
 }
 
 a.list-group-item {

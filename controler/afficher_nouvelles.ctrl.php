@@ -14,10 +14,14 @@ if (isset($_GET['rssID'])) {
     $allNews = $dao->getAllNews($rssID);
 
     foreach ($dao->getAllNews($rssID) as $new) {
-        /* On ajoute l'objet NEW dans l'array data */
+        /* On forme l'URL vers l'affichage de la nouvelle unique */
         $new->urlParsed = "afficher_nouvelle.ctrl.php?newID=".$new->id()."&rssID=".$rssID;
+
+        /* On ajoute le titre du flux contenant dans l'objet new */
+        $new->RSStitre = $dao->readRSSfromID($rssID)->titre();
+
+        /* On ajoute l'objet NEW dans l'array data */
         $data[] = $new;
-        //var_dump($new);
     }
 
     include "../view_style/afficher_nouvelles.view.php";

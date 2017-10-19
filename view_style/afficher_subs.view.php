@@ -43,7 +43,7 @@
                         <h4 class="title">Mes abonnements</h4>
                         <p class="category">Ici figure la liste de vos abonnements à des flux</p>
                     </div>
-                    <div class="content">
+                    <div class="content special-list-2">
                         <?php foreach ($data as $cat => $listeRSS) { ?>
                             <a href="#" class="list-group-item active">
                                 <?= $cat ?>
