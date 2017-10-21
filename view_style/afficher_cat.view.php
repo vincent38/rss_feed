@@ -25,19 +25,37 @@
 <div class="wrapper">
     <?php
         // Inclusion de la sidebar pour éviter la répétition du code
-        $mode = "allF";
+        $mode = "myAbo";
         include "html/sidebar.php";
-    ?>    
-    
+    ?>
+    <?php
+        // Inclusion des onglets de navigation
+        $tab_mode = "catT";
+        include "html/tabs_subs.php";
+    ?>
+
     <div class="content">
     <!-- Le contenu va ici ! -->
-        <h5 class="title special-h5">
-            <a href = "afficher_flux.ctrl.php">Tous les flux</a> <
-            <a href = "afficher_nouvelles.ctrl.php?rssID=<?= $data[0]->RSS_id(); ?>"><?=$data[0]->RSStitre?></a>
-        </h5>
+
         <div class="row">
             <div class="col-md-12">
-                <?php foreach($data as $nouvelle) { ?>
+                <div class="special-title-group">
+                    <h4 class="title">Par catégories</h4>
+                    <p>Affiche les dernières nouvelles triées par catégories</p>
+                </div>
+
+                <!-- On affiche les boutons de filtrage par catégories -->
+                <form class="special-cat-bar" action="afficher_cat.ctrl.php" method="POST">
+                    <?php foreach($data['cat'] as $cat) { ?>
+                        <button name="categorie" type="submit" value="<?= $cat['nom'] ?>" 
+                            class="btn <?= $cat['icon'] ?> btn-fill" <?= ($data['selectedCat']==$cat['nom']) ? "disabled" : ""?>>
+                            <?= $cat['nom'] ?>
+                        </button>
+                    <?php } ?>
+                </form>
+
+                <!-- On affiche toutes les nouvelles de la catégorie sélectionnée -->
+                <?php foreach($data['news'] as $nouvelle) { ?>
                     <div class="card">
                         <div class="header">
                             <h4 class="title"><?= $nouvelle->titre() ?></h4>
@@ -47,18 +65,21 @@
                             <?php if ($nouvelle->urlimage()): ?>
                                 <img src="<?=$nouvelle->urlimage() ?>" alt="image"><br><br>
                             <?php endif; ?>
-                            <?=  $nouvelle->description() ?>
-                            <br><br>
+                            <?=  $nouvelle->description() ?>    
                             <div class="footer">
                                 <hr>
                                 <div class="stats">
-                                    <i class="fa fa-arrow-right"></i> 
+                                    <i class="fa fa-newspaper-o"></i>
+                                    <?= $nouvelle->titreFlux ?>
+                                    &nbsp;
+                                    <i class="fa fa-arrow-right" aria-hidden="true"></i> 
                                     <a href="<?= $nouvelle->urlParsed() ?>">Lire la nouvelle</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 <?php } ?>
+
             </div>
         </div>
     </div>
@@ -90,7 +111,7 @@
     <script src="assets/js/bootstrap-notify.js"></script>
     
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-	<script src="assets/js/light-bootstrap-dashboard.js"></script>
+    <script src="assets/js/light-bootstrap-dashboard.js"></script>
 
     <?php include "html/alert.php"; ?>
 </html>

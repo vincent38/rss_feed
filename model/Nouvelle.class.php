@@ -24,6 +24,11 @@ class Nouvelle {
         return date("d/m/Y H:i:s", $this->date);
     }
 
+    // Renvoie l'URL d'accès à la nouvelle
+    function urlParsed() {
+        return "afficher_nouvelle.ctrl.php?newID=".$this->id()."&rssID=".$this->RSS_id();
+    }
+
     // Renvoie le timestamp UNIX de la date
     function real_date() {
         return $this->date;

@@ -20,7 +20,7 @@ class DAO {
     // $keywords : mots clés, $strict : true si tous les mots clés doivent apparaitre
     // $time : up0 si peu importe, up24 pour les dernières 24h, up7 pour les 7 derniers jours
     //         up30 pour le dernier mois
-    function searchNews(string $keywords, bool $strict, bool $onlyT, string $time) : array {
+    public function searchNews(string $keywords, bool $strict, bool $onlyT, string $time) : array {
         // Tableau contenant les nouvelles
         $results = array();
 
@@ -55,11 +55,11 @@ class DAO {
                     $i = true;
                 }
             }
-            $q = 'SELECT * FROM nouvelle WHERE'.$rq;
+            $q = 'SELECT * FROM nouvelle WHERE'.$rq.' ORDER BY date DESC';
 
             // Gestion du paramètres temps
-            // SELECT * FROM nouvelle WHERE date BETWEEN strftime('%m/%d/%Y %H:%M', datetime('now','localtime'), '-5 day') AND strftime('%m/%d/%Y %H:%M',datetime('now','localtime')); 
-            // => A FAIRE
+            // SELECT strftime('%s', 'now', '-1 month')
+            // ou : SELECT strftime('%s', 'now', '-1 day')
 
             // On exécute la requête formée
             $r = $this->db->prepare($q);
@@ -74,7 +74,7 @@ class DAO {
     }
 
     // Méthode de purge des nouvelles d'un flux
-    function purgeRSSFlux($rssID) {
+    public function purgeRSSFlux($rssID) {
         try {
             $q = 'DELETE FROM nouvelle WHERE RSS_id = :rssID';
             $r = $this->db->prepare($q);
@@ -85,7 +85,7 @@ class DAO {
     }
 
     // Méthode de suppression d'un flux
-    function deleteRSSFlux($rssID) {
+    public function deleteRSSFlux($rssID) {
         try {
             /* On supprime dans un premier temps les abonnements utilisant $rssID*/
             $q = 'DELETE FROM abonnement WHERE RSS_id = :rssID';
@@ -101,25 +101,8 @@ class DAO {
         }
     }
 
-    // Récupération de la liste des nouvelles d'un flux RSS (id)
-    function getAllNews($rssID) {
-        try {
-            $q = 'SELECT * FROM nouvelle WHERE RSS_id = :rssID ORDER BY date DESC';
-            $r = $this->db->prepare($q);
-            $r->execute(array($rssID));
-            $response = $r->fetchAll(PDO::FETCH_CLASS, "Nouvelle");
-            if (sizeof($response) > 0){
-                return $response;
-            } else {
-                return false;
-            }
-        } catch (PDOException $e) {
-            die("PDO Error : ".$e->getMessage());
-        }
-    }
-
     // Récupère la liste des flux RSS suivis
-    function getRSSFlux() {
+    public function getRSSFlux() {
         try {
             $q = "SELECT * FROM RSS";
             $r = $this->db->prepare($q);
@@ -135,7 +118,7 @@ class DAO {
 
     // Crée un nouveau flux à partir d'une URL
     // Si le flux existe déjà on ne le crée pas
-    function createRSS($url, $title) {
+    public function createRSS($url, $title) {
         $rss = $this->readRSSfromURL($url);
         if ($rss == NULL) {
             try {
@@ -160,7 +143,7 @@ class DAO {
     }
 
     // Acces à un objet RSS à partir de son URL
-    function readRSSfromURL($url) {
+    public function readRSSfromURL($url) {
         try {
             $q = "SELECT * FROM RSS WHERE url = :url";
             $r = $this->db->prepare($q);
@@ -175,7 +158,7 @@ class DAO {
     }
     
     // Acces à un objet RSS à partir de son ID
-    function readRSSfromID($rssID) {
+    public function readRSSfromID($rssID) {
         try {
             $q = "SELECT * FROM RSS WHERE id = :id";
             $r = $this->db->prepare($q);
@@ -190,7 +173,7 @@ class DAO {
     }
 
     // Met à jour un flux
-    function updateRSS(RSS $rss) {
+    public function updateRSS(RSS $rss) {
         // Met à jour uniquement le titre et la date
         $titre = $this->db->quote($rss->titre());
         $q = "UPDATE RSS SET titre=:titre, date=:d WHERE url=:url";
@@ -213,7 +196,7 @@ class DAO {
     //////////////////////////////////////////////////////////
 
     // Acces à une nouvelle à partir de son ID et l'ID du flux
-    function readNouvellefromID($newID,$RSS_id) {
+    public function readNouvellefromID($newID,$RSS_id) {
         try {
             $q = "SELECT * FROM nouvelle WHERE id = :id AND RSS_id = :RSS_id";
             $r = $this->db->prepare($q);
@@ -227,8 +210,49 @@ class DAO {
         }
     }
 
+    // Récupération de la liste des nouvelles d'un flux RSS (id)
+    //  triées de la date la plus récente à la plus ancienne
+    public function getAllNews($rssID) {
+        try {
+            $q = 'SELECT * FROM nouvelle WHERE RSS_id = :rssID ORDER BY date DESC';
+            $r = $this->db->prepare($q);
+            $r->execute(array($rssID));
+            $response = $r->fetchAll(PDO::FETCH_CLASS, "Nouvelle");
+            if (sizeof($response) > 0){
+                return $response;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+    }
+
+    // Récupération des nouvelles des $nJ derniers jours de chaque flux RSS d'une catégorie donnée
+    //  pour un utilisateur donné
+    public function getNewsFromCat($username, $cat, $nJ) {
+        try {
+            $nJ = "-$nJ day";
+
+            $q = "SELECT * FROM nouvelle WHERE RSS_id IN (SELECT RSS_id FROM abonnement WHERE utilisateur_login = :username AND categorie = :cat)
+            AND date >= strftime('%s', 'now', :nJ) ORDER BY date DESC";
+
+            $r = $this->db->prepare($q);
+            $r->execute(array($username, $cat, $nJ));
+            $response = $r->fetchAll(PDO::FETCH_CLASS, "Nouvelle");
+
+            if (sizeof($response) > 0){
+                return $response;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+    }
+
     // Acces à une nouvelle à partir de son titre et l'ID du flux
-    function readNouvellefromTitre($titre,$RSS_id) {
+    public function readNouvellefromTitre($titre,$RSS_id) {
         try {
             $q = "SELECT * FROM nouvelle WHERE titre = :titre AND RSS_id = :RSS_id";
             $r = $this->db->prepare($q);
@@ -244,7 +268,7 @@ class DAO {
 
     // Crée une nouvelle dans la base à partir d'un objet nouvelle
     // et de l'id du flux auquelle elle appartient
-    function createNouvelle(Nouvelle $n, $RSS_id) {
+    public function createNouvelle(Nouvelle $n, $RSS_id) {
         $q = "INSERT INTO nouvelle(date, titre, description, url, RSS_id) VALUES (:d, :t, :des, :url, :rss)";
         try {
             $r = $this->db->prepare($q);
@@ -265,7 +289,7 @@ class DAO {
     }
 
     // Ajoute une image à une nouvelle
-    function addImageToNouvelle($url, $id) {
+    public function addImageToNouvelle($url, $id) {
         $q = "UPDATE nouvelle SET urlImage = :url WHERE id = :id";
         try {
             $r = $this->db->prepare($q);
@@ -280,7 +304,7 @@ class DAO {
     //////////////////////////////////////////////////////////
 
     // Cherche un utilisateur sur la db avec son login et renvoie true s'il existe
-    function readUserBool($username) {
+    public function readUserBool($username) {
         $q = "SELECT * FROM utilisateur WHERE login = :username";
         try {
             $r = $this->db->prepare($q);
@@ -402,5 +426,40 @@ class DAO {
         }
         
         return $result;
-    }    
+    }
+
+    // Supprime l'abonnement d'un utilisateur à un flux
+    // => renvoie true si l'abonnement existait et a été supprimé, false sinon
+    public function unsubscribe($username, $rssID) : bool
+    {
+        try {
+            $q = "DELETE FROM abonnement WHERE utilisateur_login = :username AND RSS_id = :rssID;";
+            $r = $this->db->prepare($q);
+            $result = $r->execute(array($username, $rssID));
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+
+        return ($result != 0);
+    }
+
+    // Renvoie toutes les catégories auxquelles l'utilisateur est abonné
+    public function getAllCat($username) : array
+    {
+        $result = array();
+
+        try {
+            $q = "SELECT categorie FROM abonnement WHERE utilisateur_login = :username GROUP BY categorie";
+            $r = $this->db->prepare($q);
+            $r->execute(array($username));
+
+            /* On récupère les données sous la forme d'un tableau de catégories */
+            $result = $r->fetchAll(PDO::FETCH_COLUMN);
+
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+        
+        return $result;
+    }
 }

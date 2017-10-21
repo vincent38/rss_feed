@@ -111,7 +111,7 @@
                                         <?= $nouvelle->titreFlux ?>
                                         &nbsp;
                                         <i class="fa fa-arrow-right" aria-hidden="true"></i> 
-                                        <a href="<?= $nouvelle->urlParsed ?>">Lire la nouvelle</a>
+                                        <a href="<?= $nouvelle->urlParsed() ?>">Lire la nouvelle</a>
                                     </div>
                                 </div>     
                             </div>

@@ -30,8 +30,6 @@ if (isset($_POST['searchstr'])) {
             /* On formate les résultats trouvés */
             foreach ($foundNews as $new) {
                 /* On ajoute l'objet NEW dans l'array data */
-                // On crée un lien pour lire la nouvelle
-                $new->urlParsed = "afficher_nouvelle.ctrl.php?newID=".$new->id()."&rssID=".$new->RSS_id();
 
                 // On ajoute le titre du flux aux infos envoyées
                 $new->titreFlux = ($dao->readRSSfromID($new->RSS_id()))->titre();

@@ -13,9 +13,14 @@ $dao = new DAO();
 
 // Si les paramètres en POST sont définis, alors on ajoute l'abonnement voulu par l'utilisateur
 if (isset($_POST["flux"]) and isset($_POST["titre"]) and isset($_POST["cat"])) {
+    // On traite les valeurs reçues
+    $pFlux = rtrim($_POST["flux"]);
+    $pTitre = rtrim($_POST["titre"]);
+    $pCat = rtrim($_POST["cat"]);
+
     // Si tous les champs donnés sont non vides
-    if (rtrim($_POST["flux"]) && rtrim($_POST["titre"]) && rtrim($_POST["cat"])) {
-        $status = $_SESSION["user"]->ajoutAbonnement($_POST["flux"], $_POST["titre"], $_POST["cat"]);
+    if ($pFlux && $pTitre && $pCat) {        
+        $status = $_SESSION["user"]->ajoutAbonnement($pFlux, $pTitre, $pCat);
 
         // Si la requête a fonctionné, alors on envoie un message succès
         if ($status) {

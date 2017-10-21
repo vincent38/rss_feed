@@ -1,6 +1,11 @@
 /* Contient une partie du CSS ajouté spécialement pour RSSFeed
 =============================================================== */
+img {
+    max-width: 550px;
+}
+
 /* Items listés */
+
 .special-list-container {
     margin-top:30px;
 }
@@ -14,11 +19,12 @@
 }
 
 .special-list-2 {
-    font-size:18px;
-    margin-top:30px;
+    font-size: 18px;
+    padding: 30px 10px 10px 10px;
 }
 
 /* Radios\Checkbox */
+
 .special-radio {
     margin-right: 15px;
     margin-left: 5px;
@@ -30,6 +36,7 @@
 }
 
 /* Titres de navigation */
+
 .special-h5 {
     margin-top:0px;
     margin-left:5px;
@@ -42,4 +49,71 @@
 
 a.list-group-item {
     color:#1DC7EA;
+}
+
+/* Formulaires */
+.special-form {
+    display: inline;
+}
+
+/* Titres catégorie */
+.special-title-group {
+    margin-top:-35px;
+    margin-left:10px;
+    margin-bottom:20px;
+}
+
+.special-title-group p {
+    font-size: 15px;
+    font-weight: 400;
+    color: #9A9A9A;
+    margin-top: -10px;
+}
+
+/* Barre de boutons pour la catégorie */
+.special-cat-bar {
+    margin-bottom: 30px;
+    margin-left: 10px;
+}
+
+.special-cat-bar button {
+    margin-right:3px;
+}
+
+/* Badges personnalisés */
+
+.badge:hover {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+.badge-error {
+    background-color: #D6302D;
+}
+.badge-error:hover {
+    background-color: #953b39;
+}
+.badge-warning {
+    background-color: #f89406;
+}
+.badge-warning:hover {
+    background-color: #c67605;
+}
+.badge-success {
+    background-color: #468847;
+}
+.badge-success:hover {
+    background-color: #356635;
+}
+.badge-info {
+    background-color: #3a87ad;
+}
+.badge-info:hover {
+    background-color: #2d6987;
+}
+.badge-inverse {
+    background-color: #333333;
+}
+.badge-inverse:hover {
+    background-color: #1a1a1a;
 }

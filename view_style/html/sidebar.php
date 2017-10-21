@@ -13,7 +13,7 @@
                 </a>
             </li>
             <li <?= $mode=="myAbo" ? 'class="active"' : ""?>>
-                <a href="manage_subs.ctrl.php">
+                <a href="afficher_subs.ctrl.php">
                     <i class="pe-7s-signal"></i>
                     <p>Mes abonnements</p>
                 </a>

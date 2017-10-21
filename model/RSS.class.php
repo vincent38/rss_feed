@@ -27,6 +27,7 @@ class RSS {
         $this->$name = $value;
     }
 
+    // Un lien pour la consultation des nouvelles du flux
     function urlParsed() {
         return "afficher_nouvelles.ctrl.php?rssID=".$this->id;
     }

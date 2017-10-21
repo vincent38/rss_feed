@@ -41,15 +41,21 @@
                 <div class="card">
                     <div class="header">
                         <h4 class="title">Mes abonnements</h4>
-                        <p class="category">Ici figure la liste de vos abonnements à des flux</p>
+                        <p class="category">Cliquez sur une catégorie pour en voir les nouveautés</p>
                     </div>
-                    <div class="content special-list-2">
+                    <div class="list-group special-list-2">
                         <?php foreach ($data as $cat => $listeRSS) { ?>
-                            <a href="#" class="list-group-item active">
+                            <button type="button" class="list-group-item active">
                                 <?= $cat ?>
-                            </a>
+                            </button>
                             <?php foreach ($data[$cat] as $r) { ?>
-                                <a href="<?= $r->urlParsed() ?>" class="list-group-item list-group-item-action"><?= $r->titre() ?></a>
+                                <button type="button" class="list-group-item">
+                                    <form class = "special-form" name = "aboForm<?= $r->id ?>" action="afficher_subs.ctrl.php" method="POST">
+                                        <input type="hidden" name="unsub" value="<?= $r->id ?>">
+                                        <span onclick="location.href='<?= $r->urlParsed() ?>';"> <?= $r->titre() ?></span>
+                                    </form>
+                                    <span name="unsub" class="badge badge-error" onclick ="aboForm<?= $r->id ?>.submit()">Se désabonner</span>
+                                </button>
                             <?php } ?>
                         <?php } ?>
                     </div>
@@ -88,5 +94,6 @@
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 	<script src="assets/js/light-bootstrap-dashboard.js"></script>
 
+    <!--  Fichier de gestion des alertes    -->
     <?php include "html/alert.php"; ?>
 </html>

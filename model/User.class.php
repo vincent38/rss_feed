@@ -15,9 +15,10 @@ class User {
         return $this->mp;
     }
 
-    function ajoutAbonnement($idRss, $nom, $cat) : bool {
+    function ajoutAbonnement($idRSS, $nom, $cat) : bool {
+
         $dao = new DAO;
-        $status = $dao->createAbo($this->login, $idRss, $nom, $cat);
+        $status = $dao->createAbo($this->login, $idRSS, $nom, $cat);
 
         return $status;
     }
