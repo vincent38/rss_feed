@@ -26,28 +26,28 @@
 <div class="wrapper">
     <?php
         // Inclusion de la sidebar pour éviter la répétition du code
-        $mode = "allF";
+        $mode = "myAbo";
         include "html/sidebar.php";
     ?>    
     <?php
         // Inclusion des onglets de navigation
         $tab_mode = "picT";
-        include "html/tabs_allflux.php";
+        include "html/tabs_subs.php";
     ?>
     
     <div class="content">
     <!-- Le contenu va ici ! -->
         <div class="special-title-group">
             <h4 class="title">En images</h4>
-            <p>Affiche toutes les nouvelles de vos flux en images</p>
+            <p>Affiche les dernières nouvelles de vos abonnements en images</p>
         </div>
 
-        <!-- On affiche les boutons de filtrage par flux -->
-        <form class="special-cat-bar" action="afficher_mozaic.ctrl.php" method="POST">
-            <?php foreach($data['flux'] as $rss) { ?>
-                <button name="rssID" type="submit" value="<?= $rss['id'] ?>" 
-                    class="btn <?= $rss['icon'] ?> btn-fill" <?= ($data['selectedID']==$rss['id']) ? "disabled" : ""?>>
-                    <?= $rss['nom'] ?>
+        <!-- On affiche les boutons de filtrage par catégories -->
+        <form class="special-cat-bar" action="afficher_mozaic_cat.ctrl.php" method="POST">
+            <?php foreach($data['cat'] as $cat) { ?>
+                <button name="categorie" type="submit" value="<?= $cat['nom'] ?>" 
+                    class="btn <?= $cat['icon'] ?> btn-fill" <?= ($data['selectedCat']==$cat['nom']) ? "disabled" : ""?>>
+                    <?= $cat['nom'] ?>
                 </button>
             <?php } ?>
         </form>
@@ -57,7 +57,8 @@
                 <div class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6 col-xs-6">
                     <div class="caption special-caption">
                         <h5><?= $nouvelle->titre() ?></h5>
-                        <p><a href="<?= $nouvelle->urlParsed() ?>" class="label label-info">Lire la suite</a></p>
+                        <p><?= $nouvelle->RSStitre ?></p>
+                        <p class="special-caption-button"><a href="<?= $nouvelle->urlParsed() ?>" class="label label-info">Lire la suite</a></p>
                     </div>
                     <img src="<?= $nouvelle->realImg ?>" alt="illustration">
                     </a>

@@ -9,19 +9,20 @@ require_once("../model/DAO.class.php");
 
 $dao = new DAO();
 
-$data = array();
-
-/* Tableau contenant tous les codes couleur bootstrap */
-$allCodes = array ("btn-success", "btn-info", "btn-warning", "btn-danger", "btn-default");
-
 /* Récupération de l'objet utilisateur à partir de la variable de session */
 $current_user = $_SESSION["user"];
 
 /* On récupère toutes les catégories de l'utilisateur */
 $allCat = $dao->getAllCat($current_user->getLogin());
 
-/* Si le tableau n'est pas vide, alors : */
-if ($allCat) {
+/* On initialise les éléments passés à la vue */
+$data = array();
+$data_new = array();
+
+/* Tableau contenant tous les codes couleur bootstrap */
+$allCodes = array ("btn-success", "btn-info", "btn-warning", "btn-danger", "btn-default");
+
+if ($allCat !== null) {
     /* Si l'utilisateur a déjà sélectionné une catégorie */
     if (isset($_POST['categorie'])) {
         /* On vérifie que l'utilisateur est abonné à cette catégorie au moment de la requête */
@@ -42,7 +43,14 @@ if ($allCat) {
 
         // On ajoute le nom du flux père à chaque objet nouvelle
         foreach ($news as $new) {
-            $new->titreFlux = ($dao->readRSSfromID($new->RSS_id()))->titre();
+            // On ajoute des attributs utiles à l'objet nouvelle
+            $new->RSStitre = ($dao->readRSSfromID($new->RSS_id()))->titre();       
+            
+            if ($new -> urlImage() === null) {
+                $new->realImg = "../data/no_img.png";            
+            } else {
+                $new->realImg = $new->urlImage();
+            }
         }
 
         // On formate l'objet allCat
@@ -59,9 +67,5 @@ if ($allCat) {
         $data['selectedCat'] = $selectedCat;
     }
 
-} else {
-    // Plus tard : message à afficher dans la page pour signaler qu'il n'y a aucun abonnement
+    require_once "../view_style/afficher_mozaic_cat.view.php";
 }
-
-
-require_once "../view_style/afficher_cat.view.php";

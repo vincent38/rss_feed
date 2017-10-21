@@ -144,8 +144,14 @@ a.list-group-item {
 }
 
 .special-caption p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: rgb(150, 146, 146);
+}
+
+.special-caption-button {
     margin-bottom: 0px 0px 30px;
-    margin-top:20%;
+    margin-top:10%;
 }
 
 /* Ajustement de la taille des éléments de la grille */

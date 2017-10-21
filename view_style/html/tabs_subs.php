@@ -15,7 +15,7 @@
         S'abonner</a>
     </li>
     <li <?= $tab_mode=="picT" ? 'class="active"' : ""?>>
-        <a href="#">
+        <a href="afficher_mozaic_cat.ctrl.php">
         <i class = "fa fa-picture-o"></i>
         En images</a>
     </li>
