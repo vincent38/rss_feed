@@ -38,4 +38,4 @@ $data = array();
 $data = $dao->getAbo($current_user->getLogin());
 
 
-include "../view_style/afficher_subs.view.php";
+require_once "../view_style/afficher_subs.view.php";

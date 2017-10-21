@@ -55,11 +55,22 @@ class DAO {
                     $i = true;
                 }
             }
-            $q = 'SELECT * FROM nouvelle WHERE'.$rq.' ORDER BY date DESC';
+            $q = 'SELECT * FROM nouvelle WHERE'.$rq;
 
-            // Gestion du paramètres temps
-            // SELECT strftime('%s', 'now', '-1 month')
-            // ou : SELECT strftime('%s', 'now', '-1 day')
+            // Gestion du paramètres temps : AND date >= strftime('%s', 'now', '-1 day') ORDER BY date DESC
+            $tabopt = array ("up0" => "", "up24" => "-1 day", "up7" => "-7 day", "up30" => "-1 month");
+
+            // Si le paramètre donné est valide
+            if (array_key_exists($time, $tabopt)) {
+                if ($time != "up0") {
+                    $q .= " AND date >= strftime('%s', 'now', '{$tabopt[$time]}')";
+                }
+            } else {
+                die("Erreur : paramètres invalides : searchNews");
+            }
+
+            // On ordonne les résultats par récence
+            $q .= ' ORDER BY date DESC';
 
             // On exécute la requête formée
             $r = $this->db->prepare($q);
@@ -214,9 +225,16 @@ class DAO {
     //  triées de la date la plus récente à la plus ancienne
     public function getAllNews($rssID) {
         try {
-            $q = 'SELECT * FROM nouvelle WHERE RSS_id = :rssID ORDER BY date DESC';
-            $r = $this->db->prepare($q);
-            $r->execute(array($rssID));
+            // Si l'ID rss n'est pas spécifié, on prend le premier apparaissant dans la liste
+            if ($rssID == -1) {
+                $q = 'SELECT * FROM nouvelle WHERE RSS_id IN (SELECT id FROM RSS LIMIT 1) ORDER BY date DESC';         
+                $r = $this->db->prepare($q);
+                $r->execute();
+            } else {
+                $q = 'SELECT * FROM nouvelle WHERE RSS_id = :rssID ORDER BY date DESC';                
+                $r = $this->db->prepare($q);
+                $r->execute(array($rssID));
+            }
             $response = $r->fetchAll(PDO::FETCH_CLASS, "Nouvelle");
             if (sizeof($response) > 0){
                 return $response;

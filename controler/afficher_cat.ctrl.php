@@ -12,7 +12,7 @@ $dao = new DAO();
 $data = array();
 
 /* Tableau contenant tous les codes couleur bootstrap */
-$allCodes = array ("btn-default", "btn-success", "btn-info", "btn-warning", "btn-danger");
+$allCodes = array ("btn-success", "btn-info", "btn-warning", "btn-danger", "btn-default");
 
 /* Récupération de l'objet utilisateur à partir de la variable de session */
 $current_user = $_SESSION["user"];
@@ -64,4 +64,4 @@ if ($allCat) {
 }
 
 
-include "../view_style/afficher_cat.view.php";
+require_once "../view_style/afficher_cat.view.php";

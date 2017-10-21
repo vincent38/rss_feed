@@ -117,3 +117,46 @@ a.list-group-item {
 .badge-inverse:hover {
     background-color: #1a1a1a;
 }
+
+/* Hover sur les miniatures */
+.thumbnail {
+    position:relative;
+    overflow:hidden;
+}
+ 
+.special-caption {
+    position:absolute;
+    top:0;
+    right:0;
+    background:rgba(0, 0, 0, 0.55);
+    width:100%;
+    height:100%;
+    padding:7% !important;
+    display: none;
+    text-align:center;
+    color:#fff !important;
+    z-index:2;
+}
+
+.special-caption h5 {
+    font-size:18px;
+    margin-bottom: 20px;
+}
+
+.special-caption p {
+    margin-bottom: 0px 0px 30px;
+    margin-top:20%;
+}
+
+/* Ajustement de la taille des éléments de la grille */
+.special-row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display:         flex;
+    flex-wrap: wrap;
+  }
+.special-row > [class*='col-'] {
+    display: flex;
+    flex-direction: column;
+}

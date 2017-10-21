@@ -45,7 +45,9 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <?php
+                        <?php                        
+                        require_once("../model/User.class.php");
+
                         if (session_status() == PHP_SESSION_NONE) session_start();
 
                         if (!isset($_SESSION["user"]) or $_SESSION["user"] == null) {
@@ -64,7 +66,7 @@
                                     $alert['icon'] = "pe-7s-check";
                                 } elseif (isset($_GET['logged'])) {
                                     // On affiche un message à la connexion de l'utilisateur
-                                    $alert['message'] .= "Bienvenue sur votre compte !";
+                                    $alert['message'] .= "Bienvenuesur votre compte, <b>".($_SESSION["user"])->getLogin()."</b>.";
                                     $alert['type'] = "success";
                                     $alert['icon'] = "pe-7s-check";
                                 }

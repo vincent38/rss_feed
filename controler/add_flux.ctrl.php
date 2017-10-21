@@ -42,4 +42,4 @@ if (isset($_POST['url']) and isset($_POST['titre'])) {
 }
 
 // Vue
-include "../view_style/add_flux.view.php";
+require_once "../view_style/add_flux.view.php";

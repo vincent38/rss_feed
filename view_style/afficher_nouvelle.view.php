@@ -28,6 +28,11 @@
         $mode = "allF";
         include "html/sidebar.php";
     ?>    
+    <?php
+        // Inclusion des onglets de navigation
+        $tab_mode = "allfT";
+        include "html/tabs_allflux.php";
+    ?>    
     
     <div class="content">
     <!-- Le contenu va ici ! -->

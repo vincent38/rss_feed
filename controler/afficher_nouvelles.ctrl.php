@@ -13,13 +13,19 @@ if (isset($_GET['rssID'])) {
 
     $allNews = $dao->getAllNews($rssID);
 
-    foreach ($dao->getAllNews($rssID) as $new) {
-        /* On ajoute le titre du flux contenant dans l'objet new */
-        $new->RSStitre = $dao->readRSSfromID($rssID)->titre();
+    if ($allNews) {
+        foreach ($allNews as $new) {
+            /* On ajoute le titre du flux contenant dans l'objet new */
+            $new->RSStitre = $dao->readRSSfromID($new->RSS_id())->titre();
 
-        /* On ajoute l'objet NEW dans l'array data */
-        $data[] = $new;
+            /* On ajoute l'objet NEW dans l'array data */
+            $data[] = $new;
+        }
+    } else {
+        $alert['message'] = "RSS_ID invalide !";
+        $alert['type'] = "danger";
+        $alert['icon'] = "pe-7s-attention";
     }
 
-    include "../view_style/afficher_nouvelles.view.php";
+    require_once "../view_style/afficher_nouvelles.view.php";
 }

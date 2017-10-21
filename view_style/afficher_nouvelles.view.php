@@ -27,13 +27,18 @@
         // Inclusion de la sidebar pour éviter la répétition du code
         $mode = "allF";
         include "html/sidebar.php";
-    ?>    
+    ?>   
+    <?php
+        // Inclusion des onglets de navigation
+        $tab_mode = "allfT";
+        include "html/tabs_allflux.php";
+    ?>
     
     <div class="content">
     <!-- Le contenu va ici ! -->
         <h5 class="title special-h5">
             <a href = "afficher_flux.ctrl.php">Tous les flux</a> <
-            <a href = "afficher_nouvelles.ctrl.php?rssID=<?= $data[0]->RSS_id(); ?>"><?=$data[0]->RSStitre?></a>
+            <a href = "afficher_nouvelles.ctrl.php?rssID=<?= $data ? $data[0]->RSS_id() : "" ?>"><?= $data ? $data[0]->RSStitre : ""?></a>
         </h5>
         <div class="row">
             <div class="col-md-12">
@@ -75,7 +80,6 @@
 
     </div>
 </div>
-
 
 </body>
 

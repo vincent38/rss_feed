@@ -31,5 +31,5 @@ if (isset($_GET['newID']) and isset( $_GET['rssID'])) {
     $data->new_titre = $short_titre;
     /* ================================================================= */
 
-    include "../view_style/afficher_nouvelle.view.php";
+    require_once "../view_style/afficher_nouvelle.view.php";
 }
