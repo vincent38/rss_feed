@@ -69,9 +69,6 @@ class DAO {
                 die("Erreur : paramètres invalides : searchNews");
             }
 
-            // On ajoute la query string de filtrage
-            $q .= $this->getFilterQuery();
-
             // On ordonne les résultats par récence
             $q .= ' ORDER BY date DESC';
 

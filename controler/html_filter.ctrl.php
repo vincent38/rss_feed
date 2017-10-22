@@ -37,7 +37,7 @@ if (isset($_POST['toBlock'])) {
             foreach ($_POST['toBlock'] as $toBlock) {
                 if ($toBlock == 'typo')
                     // On ajoute toutes les balises généralement utilisées pour du simple formatage
-                    $params .= "<b><p><strong><i><u><s><br><h1><h2><h3><h4><h5><h6><ul><li><div>";
+                    $params .= "<b><p><strong><i><u><s><br><h1><h2><h3><h4><h5><h6><ul><li>";
                 else
                     $params .= "<".$toBlock.">";
             }

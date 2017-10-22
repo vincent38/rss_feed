@@ -35,7 +35,7 @@ CREATE TABLE word_filters (
     filter_chain text
 );
 
-/* Table contenant les balises filtrées par l'utilisateur */
+/* Table contenant les balises HTML filtrées par l'utilisateur */
 CREATE TABLE html_filters (
     utilisateur_login varchar(80),
     filtered_tags text
