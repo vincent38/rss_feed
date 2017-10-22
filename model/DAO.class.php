@@ -598,9 +598,11 @@ class DAO {
         return $rq;
     }
 
-    // Renvoie le nombre de nouvelles dans la base filtrées par les mots clés
-    public function getFilterStats($username) : int {
-        $number_F = 0;
+    // Renvoie total de nouvelles dans la base filtrées par les mots clés
+    // et le nom des flux les plus bloqués
+    // sous la forme d'un array ("nomRSS" => "nom du flux le plus bloqué", "nbRSS" => "nombre d'articles bloqués du flux", "nbTot" => "nombre total de nouvelles bloquées")
+    public function getFilterStats($username) : array {
+        $result = array();
 
         try {
             // On récupère la query string de filtrage
@@ -608,19 +610,32 @@ class DAO {
 
             // Si l'utilisateur utilise des filtres
             if ($filter_q) {
-                $q = 'SELECT COUNT(*) FROM nouvelle WHERE RSS_id > -1 '.$filter_q;                
+                // La requête ressemble à quelque chose comme ça avec "ministre"
+                // SELECT COUNT(*) AS nbBlock, RSS_id FROM nouvelle WHERE RSS_id > -1 AND (titre LIKE '%ministre%' OR description LIKE '%ministre%') GROUP BY RSS_id ORDER BY nbBlock DESC
+                $q = 'SELECT COUNT(*) AS nbBlock, RSS_id FROM nouvelle WHERE RSS_id > -1 '.$filter_q. ' GROUP BY RSS_id ORDER BY nbBlock DESC';
                 $r = $this->db->prepare($q);
                 $r->execute(array());
 
-                $response = $r->fetch();
+                $response = $r->fetchAll();
 
-                // On renvoie le résultat
-                $number_F = $response[0];
+                /* On formate le tableau de retour, s'il y a des résultats à la requête */
+                if ($response) {
+                    // Calcul du nombre total de nouvelles bloquées
+                    $totalNB = 0;
+                    foreach ($response as $qRow) {
+                        $totalNB += $qRow["nbBlock"];
+                    }
+                    $result['nbTot'] = $totalNB;
+
+                    // On récupère le nom du flux le plus bloqué
+                    $result['nomRSS'] = $this->readRSSfromID($response[0]['RSS_id'])->titre();
+                    $result['nbRSS'] = $response[0]['nbBlock'];
+                }
             }
         } catch (PDOException $e) {
             die("PDO Error : ".$e->getMessage());
         }
 
-        return $number_F;
+        return $result;
     }
 }

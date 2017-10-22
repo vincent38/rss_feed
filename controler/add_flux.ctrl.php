@@ -3,7 +3,7 @@
 // Vérification de l'authentification
 require_once('redirect.ctrl.php');
 
-// Ajout flux
+// Includes principaux
 require_once('../model/RSS.class.php');
 require_once('../model/Nouvelle.class.php');
 require_once('../model/DAO.class.php');

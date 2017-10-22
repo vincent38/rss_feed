@@ -168,3 +168,8 @@ a.list-group-item {
     display: flex;
     flex-direction: column;
 }
+
+/* Notifications */
+.special-message {
+    font-size:15px;
+}

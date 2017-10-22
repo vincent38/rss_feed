@@ -27,12 +27,16 @@
                     <p class="text-muted">Séparez les mots-clés par un point-virgule.</p>
                     <br>
                         <form action="word_filter.ctrl.php" method="post">
-                            <div class = "row col-lg-6">
+                            <?php if ($data['stats']): ?>
+                            <div class = "row col-lg-7">
                                 <div class="alert alert-info alert-with-icon" data-notify="container">
                                     <span data-notify="icon" class = "pe-7s-info"></span>
-                                    <span data-notify="message">Information : <b><?= $data['stats'] ?></b> articles de la base de données sont bloqués par vos filtres.</span>
+                                    <span data-notify="message" class = "special-message"><b><?= $data['stats']['nbTot'] ?></b> articles de la base de données sont actuellement bloqués par vos filtres.
+                                    <br>Principalement dans le flux : <b><?= $data['stats']['nomRSS'] ?></b> (<?= $data['stats']['nbRSS'] ?> articles bloqués).
+                                    </span>
                                 </div>
                             </div>
+                            <?php endif; ?>
                             <div class = "row">
                                 <div class = "col-lg-12">
                                     <label>Bloquer toutes les nouvelles contenant :</label>
