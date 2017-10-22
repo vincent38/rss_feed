@@ -6,7 +6,7 @@ require_once("../model/UserManager.class.php");
 
 $uM = new UserManager;
 
-if (isset($_POST["username"]) and isset($_POST["password"])) {
+if (!empty($_POST["username"]) and !empty($_POST["password"])) {
     //Inscription
     $reply = $uM->register($_POST["username"], $_POST["password"]);
     if ($reply) {

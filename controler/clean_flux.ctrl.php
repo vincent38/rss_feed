@@ -6,7 +6,7 @@ require_once('redirect.ctrl.php');
 require_once('../model/DAO.class.php');
 require_once('../model/RSS.class.php');
 
-if (isset($_POST['toClean'])) {
+if (!empty($_POST['toClean'])) {
     $dao = new DAO();
 
     $alert['message'] = "Les flux suivants ont été purgés : <br>";

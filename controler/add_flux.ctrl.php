@@ -8,7 +8,7 @@ require_once('../model/RSS.class.php');
 require_once('../model/Nouvelle.class.php');
 require_once('../model/DAO.class.php');
 
-if (isset($_POST['url']) and isset($_POST['titre'])) {
+if (!empty($_POST['url']) and !empty($_POST['titre'])) {
     //OK, on échappe et on fait les vérifs
     $titre = htmlspecialchars($_POST['titre']);
     $url = htmlspecialchars($_POST['url']);

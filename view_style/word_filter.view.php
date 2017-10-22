@@ -23,8 +23,8 @@
                     </div>
                     <div class="content">
                     <br>
-                    <p class="text-muted">Les filtres choisis seront appliqués uniquement sur les pages visionnées depuis "Mes abonnements".</p>
-                    <p class="text-muted">Séparez les mots-clés par un point-virgule.</p>
+                    <p class="text-muted">Les filtres choisis seront appliqués à toutes les pages visionnées tant que vous êtes connecté.</p>
+                    <p class="text-muted">Veuillez séparer les différents mots-clés par un point-virgule.</p>
                     <br>
                         <form action="word_filter.ctrl.php" method="post">
                             <?php if ($data['stats']): ?>
@@ -32,7 +32,7 @@
                                 <div class="alert alert-info alert-with-icon" data-notify="container">
                                     <span data-notify="icon" class = "pe-7s-info"></span>
                                     <span data-notify="message" class = "special-message"><b><?= $data['stats']['nbTot'] ?></b> articles de la base de données sont actuellement bloqués par vos filtres.
-                                    <br>Principalement dans le flux : <b><?= $data['stats']['nomRSS'] ?></b> (<?= $data['stats']['nbRSS'] ?> articles bloqués).
+                                    <br>Principalement dans la source : <b><?= $data['stats']['nomRSS'] ?></b> (<?= $data['stats']['nbRSS'] ?> articles bloqués).
                                     </span>
                                 </div>
                             </div>

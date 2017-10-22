@@ -8,7 +8,7 @@ require_once('../model/RSS.class.php');
 
 $dao = new DAO();
 
-if (isset($_POST['toDelete'])) {
+if (!empty($_POST['toDelete'])) {
     $alert['message'] = "Les flux suivants ont été supprimés : <br>";
     
     foreach ($_POST['toDelete'] as $rssID) {

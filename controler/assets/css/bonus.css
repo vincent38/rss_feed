@@ -173,3 +173,9 @@ a.list-group-item {
 .special-message {
     font-size:15px;
 }
+
+/* Checkbox filtres HTML */
+.special-checkbox-text {
+    text-transform: none;
+    font-size: 16px;
+}

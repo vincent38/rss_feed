@@ -12,7 +12,7 @@ $dao = new DAO();
 $current_user = $_SESSION["user"];
 
 /* Si l'utilisateur veut se désabonner d'un flux */
-if (isset($_POST['unsub'])) {
+if (!empty($_POST['unsub'])) {
     $rssID = $_POST['unsub'];
     $rssName = $dao->readRSSfromID($rssID)->titre();
 

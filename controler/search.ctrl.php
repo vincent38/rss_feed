@@ -39,7 +39,7 @@ if (isset($_POST['searchstr'])) {
         } else { // On signale à l'utilisateur qu'aucun résultat n'a été trouvé
             $alert['message'] .= "Aucun résultat trouvé pour la requête : <br><b>".$_POST['searchstr']."</b>";
             $alert['type'] = "warning";
-            $alert['icon'] = "pe-7s-check";
+            $alert['icon'] = "pe-7s-info";
         }
     } else { // On demande à l'utilisateur de taper des mots clés valides
         $alert['message'] .= "Veuillez taper des mots clés de recherche valides";

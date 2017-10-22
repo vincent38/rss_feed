@@ -24,7 +24,7 @@ $allCodes = array ("btn-success", "btn-info", "btn-warning", "btn-danger", "btn-
 
 if ($allCat !== null) {
     /* Si l'utilisateur a déjà sélectionné une catégorie */
-    if (isset($_POST['categorie'])) {
+    if (!empty($_POST['categorie'])) {
         /* On vérifie que l'utilisateur est abonné à cette catégorie au moment de la requête */
         if (in_array($_POST['categorie'], $allCat)) {
             $selectedCat = $_POST['categorie'];

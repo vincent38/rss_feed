@@ -494,6 +494,9 @@ class DAO {
         return $result;
     }
 
+    /* Fonctions liées au système de filtrage par mots clés
+    ================================================================================================================== */
+
     // Met à jour les mots clés filtrés de l'utilisateur
     // => crée l'entrée si elle n'existe pas
     public function update_word_filter($username, $new_chain) : bool
@@ -579,6 +582,9 @@ class DAO {
             if ($filter_chain) {
                 $filters = explode(",", $filter_chain);
 
+                // Hack rapide pour éviter d'avoir à gérer les cas ou la requête commence ou termine par "OR"
+                if ($opt) $rq = " AND (0=1 ";
+
                 foreach ($filters as &$word) {
                     if (rtrim($word)) { // Si la chaîne n'est pas vide ou remplie d'espaces
                         // On quote les mots clés en ajoutant les jokers
@@ -586,12 +592,14 @@ class DAO {
 
                         // On ajoute la query string selon le mode d'appel
                         if ($opt) {
-                            $rq .= " AND (titre LIKE $word OR description LIKE $word)";
+                            $rq .= " OR (titre LIKE $word OR description LIKE $word)";
                         } else {
                             $rq .= " AND NOT (titre LIKE $word OR description LIKE $word)";
                         }
                     }
                 }
+
+                if ($opt) $rq .= ")";
             }
         }
 
@@ -637,5 +645,71 @@ class DAO {
         }
 
         return $result;
+    }
+
+    /* Fonctions liées au système de filtrage HTML
+    ================================================================================================================== */
+
+    // Met à jour les balises HTML filtrées de l'utilisateur
+    // => crée l'entrée si elle n'existe pas
+    public function update_HTML_filter($username, $new_chain) : bool
+    {
+        $result = true;
+
+        try {
+            $filter_chain = $this->getHTMLFilter($username);
+
+            /* Si les filtres n'existent pas, on en crée de nouveaux */
+            if (!$filter_chain) {
+                $q = 'INSERT INTO html_filters (utilisateur_login,filtered_tags) VALUES (:username,:new_chain)';
+                $r = $this->db->prepare($q);
+                $r->execute(array($username, $new_chain));
+
+                $result = $r;
+
+            } else { // Si une chaîne a déjà été enregistrée et qu'elle est différente de la nouvelle, on la met à jour
+                if ($filter_chain != $new_chain) {
+                    $q = "UPDATE html_filters SET filtered_tags = :new_chain WHERE utilisateur_login = :username";
+                    $r = $this->db->prepare($q);
+                    $r->execute(array($new_chain, $username));
+
+                    $result = $r;
+                }
+                // => sinon on ne fait rien
+            }
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+
+        return ($result ? true : false);
+    }
+
+    // Renvoie les filtres HTML de l'utilisateur $username s'il en a
+    // false sinon
+    public function getHTMLFilter($username) : string
+    {
+        try {
+            $q = "SELECT filtered_tags FROM html_filters WHERE utilisateur_login = :username";
+            $r = $this->db->prepare($q);
+            $r->execute(array($username));
+
+            $result = $r->fetch();
+
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+
+        return ($result ? $result[0] : "");
+    }
+
+    // Supprime les filtres HTML de l'utilisateur $username de la base de données
+    public function removeHTMLFilter($username) {
+        try {
+            $q = 'DELETE FROM html_filters WHERE utilisateur_login = :username';
+            $r = $this->db->prepare($q);
+            $r->execute(array($username));
+        } catch (PDOException $e) {
+            die ("PDO Error : ".$e->getMessage());
+        }
     }
 }
