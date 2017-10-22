@@ -28,3 +28,9 @@ CREATE TABLE abonnement (
     categorie varchar(40),
     primary key (utilisateur_login,RSS_id)
 );
+
+/* Table contenant les mots clés filtrés par l'utilisateur */
+CREATE TABLE word_filters (
+    utilisateur_login varchar(80),
+    filter_chain text
+);

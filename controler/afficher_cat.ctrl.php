@@ -1,11 +1,13 @@
 <?php
 /* Affichage des nouvelles par catégorie */
 
-require_once("../model/User.class.php");
 // Vérification de l'authentification
 require_once('redirect.ctrl.php');
-require_once("../model/RSS.class.php");
-require_once("../model/DAO.class.php");
+
+// Ajout flux
+require_once('../model/RSS.class.php');
+require_once('../model/Nouvelle.class.php');
+require_once('../model/DAO.class.php');
 
 $dao = new DAO();
 

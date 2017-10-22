@@ -69,6 +69,9 @@ class DAO {
                 die("Erreur : paramètres invalides : searchNews");
             }
 
+            // On ajoute la query string de filtrage
+            $q .= $this->getFilterQuery();
+
             // On ordonne les résultats par récence
             $q .= ' ORDER BY date DESC';
 
@@ -225,13 +228,16 @@ class DAO {
     //  triées de la date la plus récente à la plus ancienne
     public function getAllNews($rssID) {
         try {
+            // On ajoute la query string de filtrage
+            $filter = $this->getFilterQuery();
+
             // Si l'ID rss n'est pas spécifié, on prend le premier apparaissant dans la liste
             if ($rssID == -1) {
-                $q = 'SELECT * FROM nouvelle WHERE RSS_id IN (SELECT id FROM RSS LIMIT 1) ORDER BY date DESC';         
+                $q = 'SELECT * FROM nouvelle WHERE RSS_id IN (SELECT id FROM RSS LIMIT 1) '.$filter.' ORDER BY date DESC';         
                 $r = $this->db->prepare($q);
                 $r->execute();
             } else {
-                $q = 'SELECT * FROM nouvelle WHERE RSS_id = :rssID ORDER BY date DESC';                
+                $q = 'SELECT * FROM nouvelle WHERE RSS_id = :rssID '.$filter.' ORDER BY date DESC';                
                 $r = $this->db->prepare($q);
                 $r->execute(array($rssID));
             }
@@ -252,8 +258,11 @@ class DAO {
         try {
             $nJ = "-$nJ day";
 
+            // On ajoute la query string de filtrage
+            $filter = $this->getFilterQuery();
+
             $q = "SELECT * FROM nouvelle WHERE RSS_id IN (SELECT RSS_id FROM abonnement WHERE utilisateur_login = :username AND categorie = :cat)
-            AND date >= strftime('%s', 'now', :nJ) ORDER BY date DESC";
+            AND date >= strftime('%s', 'now', :nJ) $filter ORDER BY date DESC";
 
             $r = $this->db->prepare($q);
             $r->execute(array($username, $cat, $nJ));
@@ -273,6 +282,10 @@ class DAO {
     public function readNouvellefromTitre($titre,$RSS_id) {
         try {
             $q = "SELECT * FROM nouvelle WHERE titre = :titre AND RSS_id = :RSS_id";
+
+            // On ajoute la query string de filtrage
+            $q .= $this->getFilterQuery();
+
             $r = $this->db->prepare($q);
             $r->execute(array($titre, $RSS_id));
             $response = $r->fetchAll(PDO::FETCH_CLASS, "Nouvelle");
@@ -479,5 +492,135 @@ class DAO {
         }
         
         return $result;
+    }
+
+    // Met à jour les mots clés filtrés de l'utilisateur
+    // => crée l'entrée si elle n'existe pas
+    public function update_word_filter($username, $new_chain) : bool
+    {
+        $result = true;
+
+        try {
+            $filter_chain = $this->getFilterChain($username);
+
+            /* Si elle n'existe pas, on en crée une nouvelle */
+            if (!$filter_chain) {
+                $q = 'INSERT INTO word_filters (utilisateur_login,filter_chain) VALUES (:username,:new_chain)';
+                $r = $this->db->prepare($q);
+                $r->execute(array($username, $new_chain));
+
+                $result = $r;
+
+            } else { // Si une chaîne a déjà été enregistrée et qu'elle est différente de la nouvelle, on la met à jour
+                if ($filter_chain != $new_chain) {
+                    $q = "UPDATE word_filters SET filter_chain = :new_chain WHERE utilisateur_login = :username";
+                    $r = $this->db->prepare($q);
+                    $r->execute(array($new_chain, $username));
+
+                    $result = $r;
+                }
+                // => sinon on ne fait rien
+            }
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+
+        return ($result ? true : false);
+    }
+
+    // Supprime la chaîne filtre de l'utilisateur $username de la base de données
+    public function removeFilterChain($username) {
+        try {
+            $q = 'DELETE FROM word_filters WHERE utilisateur_login = :username';
+            $r = $this->db->prepare($q);
+            $r->execute(array($username));
+        } catch (PDOException $e) {
+            die ("PDO Error : ".$e->getMessage());
+        }
+    }
+
+    // Renvoie la chaîne filtre de l'utilisateur $username si elle existe
+    // false sinon
+    public function getFilterChain($username) : string
+    {
+        try {
+            $q = "SELECT filter_chain FROM word_filters WHERE utilisateur_login = :username";
+            $r = $this->db->prepare($q);
+            $r->execute(array($username));
+
+            $result = $r->fetch();
+
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+
+        return ($result ? $result[0] : "");
+    }
+
+    // Renvoie la requête appliquant les filtres utilisateur
+    // ou une chaîne vide si l'utilisateur est connecté
+    //   => opt est à false s'il faut exclure les nouvelles contenant les mots
+    //                true s'il faut autoriser uniquement les nouvelles contenant les mots
+    public function getFilterQuery($opt = false) : string 
+    {
+        require_once("../model/User.class.php");
+
+        $rq = "";
+
+        // On démarre la session si elle n'est pas déjà lancée
+        if (session_status() == PHP_SESSION_NONE) session_start();
+
+        // Si aucun utilisateur est connecté
+        if (isset($_SESSION["user"]) && $_SESSION["user"] !== null) {
+            // On récupère tous la filter chain de l'utilisateur connecté
+            $filter_chain = $this->getFilterChain($_SESSION["user"]->getLogin());
+
+            // Si la chaîne est non vide, on crée une query string à partir des mots clés
+            if ($filter_chain) {
+                $filters = explode(",", $filter_chain);
+
+                foreach ($filters as &$word) {
+                    if (rtrim($word)) { // Si la chaîne n'est pas vide ou remplie d'espaces
+                        // On quote les mots clés en ajoutant les jokers
+                        $word = $this->db->quote("%".$word."%");
+
+                        // On ajoute la query string selon le mode d'appel
+                        if ($opt) {
+                            $rq .= " AND (titre LIKE $word OR description LIKE $word)";
+                        } else {
+                            $rq .= " AND NOT (titre LIKE $word OR description LIKE $word)";
+                        }
+                    }
+                }
+            }
+        }
+
+        return $rq;
+    }
+
+    // Renvoie le nombre de nouvelles dans la base filtrées par les mots clés
+    public function getFilterStats($username) : int {
+        $number_F = 0;
+
+        try {
+            // On récupère la query string de filtrage
+            $filter_q = $this->getFilterQuery(true);
+
+            // Si l'utilisateur utilise des filtres
+            if ($filter_q) {
+                $q = 'SELECT COUNT(*) FROM nouvelle WHERE RSS_id > -1 '.$filter_q;                
+                $r = $this->db->prepare($q);
+                $r->execute(array());
+
+                $response = $r->fetch();
+
+                // On renvoie le résultat
+                $number_F = $response[0];
+            }
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+
+        return $number_F;
     }
 }

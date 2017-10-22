@@ -1,8 +1,6 @@
 <?php
 /* Gestion des abonnements d'un utilisateur */
 
-require_once("../model/User.class.php");
-
 // Vérification de l'authentification
 require_once('redirect.ctrl.php');
 
