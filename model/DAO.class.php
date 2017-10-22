@@ -20,13 +20,12 @@ class DAO {
     // $keywords : mots clés, $strict : true si tous les mots clés doivent apparaitre
     // $time : up0 si peu importe, up24 pour les dernières 24h, up7 pour les 7 derniers jours
     //         up30 pour le dernier mois
-    public function searchNews(string $keywords, bool $strict, bool $onlyT, string $time) : array {
+    public function searchNews(array $keywords, bool $strict, bool $onlyT, string $time) : array {
         // Tableau contenant les nouvelles
         $results = array();
 
         /* Traitement des mots clés reçus en entrée 
         ======================================================*/
-        $keywords = preg_split('/\s+/', $keywords); // On coupe la chaîne par des espaces
         $s_keywords = array();
 
         /* On reconstruit un tableau et on sécurise chacun des mots clés individuellement */

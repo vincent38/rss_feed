@@ -100,6 +100,21 @@ class Nouvelle {
         }
     }
 
+    // Surligne les occurences du tableau $s_str dans le titre et le corps de la nouvelle
+    public function highlight(array $s_str) {
+        foreach ($s_str as $keyword) {
+            // On utilise preg_quote pour éviter des "interférences" entre la syntaxe régulière et les arguments de recherche
+            $this->description = preg_replace("/".preg_quote($keyword, "/")."/i", '<span class="special-highlight">$0</span>', $this->description);    
+            $this->titre = preg_replace("/".preg_quote($keyword, "/")."/i", '<span class="special-highlight">$0</span>', $this->titre);           
+        }
+
+        // Ancienne solution fonctionnelle mais qui faisait perdre l'information de la casse : expression régulière plus haut adaptée de stackoverflow */
+        /*
+            $this->description = str_ireplace($keyword, '<span class="special-highlight">'.$keyword.'</span>', $this->description);
+            $this->titre = str_ireplace($keyword, '<span class="special-highlight">'.$keyword.'</span>', $this->titre);
+        */
+    }
+
     // Applique les filtres HTML éventuels sur le corps de la nouvelle
     private function filterHTML($description) : string {
         $filtered = "";

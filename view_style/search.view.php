@@ -20,7 +20,7 @@
                     <div class="content">
                         <form action="search.ctrl.php" method="post">
                             <div class="input-group">
-                                <input type="text" class="form-control" name = "searchstr" placeholder="Search">
+                                <input type="text" class="form-control" name = "searchstr" placeholder="Search" value = "<?= $data_opt['str'] ?? ""?>">
                                 <div class="input-group-btn">
                                 <button class="btn btn-default" type="submit">
                                     <i class="pe-7s-search"></i>
@@ -30,43 +30,59 @@
                             <br>
                             <h5>Rechercher les résultats qui...</h5>              
                             <label for="anyT" class = "special-radio">
-                                <input type="radio" name='typeS' value="anyT" checked>
+                                <input type="radio" name='typeS' value="anyT"
+                                <?= isset($data_opt['strict']) ? ($data_opt['strict'] ? "" : "checked") : "checked" ?>>
                                 Contiennent n'importe quel terme
                             </label>
                             <label for="allT" class = "special-radio">
-                                <input type="radio" name='typeS' id = 'allT' value="allT">
+                                <input type="radio" name='typeS' id = 'allT' value="allT"
+                                <?= isset($data_opt['strict']) ? ($data_opt['strict'] ? "checked" : "") : "" ?>>
                                 Contiennent tous les termes
                             </label>  
                             <br><br>
 
                             <h5>Rechercher les résultats dans...</h5>                   
                             <label for="all" class = "special-radio">
-                                <input type="radio" name='modeS' value="all" checked>
+                                <input type="radio" name='modeS' value="all"
+                                <?= isset($data_opt['onlyT']) ? ($data_opt['onlyT'] ? "" : "checked") : "checked" ?>>
                                 Titre et corps des contenus
                             </label>                            
                             <label for="t_only" class = "special-radio">
-                                <input type="radio" name='modeS'  value="t_only">
+                                <input type="radio" name='modeS'  value="t_only"
+                                <?= isset($data_opt['onlyT']) ? ($data_opt['onlyT'] ? "checked" : "") : "" ?>>
                                 Titre des contenus uniquement
                             </label>
                             <br><br>
 
                             <h5>Date des nouvelles</h5>                             
                             <label for="up0" class = "special-radio">
-                                <input type="radio" name='time' value="up0" checked>
+                                <input type="radio" name='time' value="up0"
+                                <?= isset($data_opt['time']) ? ($data_opt['time']=="up0" ? "checked" : "") : "checked" ?>>
                                 Peu importe
                             </label>                            
                             <label for="up24" class = "special-radio">
-                                <input type="radio" name='time'  value="up24">
+                                <input type="radio" name='time'  value="up24"
+                                <?= isset($data_opt['time']) ? ($data_opt['time']=="up24" ? "checked" : "") : "" ?>>
                                 Les dernières 24 heures
                             </label>                            
                             <label for="up7" class = "special-radio">
-                                <input type="radio" name='time' value="up7">
+                                <input type="radio" name='time' value="up7"
+                                <?= isset($data_opt['time']) ? ($data_opt['time']=="up7" ? "checked" : "") : "" ?>>
                                 La dernière semaine
                             </label>                           
                             <label for="up30" class = "special-radio">
-                                <input type="radio" name='time'  value="up30">
+                                <input type="radio" name='time'  value="up30"
+                                <?= isset($data_opt['time']) ? ($data_opt['time']=="up30" ? "checked" : "") : "" ?>>
                                 Le dernier mois
-                            </label>
+                            </label> 
+                            <br><br><br>
+                            <div class="form-check">
+                                <label class="form-check-label special-radio">
+                                    <input class="form-check-input" type="checkbox" name="highlight" value="highlight"
+                                    <?= isset($data_opt['highlight']) ? ($data_opt['highlight'] ? "checked" : "") : "" ?>>
+                                    Surligner les occurences dans les résultats
+                                </label>
+                            </div>
                         </form>
                     </div>
                 </div>

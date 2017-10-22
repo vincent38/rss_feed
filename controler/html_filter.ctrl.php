@@ -13,7 +13,7 @@ $dao = new DAO();
 
 $userL = $_SESSION['user'] -> getLogin();
 
-if (isset($_POST['toBlock'])) {
+if (isset($_POST['toBlock'])) { // => note : erreur dans le nommage du paramètre, il s'agit bien des balises à AUTORISER
     // On vérifie que les paramètres envoyés sont valides
     $params = array("typo", "img", "iframe", "a", "script", "noBlock");
     $valide = true;
@@ -31,15 +31,16 @@ if (isset($_POST['toBlock'])) {
             // On supprime l'entrée dans la base de données, si elle existe
             $dao->removeHTMLFilter($userL);
         } else {
-            $params = "";
+            // Par défaut, la balise span est toujours autorisée
+            $params = "<span>";
 
             // On formate la chaîne de paramètres à passer
-            foreach ($_POST['toBlock'] as $toBlock) {
-                if ($toBlock == 'typo')
+            foreach ($_POST['toBlock'] as $toAuth) {
+                if ($toAuth == 'typo')
                     // On ajoute toutes les balises généralement utilisées pour du simple formatage
                     $params .= "<b><p><strong><i><u><s><br><h1><h2><h3><h4><h5><h6><ul><li>";
                 else
-                    $params .= "<".$toBlock.">";
+                    $params .= "<".$toAuth.">";
             }
 
             // On met à jour les paramètres utilisateur

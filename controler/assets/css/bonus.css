@@ -179,3 +179,8 @@ a.list-group-item {
     text-transform: none;
     font-size: 16px;
 }
+
+/* Effet de surlignement après recherche */
+.special-highlight {
+    background-color:#fffc09;
+}
