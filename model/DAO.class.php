@@ -543,7 +543,7 @@ class DAO {
     }
 
     // Renvoie la chaîne filtre de l'utilisateur $username si elle existe
-    // false sinon
+    // une chaîne vide sinon
     public function getFilterChain($username) : string
     {
         try {
@@ -573,7 +573,7 @@ class DAO {
         // On démarre la session si elle n'est pas déjà lancée
         if (session_status() == PHP_SESSION_NONE) session_start();
 
-        // Si aucun utilisateur est connecté
+        // Si l'utilisateur est connecté
         if (isset($_SESSION["user"]) && $_SESSION["user"] !== null) {
             // On récupère tous la filter chain de l'utilisateur connecté
             $filter_chain = $this->getFilterChain($_SESSION["user"]->getLogin());
@@ -685,7 +685,7 @@ class DAO {
     }
 
     // Renvoie les filtres HTML de l'utilisateur $username s'il en a
-    // false sinon
+    // une chaîne vide sinon
     public function getHTMLFilter($username) : string
     {
         try {

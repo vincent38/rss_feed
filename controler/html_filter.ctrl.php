@@ -35,7 +35,11 @@ if (isset($_POST['toBlock'])) {
 
             // On formate la chaîne de paramètres à passer
             foreach ($_POST['toBlock'] as $toBlock) {
-                $params .= "<".$toBlock.">";
+                if ($toBlock == 'typo')
+                    // On ajoute toutes les balises généralement utilisées pour du simple formatage
+                    $params .= "<b><p><strong><i><u><s><br><h1><h2><h3><h4><h5><h6><ul><li><div>";
+                else
+                    $params .= "<".$toBlock.">";
             }
 
             // On met à jour les paramètres utilisateur
@@ -53,10 +57,16 @@ if (isset($_POST['toBlock'])) {
 }
 
 // On récupère les paramètres utilisateur
-$filter_chain = $dao->getHTMLFilter($userL);
+$params = explode("><", $dao->getHTMLFilter($userL));
 
-// var_dump de ce qu'on trouve
-var_dump($filter_chain);
+foreach ($params as $key => $arg) {
+    $params[$key] = str_replace("<", "", $arg);
+    $params[$key] = str_replace(">", "", $params[$key]);
+}
+
+$params[0] = str_replace("<", "", $params[0]);
+
+$data = $params;
 
 // Vue
 require_once "../view_style/html_filter.view.php";

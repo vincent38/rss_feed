@@ -26,15 +26,16 @@
                         <form action="html_filter.ctrl.php" method="post">
                             <div class="form-check">
                                 <label class="form-check-label special-radio">
-                                    <input class="form-check-input" type="checkbox" name="toBlock" value="noBlock" onClick="disableAll(this)" id="unblock" checked><!-- à changer : ça dépend -->
-                                    Ne pas bloquer les balises HTML
+                                    <input class="form-check-input" type="checkbox" name="toBlock" value="noBlock" onClick="disableAll(this)" id="unblock" <?= $data[0] ? "" : "checked" ?>>
+                                    Ne pas bloquer les balises HTML (par défaut)
                                 </label>
                             </div>
                             <br>
                             <p class = "text-success"> Recommandé : </p>
                             <div class="form-check">
                                 <label class="form-check-label special-radio">
-                                    <input class="form-check-input" type="checkbox" name='toBlock[]' value="typo">
+                                    <input class="form-check-input" type="checkbox" name='toBlock[]' value="typo" <?= (in_array("strong", $data)) ? "checked" : "" ?>
+                                     <?= $data[0] ? "" : "disabled" ?>
                                     <b>balises de mise en forme</b> :
                                     <span class = "special-checkbox-text">&nbsp; &#60;b&#62; , &nbsp; &#60;strong&#62;  , &nbsp; &#60;p&#62;  , &nbsp; etc.</span>
                                 </label>
@@ -42,14 +43,16 @@
                             <br>
                             <div class="form-check">
                                 <label class="form-check-label special-radio">
-                                    <input class="form-check-input" type="checkbox" name='toBlock[]' value="img">
+                                    <input class="form-check-input" type="checkbox" name='toBlock[]' value="img" <?= (in_array("img", $data)) ? "checked" : "" ?>
+                                     <?= $data[0] ? "" : "disabled" ?>
                                     <b>img</b> : insertion d'une image
                                 </label>
                             </div>
                             <br>
                             <div class="form-check">
                                 <label class="form-check-label special-radio">
-                                    <input class="form-check-input" type="checkbox" name='toBlock[]' value="a">
+                                    <input class="form-check-input" type="checkbox" name='toBlock[]' value="a" <?= (in_array("a", $data)) ? "checked" : "" ?>
+                                     <?= $data[0] ? "" : "disabled" ?>
                                     <b>a</b> : insertion d'un lien hypertexte
                                 </label>
                             </div>
@@ -57,14 +60,16 @@
                             <p class = "text-warning"> Déconseillé : </p>
                             <div class="form-check">
                                 <label class="form-check-label special-radio">
-                                    <input class="form-check-input" type="checkbox" name='toBlock[]' value="iframe">
+                                    <input class="form-check-input" type="checkbox" name='toBlock[]' value="iframe" <?= (in_array("iframe", $data)) ? "checked" : "" ?>
+                                     <?= $data[0] ? "" : "disabled" ?>
                                     <b>iframe</b> : intégration de pages Web
                                 </label>
                             </div>
                             <br>
                             <div class="form-check">
                                 <label class="form-check-label special-radio">
-                                    <input class="form-check-input" type="checkbox" name='toBlock[]' value="script">
+                                    <input class="form-check-input" type="checkbox" name='toBlock[]' value="script" <?= (in_array("script", $data)) ? "checked" : "" ?>
+                                     <?= $data[0] ? "" : "disabled" ?>
                                     <b>script</b> : insertion d'un script
                                 </label>
                             </div>
@@ -82,15 +87,7 @@
         </div>
     </div>
 
-    <footer class="footer">
-        <div class="container-fluid">
-            <nav class="pull-left">
-            </nav>
-            <p class="copyright pull-right">
-                Projet de gestionnaire de flux RSS - <a href="http://iut2.univ-grenoble-alpes.fr">IUT2 Grenoble</a>
-            </p>
-        </div>
-    </footer>
+    <?php include "html/footer.php" ?>
 
     </div>
 </div>

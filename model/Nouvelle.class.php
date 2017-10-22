@@ -35,7 +35,15 @@ class Nouvelle {
     }
 
     function description() {
-        return $this->description;
+        // Si un utilisateur est connecté et possède des filtres HTML, on les applique à la nouvelle
+        // sinon on renvoie le corps de la nouvelle inchangé
+        $filtered = $this->filterHTML($this->description);
+
+        if ($filtered) {
+            return $filtered;
+        } else {
+            return $this->description;
+        }
     }
 
     function url() {
@@ -90,5 +98,33 @@ class Nouvelle {
         if ($images->length != 0){
             $this->downloadImage($item, $id);
         }
+    }
+
+    // Applique les filtres HTML éventuels sur le corps de la nouvelle
+    private function filterHTML($description) : string {
+        $filtered = "";
+
+        require_once("../model/User.class.php");
+        require_once("../model/DAO.class.php");
+
+        // Instanciation de l'objet DAO
+        $dao = new DAO();
+
+        // On démarre la session si elle n'est pas déjà lancée
+        if (session_status() == PHP_SESSION_NONE) session_start();
+
+        // Si un utilisateur est connecté
+        if (isset($_SESSION["user"]) && $_SESSION["user"] !== null) {
+            $userL = $_SESSION['user']->getLogin();
+            $filter = $dao->getHTMLFilter($userL);
+
+            // Si l'utilisateur utilise des filtres, ils sont appliqués
+            if ($filter) {
+                $filtered = strip_tags($description, $filter);
+            }
+        }
+        // sinon aucun filtre n'est appliqué
+
+        return $filtered;
     }
 }

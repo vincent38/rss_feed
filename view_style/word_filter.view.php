@@ -59,15 +59,7 @@
         </div>
     </div>
 
-    <footer class="footer">
-        <div class="container-fluid">
-            <nav class="pull-left">
-            </nav>
-            <p class="copyright pull-right">
-                Projet de gestionnaire de flux RSS - <a href="http://iut2.univ-grenoble-alpes.fr">IUT2 Grenoble</a>
-            </p>
-        </div>
-    </footer>
+    <?php include "html/footer.php" ?>
 
     </div>
 </div>
