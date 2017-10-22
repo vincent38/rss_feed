@@ -70,7 +70,7 @@
                                 <label class="form-check-label special-radio">
                                     <input class="form-check-input" type="checkbox" name='toBlock[]' value="script" <?= (in_array("script", $data)) ? "checked" : "" ?>
                                      <?= $data[0] ? "" : "disabled" ?>
-                                    <b>script</b> : insertion d'un script
+                                    <b>script</b> : insertion de scripts
                                 </label>
                             </div>
                             </br>

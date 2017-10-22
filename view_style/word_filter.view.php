@@ -32,7 +32,7 @@
                                 <div class="alert alert-info alert-with-icon" data-notify="container">
                                     <span data-notify="icon" class = "pe-7s-info"></span>
                                     <span data-notify="message" class = "special-message"><b><?= $data['stats']['nbTot'] ?></b> articles de la base de données sont actuellement bloqués par vos filtres.
-                                    <br>Principalement dans la source : <b><?= $data['stats']['nomRSS'] ?></b> (<?= $data['stats']['nbRSS'] ?> articles bloqués).
+                                    <br>Principalement dans la source : <b><?= $data['stats']['nomRSS'] ?></b> (<b><?= $data['stats']['nbRSS'] ?></b> articles bloqués).
                                     </span>
                                 </div>
                             </div>
