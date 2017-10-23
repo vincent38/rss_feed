@@ -52,10 +52,11 @@
                                     </label>
                                 </div>
                                 </br>
-                                <button type="submit" class = "btn btn-warning btn-fill pull-left">
+                                <button type="submit" class = "btn btn-warning btn-fill pull-left" onclick="showLoading(this)">
                                     <span class="fa fa-refresh" style="margin-left: -6px;"></span>
                                     Mettre à jour
                                 </button>
+                                <img src="assets/img/gif/loading.svg" class="special-loading" alt="chargement" id="loading_ico" hidden>
                                 <div class="clearfix"></div>
                             </form>
                         </div>
@@ -86,6 +87,7 @@
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
     <script src="assets/js/light-bootstrap-dashboard.js"></script>
 
+    <!-- Cochage automatique des checkbox et icône de chargement -->
     <script language="JavaScript">
         function checkAll(ele) {
             var checkboxes = document.getElementsByTagName('input');
@@ -95,6 +97,11 @@
                     checkboxes[i].checked = ele.checked;
                 }
             }
+        }
+
+        function showLoading(element) {
+            element.style.display = 'none';
+            document.getElementById('loading_ico').style.display = 'block';
         }
     </script>
 
