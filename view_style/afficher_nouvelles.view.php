@@ -31,7 +31,7 @@
                         </div>
                         <div class="content">
                             <?php if ($nouvelle->urlimage()): ?>
-                                <img src="<?=$nouvelle->urlimage() ?>" alt="image"><br><br>
+                                <img src="<?=$nouvelle->urlimage() ?>" class="img-thumbnail" alt="image"><br><br>
                             <?php endif; ?>
                             <?=  $nouvelle->description() ?>
                             <br><br>

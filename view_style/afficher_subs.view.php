@@ -21,7 +21,7 @@
                     <div class="card">
                         <div class="header">
                             <h4 class="title">Mes abonnements</h4>
-                            <p class="category">Cliquez sur une catégorie pour en voir les nouveautés</p>
+                            <p class="category">Liste vos abonnements et les catégories enregistrées</p>
                         </div>
                         <div class="list-group special-list-2">
                             <?php foreach ($data as $cat => $listeRSS) { ?>

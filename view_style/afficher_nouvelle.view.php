@@ -30,7 +30,7 @@
                         </div>
                         <div class="content">
                             <?php if ($data->urlimage()): ?>
-                                <img src="<?=$data->urlimage() ?>" alt="image"><br><br>
+                                <img src="<?=$data->urlimage() ?>" class="img-thumbnail" alt="image"><br><br>
                             <?php endif; ?>
                             <?=  $data->description() ?>    
                             <div class="footer">

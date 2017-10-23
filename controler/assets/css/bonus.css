@@ -1,6 +1,8 @@
 /* CSS Bonus à bootstrap
 =============================================================== */
-img {
+/* Images des flux */
+
+.img-thumbnail {
     max-width: 550px;
 }
 
