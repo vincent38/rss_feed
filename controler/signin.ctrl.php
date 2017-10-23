@@ -6,6 +6,9 @@ session_start();
 if (isset($_SESSION["user"]) and $_SESSION["user"] != null) {
     // Si l'utilisateur est déjà connecté, il est redirigé vers l'acceuil
     header("Location: afficher_flux.ctrl.php");
+
+    // On arrête le script PHP
+    exit();
 }
 
 require_once("../model/UserManager.class.php");

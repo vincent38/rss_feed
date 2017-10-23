@@ -15,33 +15,47 @@
     
     <div class="content">
     <!-- Le contenu va ici ! -->
-        <div class="special-title-group">
-            <h4 class="title">En images</h4>
-            <p>Affiche toutes les nouvelles de vos flux en images</p>
-        </div>
+        <?php if (!isset($noResult)): ?>
+            <div class="special-title-group">
+                <h4 class="title">En images</h4>
+                <p>Affiche toutes les nouvelles de vos flux en images</p>
+            </div>
+        <?php endif; ?>
 
         <!-- On affiche les boutons de filtrage par flux -->
-        <form class="special-cat-bar" action="afficher_mozaic.ctrl.php" method="POST">
-            <?php foreach($data['flux'] as $rss) { ?>
-                <button name="rssID" type="submit" value="<?= $rss['id'] ?>" 
-                    class="btn <?= $rss['icon'] ?> btn-fill" <?= ($data['selectedID']==$rss['id']) ? "disabled" : ""?>>
-                    <?= $rss['nom'] ?>
-                </button>
-            <?php } ?>
-        </form>
+        <?php if (isset($data['flux'])): ?>
+            <form class="special-cat-bar" action="afficher_mozaic.ctrl.php" method="POST">
+                <?php foreach($data['flux'] as $rss) { ?>
+                    <button name="rssID" type="submit" value="<?= $rss['id'] ?>" 
+                        class="btn <?= $rss['icon'] ?> btn-fill" <?= ($data['selectedID']==$rss['id']) ? "disabled" : ""?>>
+                        <?= $rss['nom'] ?>
+                    </button>
+                <?php } ?>
+            </form>
+        <?php endif; ?>
 
-        <div class="row special-row">
-            <?php foreach($data['news'] as $nouvelle) { ?>
-                <div class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6 col-xs-6">
-                    <div class="caption special-caption">
-                        <h5><?= $nouvelle->titre() ?></h5>
-                        <p><a href="<?= $nouvelle->urlParsed() ?>" class="label label-info">Lire la suite</a></p>
+        <?php if (isset($data['news'])): ?>
+            <div class="row special-row">
+                <?php foreach($data['news'] as $nouvelle) { ?>
+                    <div class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6 col-xs-6">
+                        <div class="caption special-caption">
+                            <h5><?= $nouvelle->titre() ?></h5>
+                            <p><a href="<?= $nouvelle->urlParsed() ?>" class="label label-info">Lire la suite</a></p>
+                        </div>
+                        <img src="<?= $nouvelle->realImg ?>" alt="illustration">
+                        </a>
                     </div>
-                    <img src="<?= $nouvelle->realImg ?>" alt="illustration">
-                    </a>
-                </div>
-            <?php } ?>
-        </div>
+                <?php } ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if (isset($noResult)): ?>
+            <div class="special-no-result">                
+                <h4 class="title"><?= $noResult['type'] ?></h4>
+                <p class="category"><?= $noResult['message'] ?></p>
+                <img src="assets/img/gif/tumbleweed.gif">
+            </div>
+        <?php endif; ?>
     </div>
 
     <?php include "html/footer.php" ?>

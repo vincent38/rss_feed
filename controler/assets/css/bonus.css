@@ -63,7 +63,7 @@ a.list-group-item {
     margin-bottom:20px;
 }
 
-.special-title-group p {
+.special-title-group p, .special-subtext {
     font-size: 15px;
     font-weight: 400;
     color: #9A9A9A;
@@ -183,4 +183,15 @@ a.list-group-item {
 /* Effet de surlignement après recherche */
 .special-highlight {
     background-color:#fffc09;
+}
+
+/* Message s'il n'y a aucun résultat d'affiché */
+.special-no-result {
+    margin-left: 10px;
+    margin-top: -30px;
+}
+
+/* On centre le tumbleweed */
+.special-no-result img {
+    margin-left: 38%;
 }

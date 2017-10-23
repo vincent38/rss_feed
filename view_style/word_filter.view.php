@@ -18,7 +18,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="header">
-                        <h4 class="title">Filtrer par mots clés</h4>
+                        <h4 class="title">Bloquer par mots clés</h4>
                         <p class="category">Filtre le contenu de vos flux et nouvelles par mots clés</p>
                     </div>
                     <div class="content">

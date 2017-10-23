@@ -17,8 +17,8 @@ $data_new = array();
 /* Tableau contenant tous les codes couleur bootstrap */
 $allCodes = array ("btn-success", "btn-info", "btn-warning", "btn-danger", "btn-default");
 
-if ($all_news !== null) {
-
+// Si la requête DAO a renvoyé des résultats
+if ($all_news) {
     /* On formate les objets nouvelle passés à la vue */
     foreach ($all_news as $nouvelle) {
         $rssObj = $dao->readRSSfromID($nouvelle->RSS_id());
@@ -50,5 +50,9 @@ if ($all_news !== null) {
     $data['flux'] = $data_rss;
     $data['selectedID'] = $all_news[0]->RSS_id();
 
-    require_once "../view_style/afficher_mozaic.view.php";
+} else { // Si on a aucun résultat
+    $noResult['type'] = "Flux vide ou paramètres incorrects";
+    $noResult['message'] = '<p class="special-subtext">Il n\'y a rien à voir... <a href = "afficher_flux.ctrl.php">Retourner à la liste des flux</a></p>';
 }
+
+require_once "../view_style/afficher_mozaic.view.php";

@@ -15,46 +15,55 @@
     
     <div class="content">
     <!-- Le contenu va ici ! -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="header">
-                        <h4 class="title">Vidanger un flux</h4>
-                        <p class="category">Purger un flux vide les images associées au flux et ses nouvelles.</p>
-                    </div>
-                    <div class="content">
-                        <br>
-                        <form action="clean_flux.ctrl.php" method="post">
-                            <?php
-                            foreach ($data as $d) {
-                            ?>
-                            <div class="form-check">
-                                <label class="form-check-label special-radio">
-                                    <input class="form-check-input" type="checkbox" name='toClean[]' value="<?= $d->id ?>|<?= $d->titre ?>">
-                                    <?= $d->titre ?>
-                                </label>
-                            </div>
-                            <?php
-                            }
-                            ?>
+        <!-- On affiche les éventuels messages d'erreur -->
+        <?php if (isset($noResult)): ?>
+            <div class="special-no-result">                
+                <h4 class="title"><?= $noResult['type'] ?></h4>
+                <p class="category"><?= $noResult['message'] ?></p>
+                <img src="assets/img/gif/tumbleweed.gif">
+            </div>
+        <?php else: ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Vidanger un flux</h4>
+                            <p class="category">Purger un flux vide les images associées au flux et ses nouvelles.</p>
+                        </div>
+                        <div class="content">
                             <br>
-                            <div class="form-check">
-                                <label class="form-check-label special-radio">
-                                    <input class="form-check-input" type="checkbox" onClick="checkAll(this)">
-                                    Tout cocher
-                                </label>
-                            </div>
-                            </br>
-                            <button type="submit" class = "btn btn-warning btn-fill pull-left">
-                                <span class="fa fa-trash" style="margin-left: -6px;"></span>
-                                Purger
-                            </button>
-                            <div class="clearfix"></div>
-                        </form>
+                            <form action="clean_flux.ctrl.php" method="post">
+                                <?php
+                                foreach ($data as $d) {
+                                ?>
+                                <div class="form-check">
+                                    <label class="form-check-label special-radio">
+                                        <input class="form-check-input" type="checkbox" name='toClean[]' value="<?= $d->id ?>|<?= $d->titre ?>">
+                                        <?= $d->titre ?>
+                                    </label>
+                                </div>
+                                <?php
+                                }
+                                ?>
+                                <br>
+                                <div class="form-check">
+                                    <label class="form-check-label special-radio">
+                                        <input class="form-check-input" type="checkbox" onClick="checkAll(this)">
+                                        Tout cocher
+                                    </label>
+                                </div>
+                                </br>
+                                <button type="submit" class = "btn btn-warning btn-fill pull-left">
+                                    <span class="fa fa-trash" style="margin-left: -6px;"></span>
+                                    Purger
+                                </button>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <?php endif; ?>
     </div>
 
     <?php include "html/footer.php" ?>

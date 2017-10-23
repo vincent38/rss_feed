@@ -30,11 +30,15 @@ if (!empty($_POST['unsub'])) {
     }
 }
 
-
 $data = array();
 
 /* On recherche tous les abonnements de l'utilisateur et on les stocke dans la variable $data */
 $data = $dao->getAbo($current_user->getLogin());
 
+/* Si l'utilisateur n'a aucun abonnements, on affiche un message d'erreur */
+if (!$data) {
+    $noResult['type'] = 'Aucun abonnement';
+    $noResult['message'] = '<p class="special-subtext">Vous n\'êtes abonné à aucun flux ! <a href="manage_subs.ctrl.php">Créer un abonnement</a></p>';   
+}
 
 require_once "../view_style/afficher_subs.view.php";

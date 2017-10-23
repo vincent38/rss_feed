@@ -14,25 +14,33 @@
     ?> 
     
     <div class="content">
-    <!-- Le contenu va ici ! -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="header">
-                        <h4 class="title">Afficher tous les flux</h4>
-                        <p class="category">Liste de tous les flux enregistrés dans notre base de données. Cliquez sur un flux pour en consulter le contenu.</p>
-                    </div>
-                    <div class="content">
-                        <ul class="list-group special-list-container">
-                            <?php foreach ($data as $r) { ?>
-                <li class="list-group-item"><a href = "<?= $r->urlParsed() ?>"><?= $r->titre ?></a><span class="badge"><?= $r->date ?></span></li>
-                            <?php } ?>
-                        </ul>
+        <!-- Le contenu va ici ! -->
+        <?php if (!isset($noResult)): ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Afficher tous les flux</h4>
+                            <p class="category">Liste de tous les flux enregistrés dans notre base de données. Cliquez sur un flux pour en consulter le contenu.</p>
+                        </div>
+                        <div class="content">
+                            <ul class="list-group special-list-container">
+                                <?php foreach ($data as $r) { ?>
+                    <li class="list-group-item"><a href = "<?= $r->urlParsed() ?>"><?= $r->titre ?></a><span class="badge"><?= $r->date ?></span></li>
+                                <?php } ?>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-
-        </div>
+        <?php else: ?>
+            <!-- On affiche les éventuels messages d'erreur -->
+            <div class="special-no-result">                
+                <h4 class="title"><?= $noResult['type'] ?></h4>
+                <p class="category"><?= $noResult['message'] ?></p>
+                <img src="assets/img/gif/tumbleweed.gif">
+            </div>
+        <?php endif; ?>
     </div>
 
     <?php include "html/footer.php" ?>

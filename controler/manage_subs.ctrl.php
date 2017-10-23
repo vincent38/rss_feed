@@ -39,9 +39,13 @@ if (isset($_POST["flux"]) and isset($_POST["titre"]) and isset($_POST["cat"])) {
 
 $data = array();
 
-/* On stocke tous les flux enregistrés dans la BDD et on les affiche */
-foreach ($dao->getRSSFlux() as $f) {
-    $data[] = $f;
+/* On récupère les flux enregistrés */
+$data = $dao->getRSSFlux();
+
+/* Si la liste est vide, on affiche un message d'erreur */
+if (!$data) {    
+    $noResult['type'] = 'Aucun flux';
+    $noResult['message'] = '<p class="special-subtext">Vous n\'avez enregistré aucun flux ! <a href="add_flux.ctrl.php">Ajouter un flux</a></p>';   
 }
 
 

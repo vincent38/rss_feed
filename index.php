@@ -1,6 +1,10 @@
 <?php
-// Are u logged in ?
-session_start();
-//Redirection vers startup appli
-header("Location: controler/afficher_flux.ctrl.php");
+    // Are u logged in ?
+    session_start();
+
+    // Redirection vers startup appli
+    header("Location: controler/afficher_flux.ctrl.php");
+
+    // On arrête le script PHP
+    exit();
 ?>

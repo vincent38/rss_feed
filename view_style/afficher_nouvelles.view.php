@@ -15,10 +15,12 @@
     
     <div class="content">
     <!-- Le contenu va ici ! -->
-        <h5 class="title special-h5">
-            <a href = "afficher_flux.ctrl.php">Tous les flux</a> <
-            <a href = "afficher_nouvelles.ctrl.php?rssID=<?= $data ? $data[0]->RSS_id() : "" ?>"><?= $data ? $data[0]->RSStitre : ""?></a>
-        </h5>
+        <?php if ($data): ?>
+            <h5 class="title special-h5">
+                <a href = "afficher_flux.ctrl.php">Tous les flux</a> <
+                <a href = "afficher_nouvelles.ctrl.php?rssID=<?= $data[0]->RSS_id() ?>"><?= $data[0]->RSStitre ?></a>
+            </h5>
+        <?php endif; ?>
         <div class="row">
             <div class="col-md-12">
                 <?php foreach($data as $nouvelle) { ?>
@@ -45,6 +47,13 @@
                 <?php } ?>
             </div>
         </div>
+        <?php if (isset($noResult)): ?>
+            <div class="special-no-result">                
+                <h4 class="title"><?= $noResult['type'] ?></h4>
+                <p class="category"><?= $noResult['message'] ?></p>
+                <img src="assets/img/gif/tumbleweed.gif">
+            </div>
+        <?php endif; ?>
     </div>
 
     <?php include "html/footer.php" ?>

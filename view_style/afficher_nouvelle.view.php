@@ -15,34 +15,45 @@
     
     <div class="content">
     <!-- Le contenu va ici ! -->
-        <h5 class="title special-h5">
-            <a href = "afficher_flux.ctrl.php">Tous les flux</a> <  
-            <a href = "afficher_nouvelles.ctrl.php?rssID=<?= $data->RSS_id(); ?>"><?=$data->RSStitre?></a>
-            < <a href = "#"><?= $data->new_titre ?></a>
-        </h5>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="header">
-                        <h4 class="title"><?= $data->titre() ?></h4>
-                        <p class="category"><i class="fa fa-clock-o"></i>  <?= $data->date() ?></p>
-                    </div>
-                    <div class="content">
-                        <?php if ($data->urlimage()): ?>
-                            <img src="<?=$data->urlimage() ?>" alt="image"><br><br>
-                        <?php endif; ?>
-                        <?=  $data->description() ?>    
-                        <div class="footer">
-                            <hr>
-                            <div class="stats">
-                                <i class="fa fa-arrow-right"></i> 
-                                <a href="<?= $data->url() ?>">Voir sur le site source</a>
-                            </div>
-                        </div>     
+        <?php if ($data): ?>
+            <h5 class="title special-h5">
+                <a href = "afficher_flux.ctrl.php">Tous les flux</a> <  
+                <a href = "afficher_nouvelles.ctrl.php?rssID=<?= $data->RSS_id(); ?>"><?=$data->RSStitre?></a>
+                < <a href = "#"><?= $data->new_titre ?></a>
+            </h5>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title"><?= $data->titre() ?></h4>
+                            <p class="category"><i class="fa fa-clock-o"></i>  <?= $data->date() ?></p>
+                        </div>
+                        <div class="content">
+                            <?php if ($data->urlimage()): ?>
+                                <img src="<?=$data->urlimage() ?>" alt="image"><br><br>
+                            <?php endif; ?>
+                            <?=  $data->description() ?>    
+                            <div class="footer">
+                                <hr>
+                                <div class="stats">
+                                    <i class="fa fa-arrow-right"></i> 
+                                    <a href="<?= $data->url() ?>">Voir sur le site source</a>
+                                </div>
+                            </div>     
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <?php endif; ?>
+
+        <!-- On affiche les éventuels messages d'erreur -->
+        <?php if (isset($noResult)): ?>
+            <div class="special-no-result">                
+                <h4 class="title"><?= $noResult['type'] ?></h4>
+                <p class="category"><?= $noResult['message'] ?></p>
+                <img src="assets/img/gif/tumbleweed.gif">
+            </div>
+        <?php endif; ?>
     </div>
 
     <?php include "html/footer.php" ?>

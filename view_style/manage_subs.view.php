@@ -15,46 +15,55 @@
 
     <div class="content">
     <!-- Le contenu va ici ! -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="header">
-                        <h4 class="title">S'abonner</h4>
-                        <p class="category">Vous pouvez vous abonner à des flux RSS, les étiqueter à une catégorie (existante ou non) et les renommer.</p>
-                    </div>
-                    <div class="content">
-                        <form action="manage_subs.ctrl.php" method="post">
-                            <label for="flux">Flux à suivre :
-                            <select name="flux" id="flux">
-                                <?php
-                                    foreach($data as $d) {
-                                        echo "<option value='".$d->id."'>".$d->titre;
-                                    }
-                                ?>
-                            </select>
-                            </label><br>
-                            <div class = "col-md-6">
-                                <div class="form-group">
-                                    <label>Titre de l'abonnement : </label>
-                                    <input type="text" name="titre" class="form-control">
+        <?php if (!isset($noResult)): ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">S'abonner</h4>
+                            <p class="category">Vous pouvez vous abonner à des flux RSS, les étiqueter à une catégorie (existante ou non) et les renommer.</p>
+                        </div>
+                        <div class="content">
+                            <form action="manage_subs.ctrl.php" method="post">
+                                <label for="flux">Flux à suivre :
+                                <select name="flux" id="flux">
+                                    <?php
+                                        foreach($data as $d) {
+                                            echo "<option value='".$d->id."'>".$d->titre;
+                                        }
+                                    ?>
+                                </select>
+                                </label><br>
+                                <div class = "col-md-6">
+                                    <div class="form-group">
+                                        <label>Titre de l'abonnement : </label>
+                                        <input type="text" name="titre" class="form-control">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class = "col-md-6">
-                                <div class="form-group">
-                                    <label>Catégorie : </label>
-                                    <input type="text" name="cat" class="form-control">
+                                <div class = "col-md-6">
+                                    <div class="form-group">
+                                        <label>Catégorie : </label>
+                                        <input type="text" name="cat" class="form-control">
+                                    </div>
                                 </div>
-                            </div>
-                            <button type="submit" class = "btn btn-info btn-fill pull-left">
-                                <span class="fa fa-magnet" style="margin-left: -6px;"></span>
-                                S'abonner
-                            </button>
-                            <div class="clearfix"></div>
-                        </form>
+                                <button type="submit" class = "btn btn-info btn-fill pull-left">
+                                    <span class="fa fa-magnet" style="margin-left: -6px;"></span>
+                                    S'abonner
+                                </button>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <?php else: ?>
+            <!-- On affiche les éventuels messages d'erreur -->
+            <div class="special-no-result">                
+                <h4 class="title"><?= $noResult['type'] ?></h4>
+                <p class="category"><?= $noResult['message'] ?></p>
+                <img src="assets/img/gif/tumbleweed.gif">
+            </div>
+        <?php endif; ?>
     </div>
 
     <?php include "html/footer.php" ?>

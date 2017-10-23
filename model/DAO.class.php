@@ -174,6 +174,7 @@ class DAO {
             $r = $this->db->prepare($q);
             $r->execute(array($rssID));
             $response = $r->fetchAll(PDO::FETCH_CLASS, "RSS");
+
             if (sizeof($response) > 0){
                 return $response[0];
             }           
@@ -285,9 +286,9 @@ class DAO {
             $r = $this->db->prepare($q);
             $r->execute(array($titre, $RSS_id));
             $response = $r->fetchAll(PDO::FETCH_CLASS, "Nouvelle");
-            if (sizeof($response) > 0){
+            if (sizeof($response) > 0) {
                 return $response[0];
-            }           
+            }
         } catch (PDOException $e) {
             die("PDO Error : ".$e->getMessage());
         }
@@ -370,6 +371,7 @@ class DAO {
             return null;
         }
     }
+
     public function unlock($username, $mdp)
     {
         $q = "SELECT mp FROM utilisateur WHERE login = :username";

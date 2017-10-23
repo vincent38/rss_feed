@@ -22,7 +22,17 @@ $data_new = array();
 /* Tableau contenant tous les codes couleur bootstrap */
 $allCodes = array ("btn-success", "btn-info", "btn-warning", "btn-danger", "btn-default");
 
-if ($allCat !== null) {
+if ($allCat) {
+    // On formate l'objet allCat et on le stocke dans $data
+    $i = 0; $clearCat = array();
+
+    foreach ($allCat as $ind => $cat) {
+        $clearCat[$ind] = array("nom" => $cat, "icon" => $allCodes[$i % 5]);
+        $i++;
+    }
+
+    $data['cat'] = $clearCat;
+
     /* Si l'utilisateur a déjà sélectionné une catégorie */
     if (!empty($_POST['categorie'])) {
         /* On vérifie que l'utilisateur est abonné à cette catégorie au moment de la requête */
@@ -37,10 +47,10 @@ if ($allCat !== null) {
         $selectedCat = $allCat[0];
     }
 
-    // On récupère les nouvelles récentes des flux de cette catégorie et on les ajoute à data <dernier jour pour l'instant>
-    if ($selectedCat) {
-        $news = $dao->getNewsFromCat($current_user->getLogin(), $selectedCat, 1);
+    $news = $dao->getNewsFromCat($current_user->getLogin(), $selectedCat, 1);
 
+    // S'il y a des résultats dans cette catégorie
+    if ($news) {
         // On ajoute le nom du flux père à chaque objet nouvelle
         foreach ($news as $new) {
             // On ajoute des attributs utiles à l'objet nouvelle
@@ -53,19 +63,20 @@ if ($allCat !== null) {
             }
         }
 
-        // On formate l'objet allCat
-        $i = 0;
-
-        foreach ($allCat as $ind => $cat) {
-            $allCat[$ind] = array("nom" => $cat, "icon" => $allCodes[$i % 5]);
-            $i++;
-        }
-
         // On stocke toutes les informations dans l'objet data
         $data['news'] = $news;
-        $data['cat'] = $allCat;
-        $data['selectedCat'] = $selectedCat;
+    } else {
+        $noResult['type'] = "Catégorie vide";
+        $noResult['message'] = '<p class="special-subtext">Rien de neuf ici pour les dernières 24 heures... <a href="afficher_flux.ctrl.php">Lire des nouvelles plus anciennes</a></p>';      
     }
 
-    require_once "../view_style/afficher_mozaic_cat.view.php";
+    $data['selectedCat'] = $selectedCat;
+
+} else {
+
+    // Si l'utilisateur n'est abonné à aucune catégorie, on affiche un message d'erreur
+    $noResult['type'] = 'Aucun abonnement';
+    $noResult['message'] = '<p class="special-subtext">Vous n\'êtes abonné à aucun flux ! <a href="manage_subs.ctrl.php">Créer un abonnement</a></p>';   
 }
+
+require_once "../view_style/afficher_mozaic_cat.view.php";

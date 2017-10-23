@@ -17,6 +17,9 @@ if ($allFlux !== null) {
         $data[] = $rss;
         $noFlux = false;
     }
+} else { // Si aucun flux n'est enregistré
+    $noResult['type'] = 'Aucun flux';
+    $noResult['message'] = '<p class="special-subtext">Vous n\'avez enregistré aucun flux ! <a href="add_flux.ctrl.php">Ajouter un flux</a></p>';   
 }
 
 require_once "../view_style/afficher_flux.view.php";

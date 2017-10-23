@@ -16,51 +16,63 @@
     <div class="content">
     <!-- Le contenu va ici ! -->
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="special-title-group">
-                    <h4 class="title">Par catégories</h4>
-                    <p>Affiche les dernières nouvelles triées par catégories</p>
-                </div>
+        <?php if (!isset($noResult) || (isset($noResult) && ($noResult['type'] !== "Aucun abonnement"))): ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="special-title-group">
+                        <h4 class="title">Par catégories</h4>
+                        <p>Affiche les dernières nouvelles triées par catégories</p>
+                    </div>
 
-                <!-- On affiche les boutons de filtrage par catégories -->
-                <form class="special-cat-bar" action="afficher_cat.ctrl.php" method="POST">
-                    <?php foreach($data['cat'] as $cat) { ?>
-                        <button name="categorie" type="submit" value="<?= $cat['nom'] ?>" 
-                            class="btn <?= $cat['icon'] ?> btn-fill" <?= ($data['selectedCat']==$cat['nom']) ? "disabled" : ""?>>
-                            <?= $cat['nom'] ?>
-                        </button>
-                    <?php } ?>
-                </form>
+                    <!-- On affiche les boutons de filtrage par catégories -->
+                    <form class="special-cat-bar" action="afficher_cat.ctrl.php" method="POST">
+                        <?php foreach($data['cat'] as $cat) { ?>
+                            <button name="categorie" type="submit" value="<?= $cat['nom'] ?>" 
+                                class="btn <?= $cat['icon'] ?> btn-fill" <?= ($data['selectedCat']==$cat['nom']) ? "disabled" : ""?>>
+                                <?= $cat['nom'] ?>
+                            </button>
+                        <?php } ?>
+                    </form>
 
-                <!-- On affiche toutes les nouvelles de la catégorie sélectionnée -->
-                <?php foreach($data['news'] as $nouvelle) { ?>
-                    <div class="card">
-                        <div class="header">
-                            <h4 class="title"><?= $nouvelle->titre() ?></h4>
-                            <p class="category"><i class="fa fa-clock-o"></i>  <?= $nouvelle->date() ?></p>
-                        </div>
-                        <div class="content">
-                            <?php if ($nouvelle->urlimage()): ?>
-                                <img src="<?=$nouvelle->urlimage() ?>" alt="image"><br><br>
-                            <?php endif; ?>
-                            <?=  $nouvelle->description() ?>    
-                            <div class="footer">
-                                <hr>
-                                <div class="stats">
-                                    <i class="fa fa-newspaper-o"></i>
-                                    <?= $nouvelle->titreFlux ?>
-                                    &nbsp;
-                                    <i class="fa fa-arrow-right" aria-hidden="true"></i> 
-                                    <a href="<?= $nouvelle->urlParsed() ?>">Lire la nouvelle</a>
+                    <?php if ($data): ?>
+                        <!-- On affiche toutes les nouvelles de la catégorie sélectionnée -->
+                        <?php foreach($data['news'] as $nouvelle) { ?>
+                            <div class="card">
+                                <div class="header">
+                                    <h4 class="title"><?= $nouvelle->titre() ?></h4>
+                                    <p class="category"><i class="fa fa-clock-o"></i>  <?= $nouvelle->date() ?></p>
+                                </div>
+                                <div class="content">
+                                    <?php if ($nouvelle->urlimage()): ?>
+                                        <img src="<?=$nouvelle->urlimage() ?>" alt="image"><br><br>
+                                    <?php endif; ?>
+                                    <?=  $nouvelle->description() ?>    
+                                    <div class="footer">
+                                        <hr>
+                                        <div class="stats">
+                                            <i class="fa fa-newspaper-o"></i>
+                                            <?= $nouvelle->titreFlux ?>
+                                            &nbsp;
+                                            <i class="fa fa-arrow-right" aria-hidden="true"></i> 
+                                            <a href="<?= $nouvelle->urlParsed() ?>">Lire la nouvelle</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                <?php } ?>
-
+                        <?php } ?>
+                    <?php endif; ?>
+                </div>
             </div>
-        </div>
+        <?php endif; ?>
+
+        <!-- On affiche les éventuels messages d'erreur -->
+        <?php if (isset($noResult)): ?>
+            <div class="special-no-result">                
+                <h4 class="title"><?= $noResult['type'] ?></h4>
+                <p class="category"><?= $noResult['message'] ?></p>
+                <img src="assets/img/gif/tumbleweed.gif">
+            </div>
+        <?php endif; ?>
     </div>
 
     <?php include "html/footer.php" ?>

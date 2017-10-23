@@ -22,10 +22,24 @@ if (isset($_GET['rssID'])) {
             $data[] = $new;
         }
     } else {
-        $alert['message'] = "RSS_ID invalide !";
-        $alert['type'] = "danger";
-        $alert['icon'] = "pe-7s-attention";
+        /* On vérifie que le RSS_id existe */
+        $rssObj = $dao->readRSSfromID($rssID);
+
+        /* Si l'objet RSS existe, on affiche un message signifiant que le flux est vide */
+        if ($rssObj) {
+            $noResult['type'] = "Flux vide";
+            $noResult['message'] = '<p class="special-subtext">Rien à afficher ! Ce flux est vide... <a href = "afficher_flux.ctrl.php">Retourner à la liste des flux</a></p>';        
+        } else { // Sinon c'est une erreur
+            $noResult['type'] = "RSS_ID incorrect";
+            $noResult['message'] = '<p class="special-subtext">Ce flux RSS n\'existe pas. <a href = "afficher_flux.ctrl.php">Retourner à la liste des flux</a></p>';
+        }
     }
 
     require_once "../view_style/afficher_nouvelles.view.php";
+} else {
+    // S'il n'y a pas de paramètre rssID, on redirige vers l'accueil
+    header("Location: ../index.php");
+
+    // On arrête le script PHP
+    exit();
 }

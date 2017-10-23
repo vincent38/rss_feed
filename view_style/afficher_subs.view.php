@@ -14,34 +14,44 @@
     ?>
 
     <div class="content">
-    <!-- Le contenu va ici ! -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="header">
-                        <h4 class="title">Mes abonnements</h4>
-                        <p class="category">Cliquez sur une catégorie pour en voir les nouveautés</p>
-                    </div>
-                    <div class="list-group special-list-2">
-                        <?php foreach ($data as $cat => $listeRSS) { ?>
-                            <button type="button" class="list-group-item active">
-                                <?= $cat ?>
-                            </button>
-                            <?php foreach ($data[$cat] as $r) { ?>
-                                <button type="button" class="list-group-item">
-                                    <form class = "special-form" name = "aboForm<?= $r->id ?>" action="afficher_subs.ctrl.php" method="POST">
-                                        <input type="hidden" name="unsub" value="<?= $r->id ?>">
-                                        <span onclick="location.href='<?= $r->urlParsed() ?>';"> <?= $r->titre() ?></span>
-                                    </form>
-                                    <span name="unsub" class="badge badge-error" onclick ="aboForm<?= $r->id ?>.submit()">Se désabonner</span>
+        <!-- Le contenu va ici ! -->
+        <?php if ($data): ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Mes abonnements</h4>
+                            <p class="category">Cliquez sur une catégorie pour en voir les nouveautés</p>
+                        </div>
+                        <div class="list-group special-list-2">
+                            <?php foreach ($data as $cat => $listeRSS) { ?>
+                                <button type="button" class="list-group-item active">
+                                    <?= $cat ?>
                                 </button>
+                                <?php foreach ($data[$cat] as $r) { ?>
+                                    <button type="button" class="list-group-item">
+                                        <form class = "special-form" name = "aboForm<?= $r->id ?>" action="afficher_subs.ctrl.php" method="POST">
+                                            <input type="hidden" name="unsub" value="<?= $r->id ?>">
+                                            <span onclick="location.href='<?= $r->urlParsed() ?>';"> <?= $r->titre() ?></span>
+                                        </form>
+                                        <span name="unsub" class="badge badge-error" onclick ="aboForm<?= $r->id ?>.submit()">Se désabonner</span>
+                                    </button>
+                                <?php } ?>
                             <?php } ?>
-                        <?php } ?>
+                        </div>
                     </div>
                 </div>
             </div>
+        <?php endif; ?>
 
-        </div>
+        <!-- On affiche les éventuels messages d'erreur -->
+        <?php if (isset($noResult)): ?>
+            <div class="special-no-result">                
+                <h4 class="title"><?= $noResult['type'] ?></h4>
+                <p class="category"><?= $noResult['message'] ?></p>
+                <img src="assets/img/gif/tumbleweed.gif">
+            </div>
+        <?php endif; ?>
     </div>
 
     <?php include "html/footer.php" ?>

@@ -35,11 +35,11 @@ $dao = new DAO();
 $data = array();
 $allFlux = $dao->getRSSFlux();
 
-if ($allFlux !== null) {
-    foreach ($allFlux as $rss) {
-    /* On ajoute l'objet RSS dans l'array data */
-    $data[] = $rss;
-    }
+if ($allFlux) {
+    $data = $allFlux;
+} else {
+    $noResult['type'] = 'Aucun flux';
+    $noResult['message'] = '<p class="special-subtext">Vous n\'avez enregistré aucun flux ! <a href="add_flux.ctrl.php">Ajouter un flux</a></p>';   
 }
 
 // Vue
