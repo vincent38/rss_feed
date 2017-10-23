@@ -29,8 +29,6 @@ if (isset($_POST['searchstr'])) {
         $data_opt['time'] = $time;
         $data_opt['highlight'] = $highlight;
 
-        /* Variable globale data contenant les données passées à la vue */
-        $data = array();
         $s_str = preg_split('/\s+/', $s_str); // On coupe la chaîne par des espaces
     
         /* On appelle la méthode de recherche de DAO */

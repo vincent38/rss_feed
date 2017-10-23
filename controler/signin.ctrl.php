@@ -38,4 +38,4 @@ if (!empty($_POST["username"]) and !empty($_POST["password"])) {
     $alert['icon'] = "pe-7s-attention";
 }
 
-include "../view_style/signin.view.php";
+require "../view_style/signin.view.php";
