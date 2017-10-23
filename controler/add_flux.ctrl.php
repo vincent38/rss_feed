@@ -14,8 +14,6 @@ if (!empty($_POST['url']) and !empty($_POST['titre'])) {
     $titre = htmlspecialchars($_POST['titre']);
     $url = htmlspecialchars($_POST['url']);
 
-    $dao = new DAO();
-
     if (filter_var($url, FILTER_VALIDATE_URL)) {
         //URL valide
         $rss = $dao->readRSSfromURL($url);

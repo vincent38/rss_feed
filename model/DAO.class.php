@@ -1,4 +1,8 @@
 <?php
+/* On crée une instance de DAO pour tout le programme */
+
+$dao = new DAO();
+
 class DAO {
     private $db; // L'objet de la base de donnée
 
@@ -127,28 +131,23 @@ class DAO {
     }
 
     // Crée un nouveau flux à partir d'une URL
-    // Si le flux existe déjà on ne le crée pas
+    // Renvoie l'objet RSS créé
     public function createRSS($url, $title) {
-        $rss = $this->readRSSfromURL($url);
-        if ($rss == NULL) {
-            try {
-                $q = 'INSERT INTO RSS (titre,url,date) VALUES (:title,:url,:date)';
-                $r = $this->db->prepare($q);
-                $r->bindParam(":title", $title);
-                $r->bindParam(":url", $url);
-                $t = time();
-                $r->bindParam(":date", $t);
-                $r->execute();
-                if ($r == NULL) {
-                    die("createRSS error: no rss inserted\n");
-                }
-                return $this->readRSSfromURL($url);
-            } catch (PDOException $e) {
-                die("PDO Error :".$e->getMessage());
+        try {
+            $q = 'INSERT INTO RSS (titre,url,date) VALUES (:title,:url,:date)';
+            $r = $this->db->prepare($q);
+            $r->bindParam(":title", $title);
+            $r->bindParam(":url", $url);
+            $t = time();
+            $r->bindParam(":date", $t);
+            $r->execute();
+            if ($r == NULL) {
+                die("createRSS error: no rss inserted\n");
             }
-        } else {
-            // Retourne l'objet existant
-            return $rss;
+            
+            return $this->readRSSfromURL($url);
+        } catch (PDOException $e) {
+            die("PDO Error :".$e->getMessage());
         }
     }
 

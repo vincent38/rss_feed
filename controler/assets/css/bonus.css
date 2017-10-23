@@ -195,3 +195,8 @@ a.list-group-item {
 .special-no-result img {
     margin-left: 38%;
 }
+
+/* Icône de chargement pour les traitements logns */
+.special-loading {
+    height: 40px;
+}

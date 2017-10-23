@@ -9,9 +9,6 @@ require_once('../model/RSS.class.php');
 require_once('../model/Nouvelle.class.php');
 require_once('../model/DAO.class.php');
 
-// Création de l'objet DAO
-$dao = new DAO();
-
 $userL = $_SESSION['user'] -> getLogin();
 
 if (isset($_POST['filter_chain'])) {

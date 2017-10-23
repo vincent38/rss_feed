@@ -7,8 +7,6 @@ require_once('redirect.ctrl.php');
 require_once("../model/RSS.class.php");
 require_once("../model/DAO.class.php");
 
-$dao = new DAO();
-
 /* Récupération de l'objet utilisateur à partir de la variable de session */
 $current_user = $_SESSION["user"];
 

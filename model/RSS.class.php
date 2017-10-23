@@ -51,7 +51,7 @@ class RSS {
     // Supprime les images associées au flux RSS, et les entrées des tables Nouvelle, RSS et Abonnement
     function delete() {
         // Objet DAO
-        $dao = new DAO();
+        global $dao;
 
         // On récupère toutes les nouvelles associées à ce flux
         $this->deleteImg();
@@ -66,7 +66,7 @@ class RSS {
     // Supprime les images associées au flux RSS
     function deleteImg() {
         // Objet DAO
-        $dao = new DAO();
+        global $dao;
 
         // On récupère toutes les nouvelles associées à ce flux
         $allNews = $dao->getAllNews($this->id);
@@ -82,7 +82,7 @@ class RSS {
     // Récupère un flux à partir de son URL
     function update() {
         // Objet DAO
-        $dao = new DAO();
+        global $dao;
 
         //Mise à jour date
         $dao->updateRSS($this);

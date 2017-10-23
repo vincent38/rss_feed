@@ -7,8 +7,6 @@ require_once('redirect.ctrl.php');
 require_once("../model/RSS.class.php");
 require_once("../model/DAO.class.php");
 
-$dao = new DAO();
-
 // Si les paramètres en POST sont définis, alors on ajoute l'abonnement voulu par l'utilisateur
 if (isset($_POST["flux"]) and isset($_POST["titre"]) and isset($_POST["cat"])) {
     // On traite les valeurs reçues

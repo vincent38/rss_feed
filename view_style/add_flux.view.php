@@ -37,10 +37,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class = "btn btn-success btn-fill pull-left">
+                            <button type="submit" class = "btn btn-success btn-fill pull-left" onclick="showLoading(this)">
                                 <span class="fa fa-plus" style="margin-left: -6px;"></span>
                                 Ajouter
                             </button>
+                            <img src="assets/img/gif/loading.svg" class="special-loading" alt="chargement" id="loading_ico" hidden>
                             <div class="clearfix"></div>
                         </form>
                     </div>
@@ -69,6 +70,14 @@
     
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
     <script src="assets/js/light-bootstrap-dashboard.js"></script>
+
+    <!-- Petit script JS pour l'affichage de l'icône de chargement -->
+    <script type="text/javascript">
+        function showLoading(element) {
+            element.style.display = 'none';
+            document.getElementById('loading_ico').style.display = 'block';
+        }
+    </script>
    
     <?php include "html/alert.php"; ?>
 </html>

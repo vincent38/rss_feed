@@ -1,6 +1,6 @@
 <?php
 
-require_once "DAO.class.php";
+require_once ("DAO.class.php");
 
 class User {
 
@@ -16,8 +16,8 @@ class User {
     }
 
     function ajoutAbonnement($idRSS, $nom, $cat) : bool {
+        global $dao;
 
-        $dao = new DAO;
         $status = $dao->createAbo($this->login, $idRSS, $nom, $cat);
 
         return $status;

@@ -9,8 +9,6 @@ require_once('../model/RSS.class.php');
 require_once('../model/Nouvelle.class.php');
 require_once('../model/DAO.class.php');
 
-$dao = new DAO();
-
 $data = array();
 
 /* Tableau contenant tous les codes couleur bootstrap */

@@ -8,8 +8,6 @@ require_once('../model/DAO.class.php');
 require_once('../model/RSS.class.php');
 
 if (!empty($_POST['toClean'])) {
-    $dao = new DAO();
-
     $alert['message'] = "Les flux suivants ont été purgés : <br>";
     foreach ($_POST['toClean'] as $rssData) {
         // On traite la chaîne passée en POST
@@ -28,9 +26,6 @@ if (!empty($_POST['toClean'])) {
     $alert['type'] = "success";
     $alert['icon'] = "pe-7s-check";
 }
-
-// Listing des flux
-$dao = new DAO();
 
 /* Variable globale data contenant les données passées à la vue */
 $data = array();

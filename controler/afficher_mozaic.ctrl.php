@@ -4,8 +4,6 @@
 require_once('../model/DAO.class.php');
 require_once('../model/RSS.class.php');
 
-$dao = new DAO();
-
 /* Si aucun rssID n'est passé en POST, on prend -1 */
 $rssID = $_POST['rssID'] ?? -1;
 

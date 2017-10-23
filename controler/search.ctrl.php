@@ -4,8 +4,6 @@
 require_once('../model/DAO.class.php');
 require_once('../model/RSS.class.php');
 
-$dao = new DAO();
-
 /* Variables globales contenant les données passées à la vue */
 $data = array();
 $data_opt = array();

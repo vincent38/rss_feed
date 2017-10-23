@@ -7,7 +7,8 @@ class UserManager {
     public function register($username, $mdp) : bool
     {
         // Objet DAO
-        $dao = new DAO();
+        global $dao;
+
         $mdp = password_hash($mdp, PASSWORD_BCRYPT);
         $reply = $dao->readUserBool($username);
         if ($reply) {
@@ -21,7 +22,8 @@ class UserManager {
     public function login($username, $mdp)
     {
         // Objet DAO
-        $dao = new DAO();
+        global $dao;
+
         $reply = $dao->read($username, $mdp);
         if ($reply == null) {
             return null;

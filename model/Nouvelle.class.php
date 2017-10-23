@@ -122,8 +122,8 @@ class Nouvelle {
         require_once("../model/User.class.php");
         require_once("../model/DAO.class.php");
 
-        // Instanciation de l'objet DAO
-        $dao = new DAO();
+        // Objet DAO
+        global $dao;
 
         // On démarre la session si elle n'est pas déjà lancée
         if (session_status() == PHP_SESSION_NONE) session_start();

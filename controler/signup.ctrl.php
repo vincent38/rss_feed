@@ -15,4 +15,4 @@ if (!empty($_POST["username"]) and !empty($_POST["password"])) {
     }
 }
 
-include "../view/signup.view.php";
+include "../view_style/signup.view.php";
