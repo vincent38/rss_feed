@@ -1,4 +1,6 @@
 <?php
+/* REDIRECTION D'UN UTILISATEUR SELON SON STATUT : CONNECTE OU NON */
+
 require_once("../model/User.class.php");
 
 // Are you logged in ?

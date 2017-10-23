@@ -1,7 +1,6 @@
 <?php
-/*
-Signin : connexion de l'utilisateur
-*/
+/* VUE DE CONNEXION DE L'UTILISATEUR */
+
 session_start();
 if (isset($_SESSION["user"]) and $_SESSION["user"] != null) {
     // Si l'utilisateur est déjà connecté, il est redirigé vers l'acceuil

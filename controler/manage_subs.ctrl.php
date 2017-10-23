@@ -1,5 +1,5 @@
 <?php
-/* Gestion des abonnements d'un utilisateur */
+/* GESTION DES ABONNEMENTS D'UN UTILISATEUR */
 
 // Vérification de l'authentification
 require_once('redirect.ctrl.php');

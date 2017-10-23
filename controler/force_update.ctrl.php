@@ -1,4 +1,5 @@
 <?php
+/* MISE A JOUR DU CONTENU D'UN FLUX (IMAGES, NOUVELLES) */
 
 // Vérification de l'authentification
 require_once('redirect.ctrl.php');

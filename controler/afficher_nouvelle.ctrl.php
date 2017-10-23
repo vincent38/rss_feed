@@ -1,4 +1,6 @@
 <?php
+/* AFFICHAGE D'UNE NOUVELLE */
+
 require_once('../model/DAO.class.php');
 require_once('../model/RSS.class.php');
 

@@ -1,4 +1,5 @@
 <?php
+/* VUE D'AJOUT DE FLUX */
 
 // Vérification de l'authentification
 require_once('redirect.ctrl.php');

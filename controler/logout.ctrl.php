@@ -1,10 +1,9 @@
 <?php
-/*
-Goodbye
-*/
+/* DECONNEXION D'UN UTILISATEUR */
+
 session_start();
 if (!isset($_SESSION["user"]) or $_SESSION["user"] == null) {
-    //Already out
+    // Already out
     header("Location: afficher_flux.ctrl.php");
 
     // On arrête le script PHP

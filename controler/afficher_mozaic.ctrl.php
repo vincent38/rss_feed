@@ -1,4 +1,6 @@
 <?php
+/* AFFICHAGE DES NOUVELLES PAR FLUX - EN IMAGES */
+
 require_once('../model/DAO.class.php');
 require_once('../model/RSS.class.php');
 

@@ -1,7 +1,6 @@
 <?php
-/*
-Signup : inscription de l'utilisateur
-*/
+/* INSCRIPTION DE L'UTILISATEUR */
+
 require_once("../model/UserManager.class.php");
 
 $uM = new UserManager;

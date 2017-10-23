@@ -1,4 +1,5 @@
 <?php
+/* SUPPRESSION TOTALE D'UN FLUX */
 
 // Vérification de l'authentification
 require_once('redirect.ctrl.php');

@@ -1,4 +1,5 @@
 <?php
+/* SUPPRESSION DU CONTENU DES FLUX (IMAGES, NOUVELLES) */
 
 // Vérification de l'authentification
 require_once('redirect.ctrl.php');

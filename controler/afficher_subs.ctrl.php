@@ -1,5 +1,5 @@
 <?php
-/* Affichage de la liste des abonnements d'un utilisateur, triée par catégories */
+/* AFFICHAGE DE LA LISTE DES ABONNEMENTS D'UN UTILISATEUR, TRIÉE PAR CATÉGORIES */
 
 // Vérification de l'authentification
 require_once('redirect.ctrl.php');

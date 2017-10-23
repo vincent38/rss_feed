@@ -1,4 +1,5 @@
 <?php
+/* CHOIX DE BALISES HTML A BLOQUER\AUTORISER DANS LE CONTENU DES NOUVELLES */
 
 // Vérification de l'authentification
 require_once('redirect.ctrl.php');

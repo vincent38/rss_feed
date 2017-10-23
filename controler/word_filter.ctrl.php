@@ -1,4 +1,5 @@
 <?php
+/* FILTRE DU CONTENU DES NOUVELLES PAR MOTS-CLES */
 
 // Vérification de l'authentification
 require_once('redirect.ctrl.php');

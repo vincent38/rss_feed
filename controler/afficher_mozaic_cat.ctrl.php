@@ -1,5 +1,5 @@
 <?php
-/* Affichage des nouvelles par catégorie */
+/* AFFICHAGE DES NOUVELLES PAR CATEGORIES - EN IMAGES */
 
 // Vérification de l'authentification
 require_once('redirect.ctrl.php');
