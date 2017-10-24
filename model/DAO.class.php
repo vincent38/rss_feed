@@ -248,6 +248,71 @@ class DAO {
         }
     }
 
+    // Récupération de tous les mots de la base de donnée classés par ordre de fréquence
+    //  triées de la date la plus récente à la plus ancienne
+    //  renvoie un tableau de la forme : array (nbOccurences => "mot") trié par nbOccurences
+    //  $nbJ : date de la plus vieille nouvelle à considérer en jours, 365 par défaut
+    public function getAllWords($nbJ = 365) : array {
+        try {
+            // On reformate le nombre de jours
+            $nbJ = "-$nbJ day";
+            $q = "SELECT description FROM nouvelle WHERE date >= strftime('%s', 'now', '-1 day')";            
+            $r = $this->db->prepare($q);
+            $r->execute();
+
+            // On récupère toutes les descriptions
+            $response = $r->fetchAll(PDO::FETCH_COLUMN);
+
+            $allText = "";
+
+            // On crée une longue chaîne de toutes les descriptions
+            foreach ($response as $description) {
+                // On supprime toute la ponctuation brouillant les statistiques
+                $allText .= " ".$description;
+            }
+
+            // On supprime toutes les balises HTML
+            $allText = strip_tags($allText);
+
+            // On enlève les smart quotes et autres caractères spéciaux
+            $allText = preg_replace("/[\u{2019}]/", " ", $allText);
+            $allText = preg_replace("/[\u{0022}]/", " ", $allText);
+            $allText = preg_replace("/[\u{0027}]/", " ", $allText);
+            $allText = preg_replace("/[\u{0060}]/", " ", $allText);
+
+            // On supprime les nbsp (seule solution ne plaçant pas des caractères erronés dans la chaîne)
+            $allText = hex2bin(str_replace('c2a0', '20', bin2hex($allText)));
+
+            $allText = str_replace(array(".", ",", "«", "»"), " ", $allText);
+
+            // On enlève les tabulations\entrées
+            $allText = str_replace(array("\r", "\t", "\n"), " ", $allText);
+
+            // On découpe la chaîne par espaces
+            $allText = explode(" ", $allText);
+
+            // On ne garde que les éléments contenant au moins trois caractères
+            $newText = array();
+            foreach ($allText as $word) {
+                if (strlen(utf8_decode($word)) >= 3) {
+                    $newText[] = strtolower($word);
+                }
+            }
+
+            // On enlève les mots les plus fréquents ayant peu de valeur pour ce genre de statistiques
+            // => http://eduscol.education.fr/cid47916/liste-des-mots-classee-par-frequence-decroissante.html
+            // le contenu du site a été parsé avec un script JS
+            
+
+            var_dump($newText);
+
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+
+        return array();
+    }
+
     // Récupération des nouvelles des $nJ derniers jours de chaque flux RSS d'une catégorie donnée
     //  pour un utilisateur donné
     public function getNewsFromCat($username, $cat, $nJ) {
