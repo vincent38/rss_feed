@@ -253,10 +253,12 @@ class DAO {
     //  renvoie un tableau de la forme : array (nbOccurences => "mot") trié par nbOccurences
     //  $nbJ : date de la plus vieille nouvelle à considérer en jours, 365 par défaut
     public function getAllWords($nbJ = 365) : array {
+        $stat_array = array();
+
         try {
             // On reformate le nombre de jours
             $nbJ = "-$nbJ day";
-            $q = "SELECT description FROM nouvelle WHERE date >= strftime('%s', 'now', '-1 day')";            
+            $q = "SELECT description FROM nouvelle WHERE date >= strftime('%s', 'now', '$nbJ')";            
             $r = $this->db->prepare($q);
             $r->execute();
 
@@ -283,7 +285,7 @@ class DAO {
             // On supprime les nbsp (seule solution ne plaçant pas des caractères erronés dans la chaîne)
             $allText = hex2bin(str_replace('c2a0', '20', bin2hex($allText)));
 
-            $allText = str_replace(array(".", ",", "«", "»"), " ", $allText);
+            $allText = str_replace(array(".", ",", "«", "»", "(", ")"), " ", $allText);
 
             // On enlève les tabulations\entrées
             $allText = str_replace(array("\r", "\t", "\n"), " ", $allText);
@@ -291,26 +293,55 @@ class DAO {
             // On découpe la chaîne par espaces
             $allText = explode(" ", $allText);
 
-            // On ne garde que les éléments contenant au moins trois caractères
+            // On enlève les mots les plus fréquents ayant peu de valeur pour ce genre de statistiques
+            // => http://eduscol.education.fr/cid47916/liste-des-mots-classee-par-frequence-decroissante.html
+            // le contenu du site a été parsé avec un script JS écrit à l'occasion
+            $frequent = "le de un être et à il avoir ne je son que est se qui ce au aux dans été en du elle ils il au de ce des ans en tous mes leur leurs ses les pour pas que un une vous par sur faire plus dire me on mon lui".
+            " nous comme mais pouvoir avec tout y aller voir en bien où sans tu ou leur homme était si deux mari moi je vous tu moi nous vouloir te femme venir quand grand celui si notre devoir"
+            ." là jour prendre même votre tout rien petit encore aussi quelque dont tout mer trouver donner lors temps ça peu même falloir sous parler alors main chose ton mettre"
+            ." vie savoir yeux passer autre après regarder toujours puis jamais cela ces cette celle celui qui aimer non heure croire cent monde donc jusqu enfant fois seul autre entre vers chez demander jeune"
+            ." jusque très moment rester répondre tout tête père fille avait mille premier car entendre ni bon trois cœur ainsi an quatre un terre contre monsieur voix penser quel"
+            ." arriver maison devant coup beau connaître devenir air mot nuit sentir eau vieux sembler moins tenir ici comprendre oui rendre toi vingt depuis attendre sortir ami trop"
+            ." porte lequel chaque amour pendant déjà pied tant gens parce que nom vivre reprendre entrer porter pays ciel avant frère regard chercher âme côté mort revenir noir maintenant"
+            ." nouveau ville rue enfin appeler soir chambre mourir pas partir cinq esprit soleil dur ont dernier jeter dix roi état corps beaucoup suivre bras écrire blanc montrer tomber"
+            ." place ouvrir ah parti assez leur cher voilà année loin point visage bruit lettre franc fond force arrêter perdre commencer paraître aucun marcher milieu saint idée presque"
+            ." ailleurs travail lumière long seulement mois fils neuf tel lever raison effet gouvernement permettre pauvre asseoir point plein personne vrai peuple fait parole guerre toute"
+            ." écouter pensée affaire quoi matin pierre monter bas vent doute front ombre part maître aujourd'hui besoin question apercevoir recevoir mieux peine tour servir oh autour "
+            ."près finir famille pourquoi souvent rire dessus madame sorte figure droit peur bout lieu silence gros chef ferme eh six bois mari histoire crier jouer feu tourner doux "
+            ."longtemps fort heureux comme garder partie face mouvement fin reconnaître quitter personne notamment comment route dès manger livre";
+
+            $frequent .= " lundi mardi mercredi jeudi vendredi samedi dimanche"; // => éventuellement
+
+            $frequent = explode (" ", $frequent);
+            
+            // On ne garde que les éléments contenant au moins trois caractères et n'appartenant pas à la liste des mots fréquents
             $newText = array();
             foreach ($allText as $word) {
-                if (strlen(utf8_decode($word)) >= 3) {
-                    $newText[] = strtolower($word);
+                $lower = strtolower($word);
+                if ((strlen(utf8_decode($lower)) >= 3) && (!in_array($lower, $frequent))) {
+                    $newText[] = $lower;
                 }
             }
 
-            // On enlève les mots les plus fréquents ayant peu de valeur pour ce genre de statistiques
-            // => http://eduscol.education.fr/cid47916/liste-des-mots-classee-par-frequence-decroissante.html
-            // le contenu du site a été parsé avec un script JS
+            // On compte le nombre d'occurences de chaque mot et on les stocke dans un array
+            foreach ($newText as $word) {
+                if (isset($stat_array[$word])) {
+                    $stat_array[$word]++;
+                } else {
+                    $stat_array[$word] = 1;
+                }
+            }
             
+            arsort($stat_array);
 
-            var_dump($newText);
+            echo "<pre>"; var_dump($stat_array); echo "</pre>";
+
 
         } catch (PDOException $e) {
             die("PDO Error : ".$e->getMessage());
         }
 
-        return array();
+        return $stat_array;
     }
 
     // Récupération des nouvelles des $nJ derniers jours de chaque flux RSS d'une catégorie donnée

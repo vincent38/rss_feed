@@ -12,8 +12,8 @@ $data = array();
 $allFlux = $dao->getRSSFlux();
 
 if ($allFlux) {
-    // On récupère les mots les plus fréquents du jour et on fait des traitements dessus
-    $dao->getAllWords();
+    // On récupère les mots les plus fréquents des cinq derniers jours et on fait des traitements dessus
+    $words = $dao->getAllWords(5);
 
 } else { // Si aucun flux n'est enregistré
     $noResult['type'] = 'Aucun flux';
