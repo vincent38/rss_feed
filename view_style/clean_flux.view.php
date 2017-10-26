@@ -53,6 +53,24 @@
                                     </label>
                                 </div>
                                 </br>
+                                <h5>Supprimer les nouvelles vieilles de plus de :</h5>                            
+                                <label class = "special-radio">
+                                    <input type="radio" name='time' value="up1">
+                                    24h
+                                </label>                            
+                                <label class = "special-radio">
+                                    <input type="radio" name='time'  value="up2">
+                                    deux jours
+                                </label>                            
+                                <label class = "special-radio">
+                                    <input type="radio" name='time' value="up14">
+                                    deux semaines
+                                </label>                           
+                                <label class = "special-radio">
+                                    <input type="radio" name='time'  value="upAll" checked>
+                                    tout supprimer
+                                </label> 
+                                <br><br><br>
                                 <button type="submit" class = "btn btn-warning btn-fill pull-left">
                                     <span class="fa fa-trash" style="margin-left: -6px;"></span>
                                     Purger

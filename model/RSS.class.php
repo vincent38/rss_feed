@@ -64,12 +64,12 @@ class RSS {
     }
 
     // Supprime les images associées au flux RSS
-    function deleteImg() {
+    function deleteImg($upT = -1) {
         // Objet DAO
         global $dao;
 
-        // On récupère toutes les nouvelles associées à ce flux
-        $allNews = $dao->getAllNews($this->id);
+        // On récupère toutes les nouvelles associées à ce flux, dans le laps de temps $upT
+        $allNews = $dao->getAllNews($this->id, $upT);
 
         // Pour chaque nouvelle : on supprime l'image associée
         foreach ($allNews as $new) {

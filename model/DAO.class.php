@@ -88,9 +88,12 @@ class DAO {
     }
 
     // Méthode de purge des nouvelles d'un flux
-    public function purgeRSSFlux($rssID) {
+    public function purgeRSSFlux($rssID, $upT = -1) {
         try {
-            $q = 'DELETE FROM nouvelle WHERE RSS_id = :rssID';
+            // On ajoute un filtre éventuel sur la date
+            $filter_date = ($upT != -1) ? " AND date <= strftime('%s', 'now', '-$upT day')" : "";
+
+            $q = 'DELETE FROM nouvelle WHERE RSS_id = :rssID'.$filter_date;
             $r = $this->db->prepare($q);
             $r->execute(array($rssID));
         } catch (PDOException $e) {
@@ -101,7 +104,7 @@ class DAO {
     // Méthode de suppression d'un flux
     public function deleteRSSFlux($rssID) {
         try {
-            /* On supprime dans un premier temps les abonnements utilisant $rssID*/
+            /* On supprime dans un premier temps les abonnements utilisant $rssID */
             $q = 'DELETE FROM abonnement WHERE RSS_id = :rssID';
             $r = $this->db->prepare($q);
             $r->execute(array($rssID));
@@ -222,18 +225,21 @@ class DAO {
 
     // Récupération de la liste des nouvelles d'un flux RSS (id)
     //  triées de la date la plus récente à la plus ancienne
-    public function getAllNews($rssID) {
+    public function getAllNews($rssID, $upT = -1) {
         try {
             // On ajoute la query string de filtrage
             $filter = $this->getFilterQuery();
 
+            // Si $upT est différent de -1, on ajoute un filtre sur la date
+            $filter_date = ($upT != -1) ? " AND date <= strftime('%s', 'now', '-$upT day')" : "";
+
             // Si l'ID rss n'est pas spécifié, on prend le premier apparaissant dans la liste
             if ($rssID == -1) {
-                $q = 'SELECT * FROM nouvelle WHERE RSS_id IN (SELECT id FROM RSS LIMIT 1) '.$filter.' ORDER BY date DESC';         
+                $q = 'SELECT * FROM nouvelle WHERE RSS_id IN (SELECT id FROM RSS LIMIT 1) '.$filter.' '.$filter_date.' ORDER BY date DESC';  
                 $r = $this->db->prepare($q);
                 $r->execute();
             } else {
-                $q = 'SELECT * FROM nouvelle WHERE RSS_id = :rssID '.$filter.' ORDER BY date DESC';                
+                $q = 'SELECT * FROM nouvelle WHERE RSS_id = :rssID '.$filter.' '.$filter_date.' ORDER BY date DESC';                
                 $r = $this->db->prepare($q);
                 $r->execute(array($rssID));
             }
@@ -248,26 +254,59 @@ class DAO {
         }
     }
 
+    // Récupération de la liste des nouvelles d'un flux RSS (id)
+    //  triées de la date la plus récente à la plus ancienne
+    public function getAllMixedNews($opt_time) {
+        try {
+            // On ajoute la query string de filtrage
+            $filter = $this->getFilterQuery();
+
+            // On construit le filtre sur la date
+            $opt_query =  array ("ajd" => " date >= strftime('%s', 'now', '-1 day')",
+                                "week" => " date >= strftime('%s', 'now', '-7 day') AND date < strftime('%s', 'now', '-1 day')",
+                                "all"  => " date >= strftime('%s', 'now', '-1 year') AND date < strftime('%s', 'now', '-7 day')");
+    
+            $filter_date = $opt_query[$opt_time];
+
+            $q = 'SELECT * FROM nouvelle WHERE '.$filter_date.' '.$filter.' ORDER BY date DESC';                
+            $r = $this->db->prepare($q);
+            $r->execute();
+
+            $response = $r->fetchAll(PDO::FETCH_CLASS, "Nouvelle");
+
+            if (sizeof($response) > 0){
+                return $response;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+    }
+
     // Récupération de tous les mots de la base de donnée classés par ordre de fréquence
     //  triées de la date la plus récente à la plus ancienne
     //  renvoie un tableau de la forme : array (nbOccurences => "mot") trié par nbOccurences
     //  $nbJ : date de la plus vieille nouvelle à considérer en jours, 365 par défaut
-    public function getAllWords($nbJ = 365) : array {
+    //  $nbMots : nombre de mots à lister, 30 par défaut
+    public function getAllWords($nbJ = 365, $nbMots = 30) : array {
         $stat_array = array();
 
         try {
             // On reformate le nombre de jours
             $nbJ = "-$nbJ day";
-            $q = "SELECT description FROM nouvelle WHERE date >= strftime('%s', 'now', '$nbJ')";            
+            $q = "SELECT description, titre FROM nouvelle WHERE date >= strftime('%s', 'now', '$nbJ')";            
             $r = $this->db->prepare($q);
             $r->execute();
 
             // On récupère toutes les descriptions
             $response = $r->fetchAll(PDO::FETCH_COLUMN);
 
-            $allText = "";
+            // Si le résultat est vide on retourne un array vide
+            if (!$response) return $stat_array;
 
             // On crée une longue chaîne de toutes les descriptions
+            $allText = "";
             foreach ($response as $description) {
                 // On supprime toute la ponctuation brouillant les statistiques
                 $allText .= " ".$description;
@@ -308,22 +347,25 @@ class DAO {
             ." ailleurs travail lumière long seulement mois fils neuf tel lever raison effet gouvernement permettre pauvre asseoir point plein personne vrai peuple fait parole guerre toute"
             ." écouter pensée affaire quoi matin pierre monter bas vent doute front ombre part maître aujourd'hui besoin question apercevoir recevoir mieux peine tour servir oh autour "
             ."près finir famille pourquoi souvent rire dessus madame sorte figure droit peur bout lieu silence gros chef ferme eh six bois mari histoire crier jouer feu tourner doux "
-            ."longtemps fort heureux comme garder partie face mouvement fin reconnaître quitter personne notamment comment route dès manger livre";
+            ."longtemps fort heureux comme garder partie face mouvement fin reconnaître quitter personne notamment comment route dès manger livre"
+            ."premier second troisième quatrième cinquième sixième septième huitième neuvième onzième douzième"
+            ." doit devra devrait devrez doivent devait malgré sont sommes étiez êtes";
 
             $frequent .= " lundi mardi mercredi jeudi vendredi samedi dimanche"; // => éventuellement
+            $frequent .= " janvier février mars avril mai juin juille aout septembre octobre novembre décembre"; // => éventuellement
 
             $frequent = explode (" ", $frequent);
             
-            // On ne garde que les éléments contenant au moins trois caractères et n'appartenant pas à la liste des mots fréquents
+            // On ne garde que les éléments contenant au moins cinq caractères et n'appartenant pas à la liste des mots fréquents
             $newText = array();
             foreach ($allText as $word) {
                 $lower = strtolower($word);
-                if ((strlen(utf8_decode($lower)) >= 3) && (!in_array($lower, $frequent))) {
+                if ((strlen($lower) >= 5) && (!in_array($lower, $frequent))) {
                     $newText[] = $lower;
                 }
             }
 
-            // On compte le nombre d'occurences de chaque mot et on les stocke dans un array
+            // On compte le nombre d'occurences de chaque mot et on les trie
             foreach ($newText as $word) {
                 if (isset($stat_array[$word])) {
                     $stat_array[$word]++;
@@ -331,11 +373,11 @@ class DAO {
                     $stat_array[$word] = 1;
                 }
             }
-            
+
             arsort($stat_array);
 
-            echo "<pre>"; var_dump($stat_array); echo "</pre>";
-
+            // On ne retient que les 30 mots les plus présents
+            $stat_array = array_slice($stat_array, 0, 30);
 
         } catch (PDOException $e) {
             die("PDO Error : ".$e->getMessage());

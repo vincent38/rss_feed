@@ -61,7 +61,7 @@ if ($allCat) {
 
     } else { // Sinon on affiche un message d'erreur
         $noResult['type'] = "Catégorie vide";
-        $noResult['message'] = '<p class="special-subtext">Rien de neuf ici pour les dernières 24 heures... <a href="afficher_flux.ctrl.php">Lire des nouvelles plus anciennes</a></p>';      
+        $noResult['message'] = '<p class="special-subtext">Rien de neuf ici pour les dernières 24 heures... <a href="force_update.ctrl.php">Mettre à jour les flux</a></p>';      
     }
 
     $data['selectedCat'] = $selectedCat;

@@ -12,6 +12,12 @@
                     <p>Afficher tous les flux</p>
                 </a>
             </li>
+            <li <?= $mode=="todayF" ? 'class="active"' : ""?>>
+                <a href="today.ctrl.php">
+                    <i class="pe-7s-news-paper"></i>
+                    <p>Aujourd'hui</p>
+                </a>
+            </li>
             <li <?= $mode=="myAbo" ? 'class="active"' : ""?>>
                 <a href="afficher_subs.ctrl.php">
                     <i class="pe-7s-signal"></i>

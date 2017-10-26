@@ -9,4 +9,9 @@
         <i class = "fa fa-picture-o"></i>
         En images</a>
     </li>
+    <li <?= $tab_mode=="dateT" ? 'class="active"' : ""?>>
+        <a href="afficher_date.ctrl.php">
+        <i class = "fa fa-clock-o"></i>
+        Par date</a>
+    </li>
 </ul>

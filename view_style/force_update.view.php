@@ -27,7 +27,7 @@
                     <div class="card">
                         <div class="header">
                             <h4 class="title">Mettre à jour un flux</h4>
-                            <p class="category">Choisissez les flux à mettre à jour</p>
+                            <p class="category">Mettre à jour un flux télécharge les nouvelles et images associées à ce flux</p>
                         </div>
                         <div class="content">
                             <br>
