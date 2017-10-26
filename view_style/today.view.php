@@ -14,7 +14,7 @@
             <div class="card col-lg-12">
                 <div class="header special-wordlist-title">
                     <h4 class="title">Aujourd'hui</h4>
-                    <p class="category">Les mots de l'actualité d'aujourd'hui</p>
+                    <p class="category">Les mots de l'actualité</p>
                 </div>
 
                 <div class = "special-wordlist">

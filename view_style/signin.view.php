@@ -6,6 +6,7 @@
   
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="assets/css/bonus.css" rel="stylesheet" />
 
 	<style>
 		@import url(https://fonts.googleapis.com/css?family=Open+Sans);
@@ -80,6 +81,9 @@
         <input type="password" name="password" placeholder="Mot de passe" required="required" />
         <button type="submit" class="btn btn-primary btn-block btn-large">Connexion</button>
     </form>
+	<div class="special-link-signin">
+		<a href="signup.ctrl.php">Créer un compte</a>
+	</div>
 </div>
 
 </body>

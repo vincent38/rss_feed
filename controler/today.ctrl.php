@@ -2,7 +2,6 @@
 /* AFFICHAGE D'UN NUAGE DE MOTS PRESENTANT L'ACTUALITE */
 
 // Vérification de l'authentification
-require_once('redirect.ctrl.php');
 require_once('../model/DAO.class.php');
 require_once('../model/RSS.class.php');
  

@@ -220,3 +220,15 @@ a.list-group-item {
 .special-wordlist-title {
     margin-top: 15px;
 }
+
+/* Lien vers la création d'un compte */
+.special-link-signin {
+    text-align: center;
+    margin-top:20px;
+}
+
+.special-link-signin a {
+    text-decoration: none;
+    font-size: 15px;
+    color:white;
+}
