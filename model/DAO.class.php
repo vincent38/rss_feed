@@ -334,7 +334,7 @@ class DAO {
 
             // On enlève les mots les plus fréquents ayant peu de valeur pour ce genre de statistiques
             // => http://eduscol.education.fr/cid47916/liste-des-mots-classee-par-frequence-decroissante.html
-            // le contenu du site a été parsé avec un script JS écrit à l'occasion
+            // le contenu du site a été parsé avec un script JS écrit à l'occasion (liste complète dans le fichier frequent.txt)
             $frequent = "le de un être et à il avoir ne je son que est se qui ce au aux dans été en du elle ils il au de ce des ans en tous mes leur leurs ses les pour pas que un une vous par sur faire plus dire me on mon lui".
             " nous comme mais pouvoir avec tout y aller voir en bien où sans tu ou leur homme était si deux mari moi je vous tu moi nous vouloir te femme venir quand grand celui si notre devoir"
             ." là jour prendre même votre tout rien petit encore aussi quelque dont tout mer trouver donner lors temps ça peu même falloir sous parler alors main chose ton mettre"
@@ -349,7 +349,7 @@ class DAO {
             ."près finir famille pourquoi souvent rire dessus madame sorte figure droit peur bout lieu silence gros chef ferme eh six bois mari histoire crier jouer feu tourner doux "
             ."longtemps fort heureux comme garder partie face mouvement fin reconnaître quitter personne notamment comment route dès manger livre"
             ."premier second troisième quatrième cinquième sixième septième huitième neuvième onzième douzième"
-            ." doit devra devrait devrez doivent devait malgré sont sommes étiez êtes";
+            ." doit devra devrait devrez doivent devait malgré sont sommes étiez êtes faire faisait est était été ont seraient étaient";
 
             $frequent .= " lundi mardi mercredi jeudi vendredi samedi dimanche"; // => éventuellement
             $frequent .= " janvier février mars avril mai juin juille aout septembre octobre novembre décembre"; // => éventuellement

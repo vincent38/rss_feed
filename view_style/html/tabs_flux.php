@@ -4,6 +4,11 @@
         <i class = "fa fa-plus"></i>
         Ajouter un flux</a>
     </li>
+    <li <?= $tab_mode=="diskF" ? 'class="active"' : ""?>>
+        <a href="disk_space.ctrl.php">
+        <i class = "fa fa-database"></i>
+        Gérer l'espace disque</a>
+    </li>
     <li <?= $tab_mode=="upF" ? 'class="active"' : ""?>>
         <a href="force_update.ctrl.php">
         <i class = "fa fa-refresh"></i>
