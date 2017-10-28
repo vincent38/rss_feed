@@ -13,8 +13,8 @@ $allFlux = $dao->getRSSFlux();
 if ($allFlux) {
     $nbMots = 30;
 
-    // On récupère les 30 mots les plus fréquents des 5 derniers jours, triés par fréquence
-    $words = $dao->getAllWords(5, $nbMots);
+    // On récupère les 30 mots les plus fréquents des 10 derniers jours, triés par fréquence
+    $words = $dao->getAllWords(10, $nbMots);
 
     if ($words) {
         // On calcule les polices via un ratio par rapport au mot le plus fréquent
@@ -27,7 +27,7 @@ if ($allFlux) {
             $coul = $color_set[$i%12];
 
             // On calcule la taille => déduite du nombre d'occurences et de l'ordre d'apparition dans la liste
-            $size = (int)(($nb/$max_occ) * 70 + (($nbMots - $i)/$nbMots) * 10);
+            $size = (int)(($nb/$max_occ) * 60 + (($nbMots - $i)/$nbMots) * 10);
 
             $data[] = array ("txt" => $word, "coul" => $coul, "taille" => $size);
 
@@ -36,7 +36,7 @@ if ($allFlux) {
 
     } else { // S'il n'y a aucun mot reçu
         $noResult['type'] = "Rien à voir";
-        $noResult['message'] = '<p class="special-subtext">Rien de neuf ici pour les dernières 24 heures... <a href="force_update.ctrl.php">Mettre à jour les flux</a></p>';  
+        $noResult['message'] = '<p class="special-subtext">Rien de neuf ici pour les cinq derniers jours... <a href="force_update.ctrl.php">Mettre à jour les flux</a></p>';  
     }
 
 } else { // Si aucun flux n'est enregistré

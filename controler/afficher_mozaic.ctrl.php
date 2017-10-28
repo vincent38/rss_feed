@@ -24,7 +24,7 @@ if ($all_news) {
         $rssObj = $dao->readRSSfromID($nouvelle->RSS_id());
 
         if ($nouvelle -> urlImage() === null) {
-            $nouvelle->realImg = "../data/no_img.png";            
+            $nouvelle->realImg = "../view_style/assets/img/no_img.png";            
         } else {
             $nouvelle->realImg = $nouvelle->urlImage();
         }

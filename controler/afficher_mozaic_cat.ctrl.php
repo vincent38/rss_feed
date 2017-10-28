@@ -55,7 +55,7 @@ if ($allCat) {
             $new->RSStitre = ($dao->readRSSfromID($new->RSS_id()))->titre();       
             
             if ($new -> urlImage() === null) {
-                $new->realImg = "../data/no_img.png";            
+                $new->realImg = "../view_style/assets/img/no_img.png";            
             } else {
                 $new->realImg = $new->urlImage();
             }

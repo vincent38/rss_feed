@@ -10,11 +10,16 @@ require_once('../model/Nouvelle.class.php');
 require_once('../model/DAO.class.php');
 
 if (!empty($_POST['url']) and !empty($_POST['titre'])) {
-    //OK, on échappe et on fait les vérifs
+    //OK, on échappe le titre et on fait les vérifs
     $titre = htmlspecialchars($_POST['titre']);
+
     $url = htmlspecialchars($_POST['url']);
 
-    if (filter_var($url, FILTER_VALIDATE_URL)) {
+    //if (filter_var($url, FILTER_VALIDATE_URL)) {
+    // précédemment, filter_var était utilisé, mais cette méthode bloquait des URLs pourtant valides, comme :
+    // http://www.courrierinternational.com/feed/all/rss.xml
+    // On utilisera donc une expression régulière provenant du site codekarate.com
+    if (preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $url)) {        
         //URL valide
         $rss = $dao->readRSSfromURL($url);
         if ($rss == NULL) {

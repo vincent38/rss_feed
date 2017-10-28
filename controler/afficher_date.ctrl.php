@@ -28,7 +28,7 @@ $allNews = $dao->getAllMixedNews($opt_time);
 if ($allNews) {
     foreach ($allNews as $new) {
         /* On ajoute le titre du flux contenant dans l'objet new */
-        $new->RSStitre = $dao->readRSSfromID($new->RSS_id())->titre();
+        $new->titreFlux = $dao->readRSSfromID($new->RSS_id())->titre();
 
         /* On ajoute l'objet NEW dans l'array data */
         $data['news'][] = $new;
