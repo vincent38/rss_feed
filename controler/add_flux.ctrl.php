@@ -38,7 +38,7 @@ if (!empty($_POST['url']) and !empty($_POST['titre'])) {
                 // On supprime le flux de la base de données et on affiche un message d'erreur
                 $rss->delete();
 
-                $alert['message'] = "Erreur : l'URL de ce flux ne renvoie pas vers un flux RSS valide";
+                $alert['message'] = "Erreur : l\'URL de ce flux ne renvoie pas vers un flux RSS valide";
                 $alert['type'] = "danger";
                 $alert['icon'] = "pe-7s-attention";
             }
