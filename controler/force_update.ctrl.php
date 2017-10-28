@@ -37,4 +37,4 @@ if ($allFlux) {
 }
 
 // Vue
-include "../view_style/force_update.view.php";
+require_once "../view_style/force_update.view.php";

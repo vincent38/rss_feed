@@ -5,7 +5,7 @@
 	<title>RSSFeed</title>
   
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-	<link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../view_style/assets/css/bootstrap.min.css" rel="stylesheet" />
 
 	<style>
 		@import url(https://fonts.googleapis.com/css?family=Open+Sans);
@@ -67,9 +67,9 @@
 		input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgba(255,255,255,0.2); }
 	</style>
 
-	<link href="assets/css/animate.min.css" rel="stylesheet"/>
+	<link href="../view_style/assets/css/animate.min.css" rel="stylesheet"/>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
-	<link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+	<link href="../view_style/assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -84,10 +84,10 @@
 
 </body>
 	<!--   Core JS Files   -->
-	<script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
-	<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="../view_style/assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+	<script src="../view_style/assets/js/bootstrap.min.js" type="text/javascript"></script>
 	<!--  Notifications Plugin    -->
-	<script src="assets/js/bootstrap-notify.js"></script>
+	<script src="../view_style/assets/js/bootstrap-notify.js"></script>
 
 	<?php include "html/alert.php"; ?>
 </html>

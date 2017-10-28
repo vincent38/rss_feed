@@ -58,4 +58,4 @@ if ($allFlux) {
 }
 
 // Vue
-include "../view_style/clean_flux.view.php";
+require_once "../view_style/clean_flux.view.php";

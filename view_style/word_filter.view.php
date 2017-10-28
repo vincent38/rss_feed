@@ -67,21 +67,21 @@
 
 </body>
     <!--   Core JS Files   -->
-    <script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
-	<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../view_style/assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+	<script src="../view_style/assets/js/bootstrap.min.js" type="text/javascript"></script>
 
 	<!--  Checkbox, Radio & Switch Plugins -->
-	<script src="assets/js/bootstrap-checkbox-radio-switch.js"></script>
+	<script src="../view_style/assets/js/bootstrap-checkbox-radio-switch.js"></script>
 
     <!--  Notifications Plugin    -->
-    <script src="assets/js/bootstrap-notify.js"></script>
+    <script src="../view_style/assets/js/bootstrap-notify.js"></script>
     
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-    <script src="assets/js/light-bootstrap-dashboard.js"></script>
+    <script src="../view_style/assets/js/light-bootstrap-dashboard.js"></script>
    
     <!-- Code bonus pour le plugin tags -->
-    <link href="assets/css/bootstrap-tagsinput.css" rel="stylesheet" />
-    <script src="assets/js/bootstrap-tagsinput.min.js"></script>
+    <link href="../view_style/assets/css/bootstrap-tagsinput.css" rel="stylesheet" />
+    <script src="../view_style/assets/js/bootstrap-tagsinput.min.js"></script>
 
     <?php include "html/alert.php"; ?>
 </html>

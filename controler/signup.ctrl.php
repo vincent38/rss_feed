@@ -31,4 +31,4 @@ if (!empty($_POST["username"]) and !empty($_POST["password"])) {
     }
 }
 
-include "../view_style/signup.view.php";
+require_once "../view_style/signup.view.php";

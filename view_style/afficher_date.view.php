@@ -71,7 +71,7 @@
             <div class="special-no-result">                
                 <h4 class="title"><?= $noResult['type'] ?></h4>
                 <p class="category"><?= $noResult['message'] ?></p>
-                <img src="assets/img/gif/tumbleweed.gif">
+                <img src="../view_style/assets/img/gif/tumbleweed.gif">
             </div>
         <?php endif; ?>
     </div>
@@ -85,17 +85,17 @@
 </body>
 
     <!--   Core JS Files   -->
-    <script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
-	<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../view_style/assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+	<script src="../view_style/assets/js/bootstrap.min.js" type="text/javascript"></script>
 
 	<!--  Checkbox, Radio & Switch Plugins -->
-	<script src="assets/js/bootstrap-checkbox-radio-switch.js"></script>
+	<script src="../view_style/assets/js/bootstrap-checkbox-radio-switch.js"></script>
 
     <!--  Notifications Plugin    -->
-    <script src="assets/js/bootstrap-notify.js"></script>
+    <script src="../view_style/assets/js/bootstrap-notify.js"></script>
     
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-    <script src="assets/js/light-bootstrap-dashboard.js"></script>
+    <script src="../view_style/assets/js/light-bootstrap-dashboard.js"></script>
 
     <?php include "html/alert.php"; ?>
 </html>

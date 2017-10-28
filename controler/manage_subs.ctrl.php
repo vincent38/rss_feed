@@ -47,4 +47,4 @@ if (!$data) {
 }
 
 
-include "../view_style/manage_subs.view.php";
+require_once "../view_style/manage_subs.view.php";

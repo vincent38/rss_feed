@@ -34,4 +34,4 @@ if ($allFlux) {
 }
 
 // Vue
-require "../view_style/delete_flux.view.php";
+require_once "../view_style/delete_flux.view.php";

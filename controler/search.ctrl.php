@@ -63,4 +63,4 @@ if (isset($_POST['searchstr'])) {
 }
 
 // Vue
-include "../view_style/search.view.php";
+require_once "../view_style/search.view.php";
