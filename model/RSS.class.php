@@ -98,7 +98,7 @@ class RSS {
         // Si l'url est non vide, on fait les traitements voulus
         if ($this->url) {
             //Telecharge le fichier XML dans $doc
-            $return = $doc->load($this->url);
+            $return = @$doc->load($this->url);
 
             // S'il n'y a pas eu d'erreur de chargement
             if ($return) {

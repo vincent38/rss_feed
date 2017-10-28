@@ -182,9 +182,6 @@ class DAO {
             $t = time();
             $r->bindParam(":date", $t);
             $r->execute();
-            if ($r == NULL) {
-                die("createRSS error: no rss inserted\n");
-            }
             
             return $this->readRSSfromURL($url);
         } catch (PDOException $e) {

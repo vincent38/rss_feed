@@ -28,13 +28,21 @@ if (!empty($_POST['url']) and !empty($_POST['titre'])) {
         if ($rss == NULL) {
             //URL Inconnue, on ajoute
             $rss = $dao->createRSS($url, $titre);
-            $rss->update();
+            
+            // Si la mise à jour se passe correctement :
+            if ($rss->update()) {
+                $alert['message'] = "Flux ajouté !";
+                $alert['type'] = "success";
+                $alert['icon'] = "pe-7s-check";
+            } else {
+                // On supprime le flux de la base de données et on affiche un message d'erreur
+                $rss->delete();
 
-            $alert['message'] = "Flux ajouté !";
-            $alert['type'] = "success";
-            $alert['icon'] = "pe-7s-check";
-            // type = ['','info','success','warning','danger'];
-            // icones : pe-7s-check, pe-7s-close-circle,  pe-7s-attention
+                $alert['message'] = "Erreur : l'URL de ce flux ne renvoie pas vers un flux RSS valide";
+                $alert['type'] = "danger";
+                $alert['icon'] = "pe-7s-attention";
+            }
+
         } else {
             $alert['message'] = "Flux déjà présent en BDD !";
             $alert['type'] = "warning";
