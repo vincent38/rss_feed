@@ -1,5 +1,5 @@
 <!-- Script PHP réalisant les alertes souhaitées pour nos différentes pages -->
-<?php if ($alert):?>
+<?php if (isset($alert) && ($alert)):?>
     <script type="text/javascript">
         $(document).ready(function(){
             $.notify({
