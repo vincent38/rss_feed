@@ -19,10 +19,16 @@ if (isset($_POST['toBlock'])) { // => note : erreur dans le nommage du paramètr
     $params = array("typo", "img", "iframe", "a", "script", "noBlock");
     $valide = true;
 
-    foreach ($_POST['toBlock'] as $arg) {
-        if (!in_array($arg, $params)) {
+    if (is_array($_POST['toBlock'])) {
+        foreach ($_POST['toBlock'] as $arg) {
+            if (!in_array($arg, $params)) {
+                $valide = false;
+                break;
+            }
+        }
+    } else {
+        if (!in_array($_POST['toBlock'], $params)) {
             $valide = false;
-            break;
         }
     }
 

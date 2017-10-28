@@ -20,6 +20,7 @@ if ($stats) {
 
     $data['labels'] = "";
     $data['stats'] = "";
+    $data['colors'] = "";
 
     $i = 0;
 

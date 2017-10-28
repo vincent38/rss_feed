@@ -70,12 +70,14 @@ class RSS {
 
         // On récupère toutes les nouvelles associées à ce flux, dans le laps de temps $upT
         $allNews = $dao->getAllNews($this->id, $upT);
-
+        
         // Pour chaque nouvelle : on supprime l'image associée
-        foreach ($allNews as $new) {
-            // Suppression de l'image associée à la nouvelle
-            if (file_exists($new->urlImage()))
-                unlink($new->urlImage());
+        if ($allNews) {
+            foreach ($allNews as $new) {
+                // Suppression de l'image associée à la nouvelle
+                if (file_exists($new->urlImage()))
+                    unlink($new->urlImage());
+            }
         }
     }
 
@@ -84,45 +86,58 @@ class RSS {
         // Objet DAO
         global $dao;
 
+        // Succès ou non de la mise à jour
+        $success = false;
+
         //Mise à jour date
         $dao->updateRSS($this);
 
         // Cree un objet pour accueillir le contenu du RSS : un document XML
         $doc = new DOMDocument;
 
-        //Telecharge le fichier XML dans $doc
-        $doc->load($this->url);
+        // Si l'url est non vide, on fait les traitements voulus
+        if ($this->url) {
+            //Telecharge le fichier XML dans $doc
+            $return = $doc->load($this->url);
 
-        // Recupère la liste (DOMNodeList) de tous les elements de l'arbre 'title'
-        $nodeList = $doc->getElementsByTagName('title');
+            // S'il n'y a pas eu d'erreur de chargement
+            if ($return) {
+                // Recupère la liste (DOMNodeList) de tous les elements de l'arbre 'title'
+                $nodeList = $doc->getElementsByTagName('title');
 
-        // Met à jour le titre dans l'objet
-        $this->titre = $nodeList->item(0)->textContent;
+                // Met à jour le titre dans l'objet
+                $this->titre = $nodeList->item(0)->textContent;
 
-        // Récupère tous les items du flux RSS
-        foreach ($doc->getElementsByTagName('item') as $node) {
+                // Récupère tous les items du flux RSS
+                foreach ($doc->getElementsByTagName('item') as $node) {
 
-            // Création d'un objet Nouvelle à conserver dans la liste $this->nouvelles
-            $nouvelle = new Nouvelle();
+                    // Création d'un objet Nouvelle à conserver dans la liste $this->nouvelles
+                    $nouvelle = new Nouvelle();
 
-            // Modifie cette nouvelle avec l'information téléchargée
-            $nouvelle->update($node);
+                    // Modifie cette nouvelle avec l'information téléchargée
+                    $nouvelle->update($node);
 
-            // On n'a pas la nouvelle dans la table, on l'ajoute
-            if ($dao->readNouvellefromTitre($nouvelle->titre(),$this->id) === null) {
-                //Ajout nouvelle dans la BDD
-                $idN = $dao->createNouvelle($nouvelle, $this->id);
+                    // On n'a pas la nouvelle dans la table, on l'ajoute
+                    if ($dao->readNouvellefromTitre($nouvelle->titre(),$this->id) === null) {
+                        //Ajout nouvelle dans la BDD
+                        $idN = $dao->createNouvelle($nouvelle, $this->id);
 
-                // Ajout image et lien avec la nouvelle
-                $nouvelle->downloadImage($node, $idN);
-                $dao->addImageToNouvelle($nouvelle->urlImage(), $idN);
-            } else {
-                $nouvelle = $dao->readNouvellefromTitre($nouvelle->titre(),$this->id);
+                        // Ajout image et lien avec la nouvelle
+                        $nouvelle->downloadImage($node, $idN);
+                        $dao->addImageToNouvelle($nouvelle->urlImage(), $idN);
+                    } else {
+                        $nouvelle = $dao->readNouvellefromTitre($nouvelle->titre(),$this->id);
+                    }
+
+                    //Ajout de la nouvelle
+                    $this->nouvelles[] = $nouvelle;
+                }
+
+                $success = true;
             }
-
-            //Ajout de la nouvelle
-            $this->nouvelles[] = $nouvelle;
         }
+
+        return $success;
     }
 
 }
