@@ -51,7 +51,7 @@ if ($all_news) {
     $data['selectedID'] = $all_news[0]->RSS_id();
 
 } else { // Si on a aucun résultat
-    $noResult['type'] = "Flux vide ou paramètres incorrects";
+    $noResult = array(); $noResult['type'] = "Flux vide ou paramètres incorrects";
     $noResult['message'] = '<p class="special-subtext">Il n\'y a rien à voir... <a href = "afficher_flux.ctrl.php">Retourner à la liste des flux</a></p>';
 }
 

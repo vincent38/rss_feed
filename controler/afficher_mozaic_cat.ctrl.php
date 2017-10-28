@@ -17,6 +17,9 @@ $allCat = $dao->getAllCat($current_user->getLogin());
 $data = array();
 $data_new = array();
 
+// Déclaration de la variable contenant les messages d'erreur
+$alert = array();
+
 /* Tableau contenant tous les codes couleur bootstrap */
 $allCodes = array ("btn-success", "btn-info", "btn-warning", "btn-danger", "btn-default");
 
@@ -64,7 +67,7 @@ if ($allCat) {
         // On stocke toutes les informations dans l'objet data
         $data['news'] = $news;
     } else {
-        $noResult['type'] = "Catégorie vide";
+        $noResult = array(); $noResult['type'] = "Catégorie vide";
         $noResult['message'] = '<p class="special-subtext">Rien de neuf ici pour les dernières 24 heures... <a href="afficher_flux.ctrl.php">Lire des nouvelles plus anciennes</a></p>';      
     }
 
@@ -73,7 +76,7 @@ if ($allCat) {
 } else {
 
     // Si l'utilisateur n'est abonné à aucune catégorie, on affiche un message d'erreur
-    $noResult['type'] = 'Aucun abonnement';
+    $noResult = array(); $noResult['type'] = 'Aucun abonnement';
     $noResult['message'] = '<p class="special-subtext">Vous n\'êtes abonné à aucun flux ! <a href="manage_subs.ctrl.php">Créer un abonnement</a></p>';   
 }
 

@@ -35,12 +35,12 @@ if ($allFlux) {
         }
 
     } else { // S'il n'y a aucun mot reçu
-        $noResult['type'] = "Rien à voir";
+        $noResult = array(); $noResult['type'] = "Rien à voir";
         $noResult['message'] = '<p class="special-subtext">Rien de neuf ici pour les cinq derniers jours... <a href="force_update.ctrl.php">Mettre à jour les flux</a></p>';  
     }
 
 } else { // Si aucun flux n'est enregistré
-    $noResult['type'] = 'Aucun flux';
+    $noResult = array(); $noResult['type'] = 'Aucun flux';
     $noResult['message'] = '<p class="special-subtext">Vous n\'avez enregistré aucun flux ! <a href="add_flux.ctrl.php">Ajouter un flux</a></p>';   
 }
 

@@ -4,6 +4,9 @@
 require_once("../model/User.class.php");
 require_once("../model/UserManager.class.php");
 
+// Déclaration de la variable contenant les messages d'erreur
+$alert = array();
+
 session_start();
 if (isset($_SESSION["user"]) and $_SESSION["user"] != null) {
     // Si l'utilisateur est déjà connecté, il est redirigé vers l'acceuil

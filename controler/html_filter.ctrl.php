@@ -9,6 +9,9 @@ require_once('../model/RSS.class.php');
 require_once('../model/Nouvelle.class.php');
 require_once('../model/DAO.class.php');
 
+// Déclaration de la variable contenant les messages d'erreur
+$alert = array();
+
 $userL = $_SESSION['user'] -> getLogin();
 
 if (isset($_POST['toBlock'])) { // => note : erreur dans le nommage du paramètre, il s'agit bien des balises à AUTORISER

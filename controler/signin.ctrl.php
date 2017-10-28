@@ -1,6 +1,9 @@
 <?php
 /* VUE DE CONNEXION DE L'UTILISATEUR */
 
+// Déclaration de la variable contenant les messages d'erreur
+$alert = array();
+
 session_start();
 if (isset($_SESSION["user"]) and $_SESSION["user"] != null) {
     // Si l'utilisateur est déjà connecté, il est redirigé vers l'acceuil

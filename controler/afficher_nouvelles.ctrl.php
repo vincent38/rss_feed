@@ -27,10 +27,10 @@ if (isset($_GET['rssID'])) {
 
         /* Si l'objet RSS existe, on affiche un message signifiant que le flux est vide */
         if ($rssObj) {
-            $noResult['type'] = "Flux vide";
+            $noResult = array(); $noResult['type'] = "Flux vide";
             $noResult['message'] = '<p class="special-subtext">Rien à afficher ! Ce flux est vide... <a href = "afficher_flux.ctrl.php">Retourner à la liste des flux</a></p>';        
         } else { // Sinon c'est une erreur
-            $noResult['type'] = "RSS_ID incorrect";
+            $noResult = array(); $noResult['type'] = "RSS_ID incorrect";
             $noResult['message'] = '<p class="special-subtext">Ce flux RSS n\'existe pas. <a href = "afficher_flux.ctrl.php">Retourner à la liste des flux</a></p>';
         }
     }

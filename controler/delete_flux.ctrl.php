@@ -7,6 +7,9 @@ require_once('redirect.ctrl.php');
 require_once('../model/DAO.class.php');
 require_once('../model/RSS.class.php');
 
+// Déclaration de la variable contenant les messages d'erreur
+$alert = array();
+
 if (!empty($_POST['toDelete'])) {
     $alert['message'] = "Les flux suivants ont été supprimés : <br>";
     
@@ -29,7 +32,7 @@ $allFlux = $dao->getRSSFlux();
 if ($allFlux) {
     $data = $allFlux;
 } else { // On affiche un message d'erreur
-    $noResult['type'] = 'Aucun flux';
+    $noResult = array(); $noResult['type'] = 'Aucun flux';
     $noResult['message'] = '<p class="special-subtext">Vous n\'avez enregistré aucun flux ! <a href="add_flux.ctrl.php">Ajouter un flux</a></p>';   
 }
 

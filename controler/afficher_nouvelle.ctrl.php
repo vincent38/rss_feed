@@ -34,7 +34,7 @@ if (isset($_GET['newID']) and isset( $_GET['rssID'])) {
         /* ================================================================= */
 
     } else { // On affiche un message d'erreur approprié
-        $noResult['type'] = "Aucun résultat";
+        $noResult = array(); $noResult['type'] = "Aucun résultat";
         $noResult['message'] = '<p class="special-subtext">Rien à afficher ! Paramètres incorrects... <a href="afficher_flux.ctrl.php">Liste des flux</a></p>';
     }
 

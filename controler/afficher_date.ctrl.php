@@ -35,7 +35,7 @@ if ($allNews) {
     }
 } else { // Aucune nouvelle dans la base de données
 
-    $noResult['type'] = "Aucune nouvelle";
+    $noResult = array(); $noResult['type'] = "Aucune nouvelle";
     $noResult['message'] = '<p class="special-subtext">Rien de neuf ici... <a href="force_update.ctrl.php">Mettre à jour les flux</a></p>';    
 
 }

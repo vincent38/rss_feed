@@ -9,6 +9,9 @@ require_once('../model/RSS.class.php');
 require_once('../model/Nouvelle.class.php');
 require_once('../model/DAO.class.php');
 
+// Déclaration de la variable contenant les messages d'erreur
+$alert = array();
+
 if (!empty($_POST['url']) and !empty($_POST['titre'])) {
     //OK, on échappe le titre et on fait les vérifs
     $titre = htmlspecialchars($_POST['titre']);

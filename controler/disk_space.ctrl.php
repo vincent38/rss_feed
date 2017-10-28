@@ -38,7 +38,7 @@ if ($stats) {
     $data['colors'] = substr($data['colors'], 1);
 
 } else {
-    $noResult['type'] = 'Aucune image stockée';
+    $noResult = array(); $noResult['type'] = 'Aucune image stockée';
     $noResult['message'] = '<p class="special-subtext">Il n\'y a aucune image stockée dans la base de données ! <a href="add_flux.ctrl.php">Ajouter un flux</a></p>';   
 }
 

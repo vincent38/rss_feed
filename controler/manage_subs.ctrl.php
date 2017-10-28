@@ -7,6 +7,9 @@ require_once('redirect.ctrl.php');
 require_once("../model/RSS.class.php");
 require_once("../model/DAO.class.php");
 
+// Déclaration de la variable contenant les messages d'erreur
+$alert = array();
+
 // Si les paramètres en POST sont définis, alors on ajoute l'abonnement voulu par l'utilisateur
 if (isset($_POST["flux"]) and isset($_POST["titre"]) and isset($_POST["cat"])) {
     // On traite les valeurs reçues
@@ -42,7 +45,7 @@ $data = $dao->getRSSFlux();
 
 /* Si la liste est vide, on affiche un message d'erreur */
 if (!$data) {    
-    $noResult['type'] = 'Aucun flux';
+    $noResult = array(); $noResult['type'] = 'Aucun flux';
     $noResult['message'] = '<p class="special-subtext">Vous n\'avez enregistré aucun flux ! <a href="add_flux.ctrl.php">Ajouter un flux</a></p>';   
 }
 

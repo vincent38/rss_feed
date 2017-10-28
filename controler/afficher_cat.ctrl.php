@@ -11,6 +11,9 @@ require_once('../model/DAO.class.php');
 
 $data = array();
 
+// Déclaration de la variable contenant les messages d'erreur
+$alert = array();
+
 /* Tableau contenant tous les codes couleur bootstrap */
 $allCodes = array ("btn-success", "btn-info", "btn-warning", "btn-danger", "btn-default");
 
@@ -60,14 +63,14 @@ if ($allCat) {
         $data['news'] = $news;
 
     } else { // Sinon on affiche un message d'erreur
-        $noResult['type'] = "Catégorie vide";
+        $noResult = array(); $noResult['type'] = "Catégorie vide";
         $noResult['message'] = '<p class="special-subtext">Rien de neuf ici pour les dernières 24 heures... <a href="force_update.ctrl.php">Mettre à jour les flux</a></p>';      
     }
 
     $data['selectedCat'] = $selectedCat;
 
 } else {
-    $noResult['type'] = 'Aucun abonnement';
+    $noResult = array(); $noResult['type'] = 'Aucun abonnement';
     $noResult['message'] = '<p class="special-subtext">Vous n\'êtes abonné à aucun flux ! <a href="manage_subs.ctrl.php">Créer un abonnement</a></p>';   
 }
 
