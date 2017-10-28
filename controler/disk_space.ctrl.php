@@ -12,7 +12,7 @@ require_once('../model/DAO.class.php');
 $data = array();
 
 // On récupère les statistiques en matière de données stockées
-$stats['stats'] = $dao->getRSS_size();
+$stats = $dao->getRSS_size();
 
 if ($stats) {
     // Colorset à utiliser pour le graphe
@@ -24,7 +24,7 @@ if ($stats) {
     $i = 0;
 
     // On ajoute les statistiques à l'objet $data
-    foreach ($dao->getRSS_size() as $nomRSS => $taille) {
+    foreach ($stats as $nomRSS => $taille) {
         $data['labels'].= ',"'.$nomRSS. '"';
         $data['stats'] .=  ','.$taille;
         $data['colors'] .= ', "rgb('.$color_set[$i%7].')"';
@@ -39,7 +39,7 @@ if ($stats) {
 
 } else {
     $noResult['type'] = 'Aucune image stockée';
-    $noResult['message'] = '<p class="special-subtext"Il n\'y a aucune image stockée dans la base de données ! <a href="add_flux.ctrl.php">Ajouter un flux</a></p>';   
+    $noResult['message'] = '<p class="special-subtext">Il n\'y a aucune image stockée dans la base de données ! <a href="add_flux.ctrl.php">Ajouter un flux</a></p>';   
 }
 
 require_once "../view_style/disk_space.view.php";
