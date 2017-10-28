@@ -76,11 +76,17 @@
                         <a href="<?= $rdir_url ?>">
                             <?php
                                 if (isset($_GET['delogged'])) {
+                                    // Déclaration de la variable contenant les messages utilisateur
+                                    $alert = array();
+
                                     // On affiche un message à la déconnexion de l'utilisateur
                                     $alert['message'] .= "Vous vous êtes bien déconnecté de votre compte";
                                     $alert['type'] = "success";
                                     $alert['icon'] = "pe-7s-check";
                                 } elseif (isset($_GET['logged'])) {
+                                    // Déclaration de la variable contenant les messages utilisateur
+                                    $alert = array();
+
                                     // On affiche un message à la connexion de l'utilisateur
                                     $alert['message'] .= "Bienvenue sur votre compte, <b>".$uLogin."</b>.";
                                     $alert['type'] = "success";

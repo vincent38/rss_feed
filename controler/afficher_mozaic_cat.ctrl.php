@@ -17,7 +17,7 @@ $allCat = $dao->getAllCat($current_user->getLogin());
 $data = array();
 $data_new = array();
 
-// Déclaration de la variable contenant les messages d'erreur
+// Déclaration de la variable contenant les messages utilisateur
 $alert = array();
 
 /* Tableau contenant tous les codes couleur bootstrap */

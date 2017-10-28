@@ -4,7 +4,7 @@
 require_once("../model/User.class.php");
 require_once("../model/UserManager.class.php");
 
-// Déclaration de la variable contenant les messages d'erreur
+// Déclaration de la variable contenant les messages utilisateur
 $alert = array();
 
 session_start();

@@ -9,7 +9,7 @@ require_once('../model/RSS.class.php');
 require_once('../model/Nouvelle.class.php');
 require_once('../model/DAO.class.php');
 
-// Déclaration de la variable contenant les messages d'erreur
+// Déclaration de la variable contenant les messages utilisateur
 $alert = array();
 
 $userL = $_SESSION['user'] -> getLogin();

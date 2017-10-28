@@ -7,7 +7,7 @@ require_once('redirect.ctrl.php');
 require_once('../model/DAO.class.php');
 require_once('../model/RSS.class.php');
 
-// Déclaration de la variable contenant les messages d'erreur
+// Déclaration de la variable contenant les messages utilisateur
 $alert = array();
 
 if (!empty($_POST['toDelete'])) {

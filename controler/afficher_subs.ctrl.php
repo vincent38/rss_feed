@@ -6,7 +6,7 @@ require_once('redirect.ctrl.php');
 require_once("../model/RSS.class.php");
 require_once("../model/DAO.class.php");
 
-// Déclaration de la variable contenant les messages d'erreur
+// Déclaration de la variable contenant les messages utilisateur
 $alert = array();
 
 /* Récupération de l'objet utilisateur à partir de la variable de session */

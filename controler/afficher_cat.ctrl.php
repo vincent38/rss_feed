@@ -11,7 +11,7 @@ require_once('../model/DAO.class.php');
 
 $data = array();
 
-// Déclaration de la variable contenant les messages d'erreur
+// Déclaration de la variable contenant les messages utilisateur
 $alert = array();
 
 /* Tableau contenant tous les codes couleur bootstrap */

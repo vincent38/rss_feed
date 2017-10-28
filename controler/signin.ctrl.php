@@ -1,7 +1,7 @@
 <?php
 /* VUE DE CONNEXION DE L'UTILISATEUR */
 
-// Déclaration de la variable contenant les messages d'erreur
+// Déclaration de la variable contenant les messages utilisateur
 $alert = array();
 
 session_start();

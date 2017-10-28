@@ -11,7 +11,7 @@ require_once('../model/DAO.class.php');
 
 $userL = $_SESSION['user'] -> getLogin();
 
-// Déclaration de la variable contenant les messages d'erreur
+// Déclaration de la variable contenant les messages utilisateur
 $alert = array();
 
 if (isset($_POST['filter_chain'])) {

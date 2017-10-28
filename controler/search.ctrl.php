@@ -8,7 +8,7 @@ require_once('../model/RSS.class.php');
 $data = array();
 $data_opt = array();
 
-// Déclaration de la variable contenant les messages d'erreur
+// Déclaration de la variable contenant les messages utilisateur
 $alert = array();
 
 $results = false;
