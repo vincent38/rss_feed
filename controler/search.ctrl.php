@@ -17,9 +17,9 @@ $results = false;
 if (isset($_POST['searchstr'])) {
 
     /* Si les mots clés de recherche ne sont pas vides */
-    if (rtrim($_POST['searchstr'])) {
+    if (trim($_POST['searchstr'])) {
         /* Définition des paramètres de recherche */
-        $s_str = rtrim($_POST['searchstr']);
+        $s_str = trim($_POST['searchstr']);
         $strict = ($_POST['typeS'] == "allT");
         $onlyT = ($_POST['modeS'] == "t_only");
         $time = $_POST['time'];
