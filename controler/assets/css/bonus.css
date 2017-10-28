@@ -232,3 +232,9 @@ a.list-group-item {
     font-size: 15px;
     color:white;
 }
+
+/* Graphique chart-js */
+.special-chart {
+    margin-top:25px;
+    margin-bottom:10px;
+}

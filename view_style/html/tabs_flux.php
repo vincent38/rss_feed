@@ -7,7 +7,7 @@
     <li <?= $tab_mode=="diskF" ? 'class="active"' : ""?>>
         <a href="disk_space.ctrl.php">
         <i class = "fa fa-database"></i>
-        Gérer l'espace disque</a>
+        Stockage des données</a>
     </li>
     <li <?= $tab_mode=="upF" ? 'class="active"' : ""?>>
         <a href="force_update.ctrl.php">

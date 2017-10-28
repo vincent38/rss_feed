@@ -133,6 +133,44 @@ class DAO {
         }
     }
 
+    // Récupère la taille en Mo des images stockées pour chaque flux RSS
+    // sous la forme d'un array ("rssTitre" => nb, [...])
+    // ou array() si aucun résultat
+    public function getRSS_size() {
+        $size_stats = array();
+
+        try {
+            $q = "SELECT RSS.titre, urlImage FROM nouvelle, RSS WHERE urlImage NOT NULL AND RSS_id = RSS.id";
+            $r = $this->db->prepare($q);
+            $r->execute();
+            
+            // On récupère via fetchAll un tableau du type [Rss] => array(image1...imageN), [Rss2] => array (image1...), (...)
+            $response = $r->fetchAll(PDO::FETCH_COLUMN|PDO::FETCH_GROUP);
+
+            // Si des images sont enregistrées
+            if (sizeof($response) > 0){
+                // On crée le tableau associatif
+                foreach ($response as $rssTitre => $listeImages) {
+                    $size_flux = 0;
+
+                    foreach ($listeImages as $urlImg) {
+                        if (file_exists($urlImg)) {
+                            $size_flux += filesize($urlImg);
+                        }
+                    }
+
+                    // On stocke dans l'array la valeur en Mégaoctets arrondie à trois décimales
+                    $size_stats[$rssTitre] = round($size_flux/1048576, 3);
+                }
+            }
+        } catch (PDOException $e) {
+            die("PDO Error : ".$e->getMessage());
+        }
+
+        return $size_stats;
+    }
+
+
     // Crée un nouveau flux à partir d'une URL
     // Renvoie l'objet RSS créé
     public function createRSS($url, $title) {

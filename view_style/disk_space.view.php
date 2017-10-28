@@ -20,18 +20,16 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="header">
-                            <h4 class="title">Gérer l'espace disque</h4>
-                            <p class="category">Permet de consulter la quantité d'espace occupée par chaque flux</p>
+                            <h4 class="title">Stockage des données</h4>
+                            <p class="category">Permet de visionner l'espace disque occupé par chaque flux</p>
                         </div>
                         <div class="content">
-
+                        <canvas id="stats_flux" class="chartjs special-chart" width="435" height="217" style="display: block; width: 435px; height: 217px;"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
         <?php endif; ?>
-
-        <canvas id="chartjs-4" class="chartjs" width="435" height="217" style="display: block; width: 435px; height: 217px;"></canvas>
 
         <!-- On affiche les éventuels messages d'erreur -->
         <?php if (isset($noResult)): ?>
@@ -68,15 +66,36 @@
 	<script src="assets/js/chart.min.js" type="text/javascript"></script>
 
     <!-- Script de dessin du graphique -->
-    <script type="text/javascript">
-        new Chart(document.getElementById("chartjs-4"),
-            {"type":"doughnut",
-            "data":{
-                "labels":["Red","Blue","Yellow"],
-                "datasets":[
-            {"label":"My First Dataset","data":[300,50,100],
-            "backgroundColor":["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"]}]}});
-    </script> 
+    <?php if($data): ?>
+        <script type="text/javascript">
+            new Chart(document.getElementById("stats_flux"),
+                {type:"doughnut",
+                data: {
+                    labels: [<?= $data['labels'] ?>],
+                    datasets: [
+                    {
+                        label: "",
+                        data: [<?= $data['stats'] ?>],
+                        backgroundColor: [<?= $data['colors'] ?>]
+                    }]},
+                options: {
+                    title: {
+                        display: true,
+                        fontSize: 20,
+                        fontFamily: "'Roboto', 'Helvetica Neue', 'Arial'",
+                        text: 'Taille occupée par les flux RSS en Mo',
+                        position: 'top',
+                        padding: 15
+                    },
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    },
+                    responsive: true
+                }
+                });
+        </script>
+    <?php endif; ?>
 
     <?php include "html/alert.php"; ?>
 </html>
