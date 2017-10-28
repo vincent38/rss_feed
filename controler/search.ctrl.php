@@ -19,11 +19,11 @@ if (isset($_POST['searchstr'])) {
     /* Si les mots clés de recherche ne sont pas vides */
     if (rtrim($_POST['searchstr'])) {
         /* Définition des paramètres de recherche */
-        $s_str = $_POST['searchstr'];
+        $s_str = rtrim($_POST['searchstr']);
         $strict = ($_POST['typeS'] == "allT");
         $onlyT = ($_POST['modeS'] == "t_only");
         $time = $_POST['time'];
-        $highlight = !($_POST['highlight'] == "");
+        $highlight = (!empty($_POST['highlight']));
 
         // On stocke les paramètres de recherche dans l'objet $data_opt
         $data_opt['str'] = $s_str;
@@ -54,12 +54,12 @@ if (isset($_POST['searchstr'])) {
                 $data[] = $new;
             }
         } else { // On signale à l'utilisateur qu'aucun résultat n'a été trouvé
-            $alert['message'] .= "Aucun résultat trouvé pour la requête : <br><b>".$_POST['searchstr']."</b>";
+            $alert['message'] = "Aucun résultat trouvé pour la requête : <br><b>".$_POST['searchstr']."</b>";
             $alert['type'] = "warning";
             $alert['icon'] = "pe-7s-info";
         }
     } else { // On demande à l'utilisateur de taper des mots clés valides
-        $alert['message'] .= "Veuillez taper des mots clés de recherche valides";
+        $alert['message'] = "Veuillez taper des mots clés de recherche valides";
         $alert['type'] = "danger";
         $alert['icon'] = "pe-7s-attention";
     }
