@@ -24,7 +24,7 @@
                     <div class="content">
                     <br>
                     <p class="text-muted">Les filtres choisis seront appliqués à toutes les pages visionnées tant que vous êtes connecté.</p>
-                    <p class="text-muted">Veuillez séparer les différents mots-clés par un point-virgule.</p>
+                    <p class="text-muted">Veuillez séparer les différents mots-clés par une virgule.</p>
                     <br>
                         <form action="word_filter.ctrl.php" method="post">
                             <?php if ($data['stats']): ?>
