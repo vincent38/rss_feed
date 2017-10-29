@@ -102,13 +102,19 @@ class Nouvelle {
 
     // Surligne les occurences du tableau $s_str dans le titre et le corps de la nouvelle
     public function highlight(array $s_str) {
+        // On forme la chaîne "preg_quote" contenant tous les groupes à remplacer
+        $regex = "(";
         foreach ($s_str as $keyword) {
-            // On utilise preg_quote pour éviter des "interférences" entre la syntaxe régulière et les arguments de recherche
-            $this->description = preg_replace("/".preg_quote($keyword, "/")."/i", '<span class="special-highlight">$0</span>', $this->description);    
-            $this->titre = preg_replace("/".preg_quote($keyword, "/")."/i", '<span class="special-highlight">$0</span>', $this->titre);           
+            $regex .= preg_quote($keyword, "/")."|"; // On utilise preg_quote avec l'option '/' pour que le délimiteur antislash soit lui aussi échappé
         }
+        // On retire le dernier pipe de la chaîne, et on ferme le groupe
+        $regex = substr($regex, 0, -1); $regex .= ")";
 
-        // Ancienne solution fonctionnelle mais qui faisait perdre l'information de la casse : expression régulière plus haut adaptée de stackoverflow */
+        // On utilise preg_quote pour éviter des "interférences" entre la syntaxe régulière et les arguments de recherche
+        $this->description = preg_replace("/".$regex."/i", '<span class="special-highlight">$0</span>', $this->description);    
+        $this->titre = preg_replace("/".$regex."/i", '<span class="special-highlight">$0</span>', $this->titre);
+
+        /* Ancienne solution fonctionnelle mais qui faisait perdre l'information de la casse */
         /*
             $this->description = str_ireplace($keyword, '<span class="special-highlight">'.$keyword.'</span>', $this->description);
             $this->titre = str_ireplace($keyword, '<span class="special-highlight">'.$keyword.'</span>', $this->titre);
