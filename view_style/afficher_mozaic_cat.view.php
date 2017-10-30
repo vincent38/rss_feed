@@ -31,8 +31,8 @@
                 <?php } ?>
             </form>
 
-            <?php if (isset($data['news'])): ?>
-                <div class="row special-row">
+            <div class="row special-row">
+                <?php if (isset($data['news'])): ?>
                     <?php foreach($data['news'] as $nouvelle) { ?>
                         <div class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6 col-xs-6">
                             <div class="caption special-caption">
@@ -44,8 +44,8 @@
                             </a>
                         </div>
                     <?php } ?>
-                </div>
-            <?php endif; ?>
+                <?php endif; ?>
+            </div>
         <?php endif; ?>
 
         <!-- On affiche les éventuels messages d'erreur -->

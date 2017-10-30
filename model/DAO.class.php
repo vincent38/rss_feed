@@ -383,7 +383,7 @@ class DAO {
             ." écouter pensée affaire quoi matin pierre monter bas vent doute front ombre part maître aujourd'hui besoin question apercevoir recevoir mieux peine tour servir oh autour "
             ."près finir famille pourquoi souvent rire dessus madame sorte figure droit peur bout lieu silence gros chef ferme eh six bois mari histoire crier jouer feu tourner doux "
             ."longtemps fort heureux comme garder partie face mouvement fin reconnaître quitter personne notamment comment route dès manger livre"
-            ."premier second troisième quatrième cinquième sixième septième huitième neuvième onzième douzième"
+            ."premier second troisième quatrième cinquième sixième septième huitième neuvième onzième douzième plusieurs"
             ." doit devra devrait devrez doivent devait malgré sont sommes étiez êtes faire faisait est était été ont seraient étaient";
 
             $frequent .= " lundi mardi mercredi jeudi vendredi samedi dimanche"; // => éventuellement
