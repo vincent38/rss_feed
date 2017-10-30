@@ -31,19 +31,21 @@
                 <?php } ?>
             </form>
 
-            <div class="row special-row">
-                <?php foreach($data['news'] as $nouvelle) { ?>
-                    <div class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6 col-xs-6">
-                        <div class="caption special-caption">
-                            <h5><?= $nouvelle->titre() ?></h5>
-                            <p class="special-caption-source"><?= $nouvelle->RSStitre ?></p>
-                            <p class="special-caption-button"><a href="<?= $nouvelle->urlParsed() ?>" class="label label-info">Lire la suite</a></p>
+            <?php if (isset($data['news'])): ?>
+                <div class="row special-row">
+                    <?php foreach($data['news'] as $nouvelle) { ?>
+                        <div class="thumbnail col-lg-3 col-md-3 col-sm-4 col-xs-6 col-xs-6">
+                            <div class="caption special-caption">
+                                <h5><?= $nouvelle->titre() ?></h5>
+                                <p class="special-caption-source"><?= $nouvelle->RSStitre ?></p>
+                                <p class="special-caption-button"><a href="<?= $nouvelle->urlParsed() ?>" class="label label-info">Lire la suite</a></p>
+                            </div>
+                            <img src="<?= $nouvelle->realImg ?>" alt="illustration">
+                            </a>
                         </div>
-                        <img src="<?= $nouvelle->realImg ?>" alt="illustration">
-                        </a>
-                    </div>
-                <?php } ?>
-            </div>
+                    <?php } ?>
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
 
         <!-- On affiche les éventuels messages d'erreur -->

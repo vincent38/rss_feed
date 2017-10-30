@@ -34,7 +34,7 @@
                         <?php } ?>
                     </form>
 
-                    <?php if ($data): ?>
+                    <?php if (isset($data['news'])): ?>
                         <!-- On affiche toutes les nouvelles de la catégorie sélectionnée -->
                         <?php foreach($data['news'] as $nouvelle) { ?>
                             <div class="card">
